@@ -1,0 +1,644 @@
+/* =========================================================
+   🎟️ Eventos — Cards premium + cinta "Agotado" + modal
+   - Mantiene grilla y modal que ya tenías
+   - Mejora legibilidad, jerarquía y micro-interacciones
+========================================================= */
+:root{
+  --brand:       #0a0a0a;
+  --gold:        #E3B341;
+  --text:        #F3F3F3;
+  --muted:       rgba(231,236,255,.86);
+  --bg:          #000;
+
+  --card-bg:     rgba(255,255,255,0.07);
+  --card-stroke: rgba(255,255,255,0.12);
+  --card-glow:   0 20px 60px rgba(0,0,0,.40);
+  --radius:      16px;
+
+  --chip-bg:     rgba(0,0,0,.55);
+  --chip-stroke: rgba(255,255,255,.20);
+}
+
+/* Scroll suave y siempre habilitado */
+html,body{
+  margin:0; padding:0; background:var(--bg); color:var(--text);
+  overflow-y:auto; scroll-behavior:smooth;
+}
+
+/* Scrollbar */
+*::-webkit-scrollbar{ width:10px; height:10px; }
+*::-webkit-scrollbar-track{ background: rgba(255,255,255,.06); }
+*::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.25); border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.35); }
+
+/* Sección */
+.eventos-section{
+  position: relative;
+  padding: clamp(24px,3vw,36px) 16px 64px;
+  border-radius: 16px;
+  transition: filter .25s ease, box-shadow .25s ease;
+}
+.eventos-section:hover{
+  filter: brightness(1.02);
+  box-shadow: inset 0 0 0 1px rgba(252,165,3,.10), 0 18px 60px rgba(0,0,0,.28);
+}
+.eventos-container{ max-width: 1160px; margin: 0 auto; }
+.eventos-header{ text-align:center; max-width: 880px; margin: 0 auto 22px; }
+.eventos-title{
+  margin:0 0 6px;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing:.2px;
+  color:#fff;
+}
+.eventos-sub{
+  margin:0;
+  color: rgba(255,255,255,.88);
+  font-size: clamp(.98rem,1.6vw,1.05rem);
+}
+
+/* Grid */
+.eventos-grid{
+  display:grid; gap: 18px;
+  grid-template-columns: repeat(1,minmax(0,1fr));
+}
+@media (min-width: 680px){
+  .eventos-grid{ grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+}
+@media (min-width: 1000px){
+  .eventos-grid{ grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; }
+}
+
+/* ====== Tarjeta ====== */
+.ev-card{
+  border:1px solid var(--card-stroke);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.05) 100%);
+  box-shadow: var(--card-glow);
+  overflow:hidden;
+  cursor:pointer;
+  transform: translateZ(0);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+  outline:none;
+  display:flex; flex-direction:column;
+}
+.ev-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 26px 70px rgba(0,0,0,.45);
+  border-color: rgba(252,165,3,.45);
+  filter: brightness(1.03);
+}
+.ev-card:focus-visible{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(252,165,3,.26), 0 26px 70px rgba(0,0,0,.45);
+}
+
+/* Thumb con relación 16:9 + overlay + chip fecha */
+.ev-thumbwrap{
+  position:relative;
+  aspect-ratio: 16/9;
+  background:#121821;
+  overflow:hidden;
+}
+.ev-thumb{
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(1.05) contrast(1.02);
+  transition: transform .4s ease;
+}
+.ev-card:hover .ev-thumb{ transform: scale(1.04); }
+.ev-overlay{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.00) 20%, rgba(0,0,0,.45) 100%);
+  pointer-events:none;
+}
+
+/* Chip de fecha en la imagen */
+.ev-datechip{
+  position:absolute; left:12px; bottom:12px; z-index:2;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  border:1px solid var(--chip-stroke);
+  font-size:.88rem; color:#fff;
+  backdrop-filter: blur(6px);
+}
+
+/* Cinta "Agotado" */
+.ev-ribbon{
+  position:absolute; top:10px; right:-46px; z-index:2;
+  transform: rotate(35deg);
+  background: linear-gradient(90deg, #6A1E1E, #C12A2A);
+  color:#fff; font-weight:700; letter-spacing:.5px;
+  padding:8px 60px; box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.18);
+  text-transform:uppercase; font-size:.8rem;
+}
+.ev-card[data-soldout="1"]{ filter: grayscale(.25) opacity(.92); }
+.ev-card[data-soldout="1"] .ev-thumb{ transform:none; }
+
+/* Cuerpo */
+.ev-body{
+  padding: 14px 14px 16px;
+  display:grid; gap: 10px;
+  text-align:center;
+}
+.ev-title{
+  margin:0; font-weight:800; line-height:1.2;
+  font-size: clamp(1.02rem,1.6vw,1.08rem);
+  color:#fff;
+}
+.ev-meta{ color: var(--muted); font-size:.93rem; line-height:1.35; }
+
+/* Badges */
+.ev-row{
+  display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
+}
+.badge{
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .80rem; line-height:1;
+  border:1px solid var(--card-stroke);
+  background: rgba(255,255,255,.06);
+  color:#f4f4f4;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+}
+.badge.gold{
+  border-color: rgba(252,165,3,.45);
+  background: rgba(252,165,3,.10);
+  color:#ffdca3;
+}
+.ev-card:hover .badge{
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px rgba(252,165,3,.14);
+}
+
+/* Contadores */
+.ev-actions{
+  display:flex; justify-content:center; align-items:center; margin-top: 4px;
+}
+.counts{ font-size:.9rem; color:#dfe6ff; }
+
+/* Estado vacío */
+.eventos-empty{
+  margin-top: 10px; text-align:center; color:#dfe6ff;
+  border:1px dashed rgba(255,255,255,.22);
+  padding: 14px 12px; border-radius: 12px;
+}
+
+/* ===== Modal ===== */
+.modal-overlay{
+  position: fixed; inset:0; background: rgba(0,0,0,.55);
+  display:grid; place-items:center; z-index: 2000; overflow:auto; padding: 24px;
+}
+.modal-card{
+  width: min(700px, 92vw);
+  background: #0c142d;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  padding: 20px 18px 18px; position: relative;
+  max-height: 90vh; overflow: auto;
+}
+.modal-title{ margin:0 0 6px; color:#fff; font-size: 1.35rem; font-weight:800; }
+.modal-subtitle{ margin:0 0 16px; color: rgba(231,236,255,.88); font-size:.96rem; }
+.modal-close{
+  position:absolute; top:8px; right:10px;
+  width:36px; height:36px; border-radius: 50%;
+  border:1px solid rgba(255,255,255,.2); background: transparent; color:#fff;
+  font-size: 20px; cursor:pointer;
+}
+.modal-form{ display:grid; gap: 12px; }
+.form-row{ display:grid; gap:6px; }
+.form-row input{
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius: 10px; padding:10px 12px; color:#fff;
+}
+.form-row label{ color:#e4ecff; font-size:.92rem; }
+.hint{ color:#bdc8ff; font-size:.82rem; }
+@media (min-width: 680px){
+  .modal-form{
+    grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .form-row{ min-width:0; }
+  /* campos que deben ocupar dos columnas */
+  #row_comprobante, .form-info, .form-row[style], .modal-title, .modal-subtitle{
+    grid-column: 1 / -1;
+  }
+}
+
+.form-info{ margin-top:2px; color:#a2ffcf; font-size:.92rem; }
+.form-info.error{ color:#ffd2d2; }
+
+/* Botón Inscribirme */
+.btn-inscribirme{
+  background: var(--gold); color:#111; font-weight:800; border:none;
+  border-radius: 12px; padding: 12px 28px; font-size: 1rem; cursor:pointer;
+  transition: background .25s ease, transform .15s ease, box-shadow .25s ease;
+  box-shadow: 0 6px 18px rgba(252,165,3,.35);
+}
+.btn-inscribirme:hover{ background:#ffb020; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(252,165,3,.48); }
+.btn-inscribirme:active{ transform: translateY(1px); box-shadow: 0 2px 10px rgba(252,165,3,.25); }
+.btn-inscribirme:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Estados hidden */
+[hidden]{ display:none !important; }
+.modal-overlay[hidden]{ display:none !important; }
+
+/* Ancla segura con header fijo (si lo usas) */
+#eventos-grid, #eventos-title, #eventos{ scroll-margin-top: 84px; }
+
+/* ======== OVERRIDES: Tipografía más grande + rojo/negro ======== */
+
+/* Paleta principal */
+:root{
+  --rojo: #C12A2A;         /* rojo protagonista */
+  --negro: #111111;        /* texto general */
+  --gris-borde: rgba(0,0,0,.12);
+}
+
+/* Sección (título/subtítulo) */
+.eventos-title{
+  color: var(--rojo) !important;
+  font-size: clamp(1.8rem, 3vw, 2.4rem) !important;
+  letter-spacing: .1px;
+}
+.eventos-sub{
+  color: var(--negro) !important;
+  font-size: clamp(1.05rem, 1.8vw, 1.15rem) !important;
+  opacity: .95;
+}
+
+/* Tarjeta: cuerpo claro para texto negro */
+.ev-card{
+  background: #fff !important;
+  border: 1px solid var(--gris-borde) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,.10) !important;
+}
+.ev-thumbwrap{ border-bottom: 1px solid var(--gris-borde); }
+
+/* Título del evento (principal = rojo) */
+.ev-title{
+  color: var(--rojo) !important;
+  font-size: clamp(1.25rem, 1.9vw, 1.45rem) !important;
+  font-weight: 800;
+}
+
+/* Metadatos y textos secundarios (negro) */
+.ev-meta{ color: var(--negro) !important; font-size: 1rem !important; }
+.ev-actions .counts{ color: var(--negro) !important; font-size: 1rem !important; }
+
+/* Badges: por defecto negros; el de precio/gratuito en rojo */
+.badge{
+  color: var(--negro) !important;
+  background: rgba(0,0,0,.05) !important;
+  border-color: var(--gris-borde) !important;
+  font-size: .9rem !important;
+  padding: 4px 12px !important;
+}
+.badge.gold{           /* usaremos este como “destacado” (precio/gratis) */
+  color: var(--rojo) !important;
+  background: rgba(193,42,42,.10) !important;
+  border-color: rgba(193,42,42,.35) !important;
+}
+
+/* Chip de fecha (principal = rojo sobre fondo blanco) */
+.ev-datechip{
+  background: #ffffff !important;
+  color: var(--rojo) !important;
+  border-color: rgba(193,42,42,.45) !important;
+  font-weight: 700;
+  font-size: 1rem !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+
+/* Cinta Agotado (se mantiene roja) */
+.ev-ribbon{
+  background: linear-gradient(90deg, #8F1F1F, #C12A2A) !important;
+}
+
+/* Hover/focus: sutil en claro */
+.ev-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(193,42,42,.35) !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,.18) !important;
+  filter: none !important;
+}
+.ev-card:focus-visible{
+  box-shadow: 0 0 0 3px rgba(193,42,42,.25), 0 20px 56px rgba(0,0,0,.2) !important;
+  border-color: rgba(193,42,42,.55) !important;
+}
+
+/* Modal: títulos principales en rojo, textos en negro */
+.modal-title{ color: var(--rojo) !important; }
+.modal-subtitle{ color: var(--negro) !important; }
+.form-row label{ color: var(--negro) !important; }
+.form-row input{
+  color: var(--negro) !important;
+  background: rgba(0,0,0,.04) !important;
+  border-color: var(--gris-borde) !important;
+}
+
+/* Botón Inscribirme (rojo) */
+.btn-inscribirme{
+  background: var(--rojo) !important;
+  color:#fff !important;
+  font-weight: 800 !important;
+  font-size: 1.05rem !important;
+  padding: 14px 30px !important;
+  box-shadow: 0 8px 20px rgba(193,42,42,.30) !important;
+}
+.btn-inscribirme:hover{
+  background:#A72424 !important;
+  box-shadow: 0 12px 28px rgba(193,42,42,.38) !important;
+}
+
+/* Scroll-margin si tienes header fijo */
+#eventos-grid, #eventos-title, #eventos{ scroll-margin-top: 90px; }
+
+
+/* === MODAL ROJO CON BORDES Y FORMULARIO BIEN ENCAJADO === */
+.modal-card{
+  background: #C12A2A !important;            /* rojo sólido */
+  border: 3px solid #8F1F1F !important;       /* borde más oscuro */
+  border-radius: 18px !important;
+  color: #fff !important;
+  box-shadow: 0 20px 70px rgba(0,0,0,.6) !important;
+  padding: 26px 28px 32px !important;         /* más aire interno */
+  max-width: 720px;
+}
+
+/* TITULOS */
+.modal-title{
+  color: #fff !important;
+  font-weight: 900;
+  font-size: 1.55rem !important;
+  margin-bottom: 4px;
+  border-bottom: 2px solid #fff;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+.modal-subtitle{
+  color: #fff !important;
+  opacity: .95;
+  font-size: 1rem !important;
+  margin-bottom: 16px;
+}
+
+/* CAMPOS Y ETIQUETAS */
+.modal-form{
+  background: #B32424;                         /* tono más oscuro dentro */
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: grid;
+  gap: 14px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,.25);
+}
+@media (min-width: 680px){
+  .modal-form{
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  #row_comprobante, .form-info, .form-row[style]{
+    grid-column: 1 / -1;
+  }
+}
+.modal-form label{
+  color: #fff !important;
+  font-weight: 600;
+  font-size: .95rem;
+}
+.modal-form input{
+  background: #fff !important;
+  color: #111 !important;
+  border: 2px solid #8F1F1F !important;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: .95rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.15);
+}
+.modal-form input:focus{
+  border-color: #fff !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.25);
+}
+.modal-form input::placeholder{
+  color: rgba(0,0,0,.45);
+}
+
+/* BOTÓN INSCRIBIRME */
+.btn-inscribirme{
+  background: #8F1F1F !important;
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 14px 36px;
+  border-radius: 10px;
+  border: 2px solid #5E1414;
+  box-shadow: 0 8px 22px rgba(0,0,0,.4);
+  margin-top: 12px;
+  width: 100%;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+.btn-inscribirme:hover{
+  background: #A72424 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+/* BOTÓN DE CIERRE */
+.modal-close{
+  color: #fff !important;
+  border-color: rgba(255,255,255,.4) !important;
+  background: rgba(0,0,0,.25) !important;
+  font-weight: bold;
+  transition: background .25s;
+}
+.modal-close:hover{
+  background: rgba(0,0,0,.45) !important;
+}
+
+
+/* =========================================================
+   🎟️ EVENTOS — Grid con márgenes tipo .gs-header__wrap
+   + 3 por fila en PC / 2 en tablet / 1 en móvil
+   + Glass más compactos
+========================================================= */
+
+/* === Márgenes iguales al header (gs-header__wrap removido para evitar distorsionar el menú flotante) === */
+
+
+/* Contenedor principal (mismos márgenes que el header + aire arriba/abajo) */
+.eventos-container {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  /* 👉 aire lateral (ya lo tenías) */
+  padding-left: 180px !important;
+  padding-right: 180px !important;
+
+  /* 👉 AIRE ARRIBA Y ABAJO visible entre header/footer y el contenido */
+  padding-top: clamp(20px, 3vw, 40px) !important;
+  padding-bottom: clamp(40px, 6vw, 80px) !important;
+}
+
+
+/* 📲 Ajustes responsivos: reduce márgenes en dispositivos pequeños */
+@media (max-width: 1440px) {
+  .eventos-container {
+    padding-left: 120px !important;
+    padding-right: 120px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .eventos-container {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .eventos-container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .eventos-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Sección general */
+.eventos-section {
+  background: #fff;
+  padding-top: clamp(60px, 8vw, 100px);
+  padding-bottom: clamp(90px, 10vw, 140px);
+}
+
+/* 🧱 Grid principal */
+.eventos-grid {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  grid-template-columns: repeat(1, minmax(0, 1fr)); /* móvil */
+}
+
+/* 📲 Tablet */
+@media (min-width: 680px) {
+  .eventos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 💻 PC */
+@media (min-width: 1024px) {
+  .eventos-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ====== Tarjetas Glass compactas ====== */
+.ev-card {
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  background: #fff !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .1) !important;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.ev-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .18) !important;
+  border-color: rgba(193, 42, 42, .45);
+}
+
+/* Imagen más baja */
+.ev-thumbwrap {
+  aspect-ratio: 16/10; /* más baja para que el glass se vea pequeño */
+}
+
+/* Cuerpo más compacto */
+.ev-body {
+  padding: 12px 12px 14px !important;
+  gap: 8px;
+}
+
+/* Texto y badges más pequeños */
+.ev-title {
+  font-size: clamp(1rem, 1.4vw, 1.25rem) !important;
+}
+.badge {
+  padding: 3px 10px !important;
+  font-size: .85rem !important;
+}
+.ev-datechip {
+  font-size: .9rem !important;
+  padding: 5px 9px !important;
+}
+.ev-meta,
+.ev-actions .counts {
+  font-size: .9rem !important;
+}
+
+
+/* ============== MODAL CENTRADO (OVERRIDE) ============== */
+/* Fondo: centra el contenido y deja aire en bordes */
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding: clamp(24px, 4vw, 56px) !important;
+  overflow-y: auto;
+  z-index: 2000;
+}
+
+/* Tarjeta roja: ancho controlado, ya NO full width */
+.modal-card{
+  /* quita cualquier “full width” anterior */
+  width: auto !important;
+  max-width: 960px !important;              /* 👈 tamaño PC */
+  margin: 0 auto !important;                /* centra horizontal */
+  border-radius: 18px !important;
+  padding: clamp(24px, 3vw, 40px) !important;
+  box-sizing: border-box;
+  background: #C12A2A !important;
+  border: 3px solid #8F1F1F !important;
+  box-shadow: 0 20px 70px rgba(0,0,0,.60) !important;
+}
+
+/* IMPORTANTE: anula cualquier padding "tipo header" aplicado al modal */
+.modal-card{
+  padding-left: clamp(18px, 3vw, 40px) !important;
+  padding-right: clamp(18px, 3vw, 40px) !important;
+}
+
+/* Responsivo: reduce un poco el ancho máximo en pantallas menores */
+@media (max-width: 1200px){
+  .modal-card{ max-width: 820px !important; }
+}
+@media (max-width: 1024px){
+  .modal-card{ max-width: 700px !important; }
+}
+@media (max-width: 768px){
+  .modal-card{ max-width: 92% !important; }
+}
+@media (max-width: 480px){
+  .modal-card{ max-width: 95% !important; }
+}
+
+/* Form interno: grid responsivo como ya tienes */
+.modal-form{
+  background:#B32424; border-radius:12px; padding:18px 20px;
+  display:grid; gap:14px; box-shadow: inset 0 0 8px rgba(0,0,0,.25);
+}
+@media (min-width:680px){
+  .modal-form{ grid-template-columns:1fr 1fr; gap:18px; }
+  #row_comprobante, .form-info, .form-row[style]{ grid-column:1 / -1; }
+}

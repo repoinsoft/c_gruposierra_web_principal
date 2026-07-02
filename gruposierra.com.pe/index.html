@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GrupoSierra.com.pe</title>
+  <meta name="description" content="Grupo Sierra Inmobiliario: proyectos, terrenos y viviendas con respaldo profesional. Confía en nosotros para tu próxima inversión inmobiliaria." />
+  <link rel="icon" type="image/x-icon" href="/img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="/img/iconos/logito.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- 1) Sistema responsive -->
+  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.6" />
+  <!-- 2) Fondo Principal-->
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.6" />
+  <!-- 3) CSS de  grupoSierra -->
+  <link rel="stylesheet" href="/assets/css/home.css?v=3.6">
+  <script src="/assets/js/home.js?v=3.6" defer></script>
+  <!-- 4) CSS de  grupoSierra Proyectos -->
+  <link rel="stylesheet" href="/pages/proyectos/proyectos.css?v=3.6">
+  <script src="/pages/proyectos/proyectos.js?v=3.6" defer></script>
+
+  <!-- 5) Menú y Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/includes/1menu.css?v=3.6" />
+
+</head>
+
+<!-- Aplicamos el fondo moderno reutilizable -->
+<body class="fondo-principal">
+  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
+  <!-- Header -->
+  <div id="header-placeholder"></div>
+  <!-- ------------------------------------------------------------------------------------- -->
+  
+  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
+  <main class="gs-main">
+
+    <!-- HERO / INICIO -->
+    <section class="gs-hero" id="inicio">
+      <div class="gs-hero__slider" aria-label="Galería principal de propiedades">
+        <!-- Las slides se inyectan por JS -->
+      </div>
+
+      <!-- Plantilla de overlay (con el botón) para clonar en cada slide -->
+      <template id="gs-hero-overlay-tpl">
+        <div class="gs-hero__overlay">
+          <h2 class="gs-hero__title"></h2>
+          <p class="gs-hero__lead"></p>
+          <div class="gs-cta">
+            <a class="gs-btn gs-btn--red" href="/#proyectos" data-scroll>Ver Proyectos</a>
+          </div>
+        </div>
+      </template>
+
+      <!-- Controles -->
+      <div class="gs-hero__controls" aria-label="Controles del carrusel">
+        <button class="gs-ctrl" data-prev aria-label="Anterior">‹</button>
+        <div class="gs-dots" role="tablist" aria-label="Diapositivas">
+          <!-- Dots se inyectan por JS -->
+        </div>
+        <button class="gs-ctrl" data-next aria-label="Siguiente">›</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE PROYECTOS -->
+    <section id="proyectos" class="proyectos-section" aria-labelledby="proyectos-title">
+      <div class="proyectos-container">
+        <header class="proyectos-header">
+          <h1 id="proyectos-title" class="proyectos-title">Nuestros Proyectos Inmobiliarios</h1>
+          <p class="proyectos-sub">Explora nuestras obras más recientes y exclusivas.</p>
+        </header>
+
+        <!-- Grid -->
+        <div id="proyectos-list" class="proyectos-grid" role="list"></div>
+
+        <!-- Estado vacío / mensajes -->
+        <div id="proyectos-empty" class="proyectos-empty" hidden>
+          Aún no hay proyectos publicados. Próximamente anunciaremos nuestros lanzamientos.
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="gs-section gs-section--light gs-section--wide gs-section--sep">
+      <div class="gs-container gs-container--airy">
+        <header class="gs-head">
+          <h3 class="gs-h2">Servicios inmobiliarios</h3>
+          <p class="gs-sub">
+            Brindamos acompañamiento integral en cada etapa del proceso inmobiliario, 
+            combinando experiencia, transparencia y compromiso para que tomes decisiones seguras al momento de invertir, alquilar o vender.
+          </p>
+        </header>
+
+        <ul class="gs-services">
+          <li class="gs-service">
+            <i class="fas fa-key gs-ico" aria-hidden="true"></i>
+            <h4>Compra y venta</h4>
+            <p>
+              Te guiamos en todo el proceso: valoración profesional, negociación eficaz y cierre exitoso de tu propiedad o inversión.
+            </p>
+          </li>
+
+          <li class="gs-service">
+            <i class="fas fa-building gs-ico" aria-hidden="true"></i>
+            <h4>Alquileres</h4>
+            <p>
+              Nos encargamos de la promoción, evaluación de inquilinos y redacción de contratos para un arrendamiento seguro y rentable.
+            </p>
+          </li>
+
+          <li class="gs-service">
+            <i class="fas fa-balance-scale gs-ico" aria-hidden="true"></i>
+            <h4>Tasación</h4>
+            <p>
+              Determinamos el valor real de tu inmueble con base en análisis de mercado, comparativos actuales y criterios técnicos confiables.
+            </p>
+          </li>
+
+          <li class="gs-service">
+            <i class="fas fa-file-signature gs-ico" aria-hidden="true"></i>
+            <h4>Gestión legal</h4>
+            <p>
+              Asesoría legal completa en títulos, minutas, escrituras, registros y due diligence para garantizar operaciones sin riesgos.
+            </p>
+          </li>
+
+          <li class="gs-service">
+            <i class="fas fa-handshake gs-ico" aria-hidden="true"></i>
+            <h4>Administración</h4>
+            <p>
+              Mantenemos tu propiedad en óptimas condiciones: cobranza, mantenimiento y gestión eficiente de ingresos y gastos.
+            </p>
+          </li>
+
+          <li class="gs-service">
+            <i class="fas fa-project-diagram gs-ico" aria-hidden="true"></i>
+            <h4>Proyectos</h4>
+            <p>
+              Participamos en el desarrollo, lanzamiento y comercialización de proyectos inmobiliarios, desde la planificación hasta la venta final.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ¿QUIÉNES SOMOS? -->
+    <section id="quienes" class="gs-section gs-section--quienes">
+      <div class="gs-container gs-container--quienes">
+        <div class="gs-quienes-grid">
+          
+          <!-- Card 1: ¿Quiénes somos? -->
+          <article class="gs-card qs-card qs-card--left">
+            <h3 class="gs-h2">¿Quiénes somos?</h3>
+            <p class="gs-p">
+              Somos <strong>Grupo Sierra Inmobiliaria</strong>, especialistas en compra, venta y alquiler de bienes raíces.  
+              Acompañamos a nuestros clientes con una asesoría integral en <em>tasación, financiamiento, gestión legal</em> y <em>proyectos exclusivos</em>.
+            </p>
+            <ul class="gs-list gs-list--check">
+              <li>Más de 10 años de experiencia en el mercado inmobiliario.</li>
+              <li>Portafolio curado con propiedades en las mejores zonas del país.</li>
+              <li>Compromiso con la transparencia, la seguridad y los resultados.</li>
+            </ul>
+          </article>
+
+          <!-- Card 2: Misión -->
+          <article class="gs-card qs-card qs-card--offer qs-card--right qs-mision">
+            <span class="qs-badge">MISIÓN</span>
+            <h4 class="gs-h3">Nuestra misión</h4>
+            <p class="gs-p">
+              Brindar soluciones inmobiliarias <strong>honestas, eficientes y sostenibles</strong>, 
+              guiando a nuestros clientes en la adquisición o inversión ideal, con acompañamiento integral.
+            </p>
+          </article>
+
+          <!-- Card 3: Nuestro enfoque / KPI -->
+          <article class="gs-card qs-card qs-card--left">
+            <h4 class="gs-h3">Nuestro enfoque</h4>
+            <p class="gs-p">
+              Combinamos la experiencia con <strong>tecnología, datos y servicio personalizado</strong>  
+              para ayudarte a decidir con confianza y alcanzar tus metas inmobiliarias.
+            </p>
+            <div class="gs-kpis">
+              <div class="gs-kpi"><span class="num">+500</span><span class="label">Operaciones</span></div>
+              <div class="gs-kpi"><span class="num">+120</span><span class="label">Clientes</span></div>
+              <div class="gs-kpi"><span class="num">24/7</span><span class="label">Atención</span></div>
+            </div>
+          </article>
+
+          <!-- Card 4: Visión -->
+          <article class="gs-card qs-card qs-card--offer qs-card--right qs-vision">
+            <span class="qs-badge">VISIÓN</span>
+            <h4 class="gs-h3">Nuestra visión</h4>
+            <p class="gs-p">
+              Ser una <strong>empresa líder en el sector inmobiliario peruano</strong>, reconocida por su innovación,
+              su compromiso social y su capacidad de transformar espacios en hogares con historia.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
+  <!-- carga el header -->
+  <script src="/includes/1menu.js?v=3.6"></script>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  <!-- Loader del footer -->
+  <script src="/includes/2pie.js?v=3.6"></script>
+  <!-- -------------------------------------------------------------------------------------- -->
+
+</body>
+</html>
+

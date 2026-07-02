@@ -1,0 +1,38 @@
+# 1) Desactivar listado
+Options -Indexes
+
+# 2) Proteger .htaccess mismo y archivos sensibles
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+<FilesMatch "(?:^|/)(?:config\.php|\.env|\.log|\.ini|composer\.json|composer\.lock|id_rsa|id_rsa\.pub|\.git|\.svn)$">
+    Require all denied
+</FilesMatch>
+
+# 3) Bloquear accesos directos a ciertos backups/temp
+RedirectMatch 404 (?i)\.(?:bak|old|backup|~|swp)$
+
+# 4) Prohibir ejecución de scripts en directorios de subida (si aplica)
+# (esto evitará que .php subidos se ejecuten si quedan en uploads/)
+<Directory "uploads">
+    <IfModule mod_php7.c>
+        php_flag engine off
+    </IfModule>
+</Directory>
+
+# Alternativa (más genérica): negar archivos .php en uploads
+<If "%{REQUEST_URI} =~ m#^/uploads/#">
+    <FilesMatch "\.(php|php5|phtml)$">
+        Require all denied
+    </FilesMatch>
+</If>
+
+# 5) Cabeceras de seguridad básicas
+Header always set X-Frame-Options "DENY"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "no-referrer-when-downgrade"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# 6) Redirigir 403 a index si prefieres UX
+ErrorDocument 403 /index.php

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventos — GrupoSierra</title>
+  <link rel="icon" type="image/x-icon" href="/img/iconos/grupoSierraIco.ico" />
+  <link rel="apple-touch-icon" href="/img/iconos/grupoSierraIco.ico" />
+
+  <!-- 1) Sistema responsive -->
+  <link rel="stylesheet" href="/assets/css/1responsive.css?v=2.1" />
+  <!-- 2) Fondo Principal-->
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=2.1" />
+  <!-- Menú y Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/includes/1menu.css?v=2.1" />
+  <!-- 3) CSS de  grupoSierra -->
+  <link rel="stylesheet" href="/pages/eventos/eventos.css?v=2.1">
+  <script src="/pages/eventos/eventos.js?v=2.1" defer></script>
+
+</head>
+
+<!-- Aplicamos el fondo moderno reutilizable -->
+<body class="fondo-principal">
+  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
+  <!-- Header -->
+  <div id="header-placeholder"></div>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  
+  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
+  <main id="inicio" class="gs-main">
+    <!-- SECCIÓN DE EVENTOS -->
+    <section class="eventos-section" aria-labelledby="eventos-title">
+      <div class="eventos-container">
+        <header class="eventos-header">
+          <h1 id="eventos-title" class="eventos-title">Eventos Inmobiliarios</h1>
+          <p class="eventos-sub">Regístrate y asegura tu cupo en nuestros lanzamientos, ferias y visitas guiadas.</p>
+        </header>
+
+        <!-- Grid -->
+        <div id="eventos-grid" class="eventos-grid" role="list"></div>
+
+        <!-- Estado vacío / mensajes -->
+        <div id="eventos-empty" class="eventos-empty" hidden>
+          No hay eventos programados por ahora.
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL: Inscripción -->
+    <div id="modal-overlay" class="modal-overlay" hidden>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" aria-label="Cerrar" id="modal-close">×</button>
+        <h2 id="modal-title" class="modal-title">Inscripción al evento</h2>
+        <p id="modal-subtitle" class="modal-subtitle"></p>
+
+        <form id="form-inscripcion" class="modal-form" novalidate>
+          <input type="hidden" name="evento_id" id="f_evento_id">
+
+          <div class="form-row">
+            <label for="f_nombre">Nombre *</label>
+            <input type="text" id="f_nombre" name="nombre" required placeholder="Tu nombre completo">
+          </div>
+
+          <div class="form-row">
+            <label for="f_apellido">Apellido *</label>
+            <input type="text" id="f_apellido" name="apellido" required placeholder="Tu apellido">
+          </div>
+
+          <div class="form-row">
+            <label for="f_dni">DNI *</label>
+            <input type="text" id="f_dni" name="dni" maxlength="15" required placeholder="Número de documento">
+          </div>
+
+          <div class="form-row">
+            <label for="f_telefono">Teléfono *</label>
+            <input type="tel" id="f_telefono" name="telefono" required placeholder="Número de contacto">
+          </div>
+
+          <div class="form-row">
+            <label for="f_correo">Correo electrónico *</label>
+            <input type="email" id="f_correo" name="correo" required placeholder="tucorreo@ejemplo.com">
+          </div>
+
+          <!-- Solo si es de pago -->
+          <div class="form-row" id="row_comprobante" hidden>
+            <label for="f_comprobante_url">Comprobante Yape (URL de imagen) *</label>
+            <input type="url" id="f_comprobante_url" name="comprobante_url" placeholder="https://...jpg|png">
+            <small class="hint">Pega el enlace directo a la imagen de tu voucher.</small>
+          </div>
+
+          <!-- Mensaje de validación -->
+          <p class="form-info" id="form-info"></p>
+
+          <!-- 🔘 Botón de envío -->
+          <div class="form-row" style="text-align:center; margin-top:16px;">
+            <button type="submit" id="btn-inscribirme" class="btn-inscribirme">
+              📝 Inscribirme
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </main>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+
+  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
+  <!-- carga el header -->
+  <script src="/includes/1menu.js?v=2.1"></script>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  <!-- Loader del footer -->
+  <script src="/includes/2pie.js?v=2.1"></script>
+  <!-- -------------------------------------------------------------------------------------- -->
+
+</body>
+</html>

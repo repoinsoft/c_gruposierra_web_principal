@@ -1,0 +1,548 @@
+/* =========================================================
+   🧱 Acordeón de Proyectos Premium (Horizontal en Desktop)
+   - Mantiene el efecto de expansión horizontal
+   - Elimina la franja negra cortada; la imagen ahora ocupa el 100% de la tarjeta
+   - Usa un degradado translúcido difuso para legibilidad superior
+   - Permite que el título se lea completo (salta de línea en lugar de cortarse)
+========================================================= */
+
+/* ===== 1) Variables del Sistema */
+:root {
+  --p-red: #C41616;
+  --p-border: rgba(255, 255, 255, 0.15);
+  --p-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+/* Re-habilitar scroll vertical */
+body.fondo-principal {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}
+.gs-main,
+.proyectos-section {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* ===== 2) Sección Proyectos (Degradado de fondo) */
+.proyectos-section {
+  position: relative;
+  margin-top: 0 !important; /* Pegado directamente al hero slider para un flujo continuo sin franjas */
+  padding-top: clamp(40px, 5vw, 64px) !important;
+  padding-bottom: clamp(48px, 6vw, 90px) !important;
+  background: #ffffff !important; /* Fondo blanco sólido y limpio sin borde negro ni degradado */
+  border-top: none !important;
+  z-index: 1;
+}
+
+.proyectos-container {
+  width: min(1440px, 92%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.proyectos-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto clamp(24px, 3vw, 36px) !important;
+}
+.proyectos-title {
+  margin: 0 0 8px;
+  color: #111111 !important; /* Negro de alta visibilidad */
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+}
+.proyectos-sub {
+  margin: 0;
+  color: #555555 !important; /* Gris oscuro para contraste y legibilidad perfecta */
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+}
+
+/* ===== 3) ESTRUCTURA ACORDEÓN: PC (min-width: 768px) */
+@media (min-width: 768px) {
+  .proyectos-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    height: 480px !important;            /* Altura fija premium */
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(20px, 4vw, 48px) !important;
+    box-sizing: border-box;
+  }
+
+  /* Tarjeta por defecto (Contraída) */
+  .proyecto-card {
+    position: relative;
+    display: block !important;
+    flex: 1 !important;                  /* Todas comparten el mismo ancho por igual */
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: var(--p-shadow) !important;
+    transition: flex 0.7s cubic-bezier(0.25, 1, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
+    background: #000000 !important;      /* Fondo base para la imagen */
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    cursor: pointer;
+    isolation: isolate;
+  }
+
+  /* Cuando el listado está en hover, las tarjetas colapsadas se reducen moderadamente */
+  .proyectos-grid:hover .proyecto-card {
+    flex: 0.8 !important;
+  }
+
+  /* Tarjeta Expandida (Hover) */
+  .proyectos-grid:hover .proyecto-card:hover {
+    flex: 2.2 !important;                /* Se expande horizontalmente de forma equilibrada */
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(196, 22, 22, 0.25) !important;
+  }
+
+  /* Imagen de fondo completo (Ocupa el 100% de la tarjeta) */
+  .proyecto-media {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+  }
+  .proyecto-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.2, 1) !important;
+  }
+  .proyecto-card:hover .proyecto-img {
+    transform: scale(1.05) !important;
+  }
+
+  /* Degradado oscuro elegante (reemplaza el bloque negro sólido de la mitad) */
+  .proyecto-card::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0) 80%
+    ) !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  /* Contenedor de Textos flotante al fondo */
+  .proyecto-body {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2 !important;
+    padding: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centrar contenidos horizontalmente */
+    gap: 8px !important;
+    box-sizing: border-box !important;
+    background: transparent !important; /* Totalmente transparente para ver la imagen detrás */
+  }
+
+  /* Título: Siempre visible, forzado a una sola fila, centrado */
+  .proy-titlebar {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-align: center !important; /* Centrar texto */
+    font-size: clamp(0.9rem, 1.15vw, 1.25rem) !important; /* Fluido para mantenerse en una sola fila en PC */
+    white-space: nowrap !important;     /* Forzar una sola fila */
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    width: 100% !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+    transition: font-size 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.25s ease !important;
+  }
+  
+  /* Cuando el listado se encuentra en hover: las tarjetas que NO están en hover (se encogen) reducen su tipografía */
+  .proyectos-grid:hover .proyecto-card:not(:hover) .proy-titlebar {
+    font-size: clamp(0.72rem, 0.8vw, 0.88rem) !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+    overflow: hidden !important;
+  }
+  
+  /* La tarjeta que SÍ está en hover (se expande) mantiene su tipografía grande y centrada */
+  .proyecto-card:hover .proy-titlebar {
+    color: #ffffff !important;           /* Blanco al expandir */
+    font-size: clamp(1.15rem, 1.5vw, 1.45rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  /* Ocultar y colapsar elementos informativos por defecto en contraído para bajar el título */
+  .proyecto-card .proyecto-ubicacion,
+  .proyecto-card .proy-footer {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top: 0px solid transparent !important;
+    transform: translateY(10px) !important;
+    transition: opacity 0.35s ease, max-height 0.35s ease, margin 0.35s ease, padding 0.35s ease, transform 0.35s ease !important;
+    pointer-events: none !important;
+  }
+
+  /* Revelar y expandir con delay al pasar el cursor */
+  .proyecto-card:hover .proyecto-ubicacion {
+    opacity: 1 !important;
+    max-height: 40px !important;
+    margin-top: 4px !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    transition-delay: 0.1s !important;
+  }
+  .proyecto-card:hover .proy-footer {
+    opacity: 1 !important;
+    max-height: 80px !important;
+    margin-top: 8px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    transition-delay: 0.15s !important;
+  }
+
+  /* Dirección flotante */
+  .proyecto-ubicacion {
+    margin: 0 0 4px 0 !important;
+    font-size: 0.88rem !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* Centrado del pin e icono */
+    gap: 6px !important;
+  }
+  .proyecto-ubicacion::before {
+    content: "\f3c5";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #ff3b30;
+  }
+
+  /* Footer: Precio + CTA */
+  .proy-footer {
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .proy-price {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  .proy-price small {
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+  .proy-price strong {
+    font-size: 1.25rem !important;
+    color: #ffffff !important;           /* Monto en blanco */
+    font-weight: 800 !important;
+  }
+
+  /* Botón Ver Proyecto */
+  .proy-cta {
+    background: #ff3b30 !important;
+    color: #ffffff !important;
+    padding: 8px 18px !important;
+    border-radius: 99px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2) !important;
+    transition: all 0.25s ease !important;
+    display: inline-block !important;
+  }
+  .proy-cta:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-1px) !important;
+  }
+}
+
+/* ===== 4) ESTRUCTURA RESPONSIVA: MÓVIL/TABLET (max-width: 767px) */
+@media (max-width: 767px) {
+  .proyectos-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    height: auto !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .proyecto-card {
+    position: relative;
+    display: block !important;
+    height: 380px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: var(--p-shadow) !important;
+    background: #000000 !important;
+    width: 100% !important;
+    max-width: 390px !important;
+    margin: 0 auto !important;
+    isolation: isolate;
+  }
+
+  .proyecto-card::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%) !important;
+    z-index: 1 !important;
+  }
+
+  .proyecto-media {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0 !important;
+  }
+  .proyecto-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .proyecto-body {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2 !important;
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    background: transparent !important;
+  }
+
+  .proy-titlebar {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 1.25rem !important;
+    white-space: normal !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  .proyecto-ubicacion {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.88rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .proyecto-ubicacion::before {
+    content: "\f3c5";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #ff3b30;
+  }
+
+  .proy-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(255,255,255,0.12) !important;
+  }
+  .proy-price {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .proy-price small {
+    font-size: 0.68rem !important;
+    color: rgba(255,255,255,0.6) !important;
+  }
+  .proy-price strong {
+    font-size: 1.2rem !important;
+    color: #ff3b30 !important;
+  }
+  .proy-cta {
+    background: #ff3b30 !important;
+    color: #ffffff !important;
+    padding: 6px 14px !important;
+    border-radius: 99px !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+  }
+}
+
+/* ===== 5) ELEMENTOS COMUNES Y AJUSTES DE POSICIÓN ===== */
+.proyectos-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.proyectos-container {
+  width: 100% !important;
+  max-width: 2000px !important;
+  margin: 0 auto !important;
+  padding-inline: 40px !important; /* Aire lateral responsivo idéntico al header */
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1023px) {
+  .proyectos-container {
+    padding-inline: 24px !important;
+  }
+}
+@media (max-width: 599px) {
+  .proyectos-container {
+    padding-inline: 16px !important;
+  }
+}
+
+/* Burbujas de Mapa e Información sobre la Imagen */
+.proy-map {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 8 !important;               /* Por encima de la máscara de enlace */
+  background: rgba(0, 0, 0, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.25s, border-color 0.25s;
+  pointer-events: auto !important;
+}
+.proy-map:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+.proy-map::before {
+  content: "" !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #2ecc71 !important; /* Verde activo */
+  display: inline-block !important;
+  box-shadow: 0 0 8px #2ecc71 !important;
+  animation: proy-map-pulse 1.8s infinite !important;
+}
+
+@keyframes proy-map-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+}
+
+.proy-pill {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 5;
+  background: rgba(17, 17, 17, 0.85) !important; /* Más oscuro para excelente contraste */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borde más visible */
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 0.86rem; /* Ligeramente más grande y legible */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important; /* Sombra para resaltar sobre la imagen */
+}
+
+.proyecto-link-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.proyectos-empty {
+  width: 100%;
+  max-width: 980px;
+  margin: clamp(16px, 2vw, 24px) auto 0;
+  padding: 18px;
+  text-align: center;
+  border-radius: 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   🎨 AJUSTE UNIFORME DE BORDES EN EL ACORDEÓN DE LA HOME
+========================================================= */
+
+.proyecto-card {
+  border: none !important; /* Elimina cualquier borde físico que sangre */
+  outline: none !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important; /* Solo la sombra base */
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Hover: Simula borde Rojo Sierra de 2px con resplandor */
+.proyecto-card:hover,
+.proyectos-grid:hover .proyecto-card:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px #D43C3C, 0 12px 28px rgba(212, 60, 60, 0.25) !important;
+}

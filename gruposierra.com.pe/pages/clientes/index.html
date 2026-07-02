@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clientes — GrupoSierra</title>
+  <link rel="icon" type="image/x-icon" href="/img/iconos/grupoSierraIco.ico" />
+  <link rel="apple-touch-icon" href="/img/iconos/grupoSierraIco.ico" />
+
+  <!-- 1) Sistema responsive -->
+  <link rel="stylesheet" href="/assets/css/1responsive.css" />
+  <!-- 2) Fondo Principal-->
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css" />
+  <!-- Menú y Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/includes/1menu.css" />
+  <!-- 3) CSS de  grupoSierra -->
+  <link rel="stylesheet" href="/pages/clientes/clientes.css">
+  <script src="/pages/clientes/clientes.js" defer></script>
+
+</head>
+
+<!-- Aplicamos el fondo moderno reutilizable -->
+<body class="fondo-principal">
+  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
+  <!-- Header -->
+  <div id="header-placeholder"></div>
+  <!-- ------------------------------------------------------------------------------------- -->
+  
+  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
+  <main id="inicio" class="gs-main">
+    <!-- SECCIÓN: Acceso a Clientes -->
+    <section class="clientes-section" aria-labelledby="clientes-title">
+      <div class="clientes-container">
+        <header class="clientes-header">
+          <h1 id="clientes-title" class="clientes-title">Acceso de Clientes</h1>
+          <p class="clientes-sub">Ingresa tu usuario y contraseña para validar tu acceso.</p>
+        </header>
+
+        <form id="login-form" class="login-card" autocomplete="off">
+          <div class="field">
+            <label for="cli-user">Cliente</label>
+            <input id="cli-user" name="user" type="text" inputmode="numeric" placeholder="Ej. 12345678" required>
+          </div>
+
+          <div class="field">
+            <label for="cli-pass">Contraseña</label>
+            <input id="cli-pass" name="pass" type="password" placeholder="•••" required>
+          </div>
+
+          <button id="btn-login" type="submit" class="btn-primary">Acceder a Estados de Cuenta</button>
+          <p id="login-msg" class="msg" role="status" aria-live="polite"></p>
+        </form>
+
+        <!-- Espacio para la vista posterior al login (se implementará luego) -->
+        <div class="after-login-placeholder" hidden></div>
+      </div>
+    </section>
+  </main>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
+  <!-- carga el header -->
+  <script src="/includes/1menu.js"></script>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  <!-- Loader del footer -->
+  <script src="/includes/2pie.js"></script>
+  <!-- -------------------------------------------------------------------------------------- -->
+
+</body>
+</html>

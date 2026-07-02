@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Usuarios — GrupoSierra</title>
+  <link rel="icon" type="image/x-icon" href="/img/iconos/grupoSierraIco.ico" />
+  <link rel="apple-touch-icon" href="/img/iconos/grupoSierraIco.ico" />
+
+  <!-- 1) Sistema responsive -->
+  <link rel="stylesheet" href="/assets/css/1responsive.css" />
+  <!-- 2) Fondo Principal-->
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css" />
+  <!-- Menú y Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/includes/1menu.css" />
+  <!-- 3) CSS de  grupoSierra -->
+  <link rel="stylesheet" href="/pages/intranet/intranet.css">
+  <script src="/pages/intranet/intranet.js" defer></script>
+
+</head>
+
+<!-- Aplicamos el fondo moderno reutilizable -->
+<body class="fondo-principal">
+  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
+  <!-- Header -->
+  <div id="header-placeholder"></div>
+  <!-- ------------------------------------------------------------------------------------- -->
+  
+  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
+  <main id="inicio" class="gs-main">
+    <!-- SECCIÓN: Acceso Intranet -->
+    <section class="intra-section" aria-labelledby="intra-title">
+      <div class="intra-container">
+        <header class="intra-header">
+          <h1 id="intra-title" class="intra-title">Acceso Intranet</h1>
+          <p class="intra-sub">Ingresa tu usuario y contraseña para validar tu acceso.</p>
+        </header>
+
+        <form id="intra-form" class="intra-card" autocomplete="off">
+          <div class="intra-field">
+            <label for="intra-user">Usuario</label>
+            <input id="intra-user" name="user" type="text" inputmode="numeric" placeholder="Ej. 12345678" required>
+          </div>
+
+          <div class="intra-field">
+            <label for="intra-pass">Contraseña</label>
+            <input id="intra-pass" name="pass" type="password" placeholder="•••" required>
+          </div>
+
+          <button id="btn-intra" type="submit" class="intra-btn">Acceder a aula Virtual</button>
+          <p id="intra-msg" class="intra-msg" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="after-intra-placeholder" hidden></div>
+      </div>
+    </section>
+  </main>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
+  <!-- carga el header -->
+  <script src="/includes/1menu.js"></script>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  <!-- Loader del footer -->
+  <script src="/includes/2pie.js"></script>
+  <!-- -------------------------------------------------------------------------------------- -->
+
+</body>
+</html>

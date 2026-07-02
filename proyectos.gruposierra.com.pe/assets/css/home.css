@@ -1,0 +1,2200 @@
+/* =========================================================
+   Proyectos 360 — Grupo Sierra (CSS unificado y sin conflictos)
+   - Aside con sticky + scroll interno
+   - Viewer principal (plano + 360)
+   - Tira de miniaturas horizontal, responsiva, con scroll-snap
+   - Scrollbars sutiles y consistentes (estilo imagen 2)
+========================================================= */
+
+:root{
+  --brand:#1F2D54;
+  --gold:#FCA503;
+  --green:#3ABE6D;
+  --text:#e7ecff;
+  --stroke:rgba(255,255,255,.10);
+  --bg:#0f1a37;
+  /* ↓ este valor controla cuántos proyectos visibles quieres */
+  --mini-item-h: 83px; 
+  --items-visible: 5; /* antes 4 */
+  --gap: 10px;
+}
+
+/* ===== Scroll global estable ===== */
+html,body{height:auto;overflow-y:auto}
+html{scrollbar-gutter:stable}
+
+/* ===== Sección base ===== */
+.gs-proy{
+  background: transparent;
+  color: var(--text);
+  padding: clamp(12px,2vw,18px);
+}
+
+/* ===== Layout (aside + viewer) ===== */
+.gs-proy__layout{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:16px;
+  align-items:stretch;                /* ambos llenan el alto */
+}
+@media (max-width: 980px){
+  .gs-proy__layout{ grid-template-columns:1fr; }
+}
+
+/* ===== Aside (mini proyectos) ===== */
+.gs-proy__aside{
+  background: rgba(255,255,255,.02);
+  border:1px solid var(--stroke);
+  border-radius:14px;
+  padding:12px;
+  position:sticky;
+  top: calc(var(--header-offset, 80px) + 8px);
+  backdrop-filter: blur(6px);
+
+  /* Igualar alto al viewer en desktop */
+  display:flex;
+  flex-direction:column;
+  height: 100%;
+}
+@media (max-width: 980px){
+  .gs-proy__aside{
+    top: 8px;
+    height:auto;                      /* móvil libre */
+  }
+}
+.gs-proy__aside-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;
+}
+.gs-proy__title{font-size:18px;margin:0}
+.gs-proy__search input{
+  width:100%;
+  padding:12px 16px;
+  border-radius:999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.gs-proy__search input:focus {
+  border-color: rgba(255, 59, 48, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Lista: llena el alto disponible con su propio scroll ===== */
+.gs-proy__list{
+  list-style:none;
+  margin:12px 0 0;
+  padding:0;
+  display:grid;
+  gap:10px;
+
+  /* antes: max-height con 5 items; ahora queremos ocupar todo el alto */
+  max-height: none;
+  overflow:auto;
+  flex: 1;                  /* llena espacio vertical */
+  min-height: 0;            /* evita overflow del contenedor flex */
+}
+.gs-proy__item{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:12px;
+  min-height: var(--mini-item-h);
+  padding:10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor:pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gs-proy__item:hover{
+  transform: translateY(-2px) scale(1.01);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 59, 48, 0.3);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  outline: none !important;
+}
+.gs-proy__item.is-active{
+  background: rgba(255, 59, 48, 0.12) !important;
+  border-color: rgba(255, 59, 48, 0.6) !important;
+  box-shadow: 0 0 15px rgba(255, 59, 48, 0.25);
+  outline: none !important;
+}
+.gs-proy__thumb{
+  width:64px;height:64px;border-radius:10px;object-fit:cover;background:#101a38;
+}
+.gs-proy__name{font-weight:600;margin:0 0 4px;font-size:14px}
+.gs-proy__chips{display:flex;flex-wrap:wrap;gap:6px}
+.gs-chip{
+  font-size:11px;padding:3px 8px;border-radius:999px;
+  border:1px solid var(--stroke);background:rgba(255,255,255,.04)
+}
+.gs-chip--ok{border-color:rgba(58,190,109,.28)}
+.gs-chip--warn{border-color:rgba(252,165,3,.30)}
+
+/* ===== Viewer ===== */
+.gs-proy__viewer{
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  overflow: hidden;
+}
+@media (max-width:980px){
+  .gs-proy__viewer{ margin-top: 12px; }
+}
+.gs-proy__info{
+  display:grid;
+  gap:6px;
+  margin-bottom:14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+.gs-proy__nombre{
+  margin:0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #ffffff, #f1f1f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gs-proy__dir{
+  margin:0;
+  font-size: 0.9rem;
+  color: #ff3b30;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.gs-proy__desc{
+  margin:0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+.gs-proy__actions{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
+.gs-btn{
+  padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);
+  background:rgba(255,255,255,.06);color:var(--text);
+  text-decoration:none;cursor:pointer
+}
+.gs-btn--gold{background:var(--gold);color:#1b1505;border-color:#d27f03}
+
+/* ===== Contenedor visual principal (plano/360) ===== */
+.gs-pano{
+  width:100%;
+  height:min(55vh,600px);
+  border-radius: 16px;
+  overflow:hidden;
+  background: #000000;
+  position:relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.3s ease;
+}
+.gs-pano:hover {
+  border-color: rgba(255, 59, 48, 0.2);
+}
+@media (max-width:768px){
+  .gs-pano{ height:45vh; }
+}
+
+/* Imagen estática (plano) */
+.gs-pano__static{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;background:#0b1430
+}
+
+/* ===== Thumbnails (tira horizontal responsiva + scroll-snap) ===== */
+.gs-thumbs{
+  margin-top:10px;
+  display:flex;
+  flex-wrap: nowrap;                 /* una sola fila */
+  gap:8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x:auto;                   /* scroll horizontal */
+  overflow-y:hidden;
+  padding: 6px 8px;                  /* simétrico */
+  -webkit-overflow-scrolling: touch; /* inercia iOS */
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;     /* encaje suave */
+  scroll-padding-inline: 8px;
+
+  /* Degradé sutil en bordes (se desactiva en móviles chicos) */
+  --fade: linear-gradient(90deg, rgba(15,26,55,0) 0, rgba(15,26,55,.6) 14px, rgba(15,26,55,.6) calc(100% - 14px), rgba(15,26,55,0) 100%);
+  -webkit-mask-image: var(--fade);
+          mask-image: var(--fade);
+}
+
+/* Miniatura responsiva con snap */
+.gs-thumb{
+  flex: 0 0 auto;
+  width: clamp(70px, 12vw, 118px);
+  height: clamp(48px, 8vw, 78px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.4);
+  overflow:hidden;
+  cursor:pointer;
+  transition: all 0.25s ease;
+  position:relative;
+  scroll-snap-align: start;
+}
+.gs-thumb img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+.gs-thumb:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 59, 48, 0.4);
+}
+.gs-thumb.is-active{
+  border-color: #ff3b30 !important;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.4);
+  outline: none !important;
+}
+.gs-thumb[data-type="plan"].is-active{outline:2px solid var(--green)}
+.gs-thumb__tag{
+  position:absolute;left:6px;top:6px;font-size:11px;padding:2px 6px;border-radius:999px;
+  background:rgba(0,0,0,.55);color:#fff
+}
+
+/* ===== Scrollbar sutil y consistente (lista + thumbs) ===== */
+/* Lista lateral (vertical) */
+.gs-proy__list::-webkit-scrollbar{ width: 10px; }
+.gs-proy__list::-webkit-scrollbar-track{
+  background: rgba(0,0,0,.25);
+  border-radius: 999px;
+}
+.gs-proy__list::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.35);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,.15);
+}
+.gs-proy__list::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.55); }
+.gs-proy__list{ scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.45) rgba(0,0,0,.25); }
+
+/* Tira de miniaturas (horizontal) */
+.gs-thumbs::-webkit-scrollbar{ height: 10px; }
+.gs-thumbs::-webkit-scrollbar-track{ background: rgba(0,0,0,.25); border-radius:999px; }
+.gs-thumbs::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.35);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,.15);
+}
+.gs-thumbs::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.55); }
+.gs-thumbs{ scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.45) rgba(0,0,0,.25); }
+
+/* ===== Breakpoints estrictos (sin desbordes) ===== */
+@media (max-width: 680px){
+  .gs-thumbs{
+    gap:6px;
+    padding:4px 6px;
+    -webkit-mask-image: none; /* liberamos ancho útil */
+            mask-image: none;
+  }
+  .gs-thumb{
+    width: clamp(58px, 22vw, 96px);
+    height: clamp(40px, 14vw, 64px);
+  }
+}
+@media (max-width: 420px){
+  .gs-thumbs{ gap:4px; padding:4px; }
+  .gs-thumb{
+    width: clamp(52px, 26vw, 88px);
+    height: clamp(36px, 16vw, 58px);
+  }
+}
+
+/* ===== Overlay de plano (si lo usas en otra vista) ===== */
+.gs-plano{
+  position:relative;margin-top:10px;border:1px solid var(--stroke);
+  border-radius:12px;overflow:hidden;background:rgba(13,23,54,.55);
+  backdrop-filter: blur(4px)
+}
+.gs-plano img{width:100%;height:auto;display:block}
+.gs-plano__close{
+  position:absolute;right:8px;top:8px;border:0;background:rgba(0,0,0,.5);
+  color:#fff;width:32px;height:32px;border-radius:999px;cursor:pointer
+}
+
+/* ===== Utilidades ===== */
+.is-hidden{ display:none !important; }
+
+/* === Override SOLO para el visor 360 (forzando el inline) === */
+#visor360.gs-pano{ height: min(42vh, 480px) !important; }
+@media (max-width: 980px){
+  #visor360.gs-pano{ height: min(48vh, 480px) !important; }
+}
+@media (max-width: 768px){
+  #visor360.gs-pano{ height: min(42vh, 420px) !important; }
+}
+@media (max-width: 560px){
+  #visor360.gs-pano{ height: min(38vh, 360px) !important; }
+}
+@media (max-width: 420px){
+  #visor360.gs-pano{ height: min(34vh, 320px) !important; }
+}
+
+
+/* ===== Ajuste general de alturas (solo desktop) ===== */
+
+/* Altura visible total del aside (4 ítems + cabecera + margen) */
+@media (min-width: 1081px){
+  .gs-proy__aside {
+    height: calc(
+      var(--mini-item-h) * var(--items-visible)
+      + (var(--items-visible) - 1) * var(--gap)
+      + 120px   /* espacio adicional para título y buscador */
+    );
+  }
+
+  /* Hacemos que el viewer tenga la misma altura */
+  .gs-proy__viewer {
+    height: calc(
+      var(--mini-item-h) * var(--items-visible)
+      + (var(--items-visible) - 1) * var(--gap)
+      + 120px
+    );
+  }
+}
+
+/* Mantiene comportamiento libre en móviles */
+@media (max-width: 980px){
+  .gs-proy__aside,
+  .gs-proy__viewer {
+    height: auto;
+  }
+}
+
+/* Asegúrate de tener esta línea (ya la agregamos antes) */
+.gs-proy__list{
+  /* ... */
+  max-height: calc(var(--mini-item-h) * var(--items-visible)
+                 + (var(--items-visible) - 1) * var(--gap));
+}
+
+/* Responsive: solo 3 visibles en la lista */
+@media (max-width: 980px){
+  .gs-proy{ --items-visible: 4; }  /* ← solo cambia el conteo visible */
+}
+
+
+/* =========================================================
+   🟥 Tema rojo → negro (override sin romper tu layout)
+   - No cambia estructura ni JS
+   - Aplica solo dentro de .gs-proy
+========================================================= */
+.gs-proy{
+  /* Degradado principal */
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(199,33,33,.35) 0%, rgba(199,33,33,0) 55%),
+    linear-gradient(180deg, #bb0a0a 0%, #a10707 38%, #2c1212 100%) !important;
+  color:#fff !important;
+
+  /* Re-definimos variables locales (solo en esta sección) */
+  --text:   #ffffff;
+  --stroke: rgba(255,255,255,.18);
+  --bg:     #000000;
+}
+
+/* Bordes y vidrios coherentes sobre rojo/negro */
+.gs-proy__aside,
+.gs-proy__viewer,
+.gs-proy__item,
+.gs-thumb{
+  border-color: var(--stroke) !important;
+  background: rgba(255,255,255,.04) !important;   /* glass suave */
+  color:#fff !important;
+  backdrop-filter: blur(6px);
+}
+
+/* Títulos y textos 100% blancos */
+.gs-proy__title,
+.gs-proy__nombre,
+.gs-proy__dir,
+.gs-proy__desc,
+.gs-proy__name{
+  color:#fff !important;
+}
+
+/* Buscador: vidrio claro + texto blanco */
+.gs-proy__search input{
+  background: rgba(255,255,255,.07) !important;
+  border-color: var(--stroke) !important;
+  color:#fff !important;
+  caret-color:#fff;
+}
+
+/* Chips: bordes visibles sobre fondo rojo/negro */
+.gs-chip{ 
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  color:#fff !important;
+}
+.gs-chip--ok{ border-color: rgba(58,190,109,.55) !important; }
+.gs-chip--warn{ border-color: rgba(252,165,3,.55) !important; }
+
+/* Hover/activo en la lista lateral */
+.gs-proy__item:hover{ outline:2px solid rgba(227,59,59,.45) !important; }
+.gs-proy__item.is-active{ outline:2px solid rgba(255,255,255,.85) !important; }
+
+/* Botones */
+.gs-btn{
+  color:#fff !important;
+  border-color: rgba(255,255,255,.25) !important;
+  background: rgba(255,255,255,.08) !important;
+}
+.gs-btn:hover{ background: rgba(255,255,255,.12) !important; }
+
+/* El botón dorado se mantiene (contraste OK) */
+.gs-btn.gs-btn--gold{
+  background: var(--gold) !important;
+  color: #1b1505 !important;
+  border-color: #d27f03 !important;
+}
+
+/* Visores (quitar azules) */
+.gs-pano{
+  background: rgba(0,0,0,.55) !important;
+}
+.gs-pano__static{ background:#000 !important; }
+
+/* Miniaturas: fondo neutro oscuro (sin azul) */
+.gs-thumb{
+  background: rgba(0,0,0,.6) !important;
+}
+.gs-thumb__tag{
+  background: rgba(0,0,0,.6) !important;
+  color:#fff !important;
+}
+
+/* Degradé del carrusel de thumbs, adaptado a rojo/negro */
+.gs-thumbs{
+  --fade: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,.6) 14px,
+    rgba(0,0,0,.6) calc(100% - 14px),
+    rgba(0,0,0,0) 100%
+  ) !important;
+  -webkit-mask-image: var(--fade) !important;
+          mask-image: var(--fade) !important;
+}
+
+/* Scrollbars blancos sutiles sobre fondo oscuro */
+.gs-proy__list::-webkit-scrollbar-track,
+.gs-thumbs::-webkit-scrollbar-track{ background: rgba(0,0,0,.35) !important; }
+.gs-proy__list::-webkit-scrollbar-thumb,
+.gs-thumbs::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.45) !important;
+  border: 2px solid rgba(0,0,0,.25) !important;
+}
+.gs-proy__list{ scrollbar-color: rgba(255,255,255,.55) rgba(0,0,0,.35) !important; }
+.gs-thumbs{ scrollbar-color: rgba(255,255,255,.55) rgba(0,0,0,.35) !important; }
+
+/* Ajustes de alturas ya existentes (se respetan); solo color texto */
+#visor360.gs-pano,
+#visorPlano.gs-pano{ color:#fff !important; }
+
+/* ➕ Una fila más de alto en desktop */
+@media (min-width: 1081px){
+  .gs-proy{
+    --items-visible: 6; /* antes 5 */
+  }
+}
+
+@media (min-width: 1081px){
+  #visor360.gs-pano{ height: min(48vh, 520px) !important; }
+}
+
+
+/* =========================================================
+   🧱 Tema final — Glass blancos sólidos + Botones rojos
+   (sin dorado, sin transparencia)
+========================================================= */
+
+/* 🔹 Anula variables doradas */
+:root,
+.gs-proy {
+  --gold: none !important;
+  --gold-700: none !important;
+}
+
+/* 🔸 Fondo general (mantiene tu rojo→negro) */
+html, body.fondo-principal {
+  background: linear-gradient(180deg, #B81818 0%, #7a1010 40%, #550909 100%) !important;
+}
+.gs-proy {
+  background: transparent !important;
+  color: #fff !important;
+  padding-top: 15px !important;            /* Pegado al menú flotante */
+}
+
+/* ⚪ Glass blancos sólidos */
+.gs-proy__aside,
+.gs-proy__viewer,
+.gs-proy__item,
+.gs-thumb,
+.gs-pano,
+.gs-pano__static {
+  background: #ffffff !important;          /* blanco puro */
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: #000 !important;                  /* texto negro dentro */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  backdrop-filter: none !important;        /* sin transparencia */
+}
+
+/* Títulos y textos principales en blanco */
+.gs-proy__title,
+.gs-proy__nombre,
+.gs-proy__dir,
+.gs-proy__desc {
+  color: #ffffff !important;
+}
+
+/* Textos dentro de los glass negros */
+.gs-proy__item *,
+.gs-thumb *,
+.gs-chip {
+  color: #000 !important;
+}
+
+/* Caja de búsqueda */
+.gs-proy__search input {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  color: #000 !important;
+  caret-color: #000 !important;
+}
+.gs-proy__search input::placeholder {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Chips claros */
+.gs-chip {
+  background: #f2f2f2 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #000 !important;
+}
+
+/* Hover y activo */
+.gs-proy__item:hover {
+  outline: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+.gs-proy__item.is-active {
+  outline: 2px solid #C41616 !important;
+}
+
+/* 🔴 Botones rojos sólidos (texto blanco) */
+.gs-btn,
+.gs-btn--gold {
+  background: #C41616;
+  border: 1px solid #A01111;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.gs-btn:hover,
+.gs-btn--gold:hover {
+  background: #E22E2E;
+  transform: scale(1.03);
+}
+
+/* Scrollbars discretos */
+.gs-proy__list::-webkit-scrollbar-thumb,
+.gs-thumbs::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.35) !important;
+}
+.gs-proy__list::-webkit-scrollbar-track,
+.gs-thumbs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+
+/* ====== BOTÓN "MOSTRAR PLANO" SIN DORADO (BORDE ROJO) ====== */
+
+/* 1) Regla ultra específica para anular cualquier estilo previo */
+.gs-proy .gs-proy__viewer .gs-proy__actions > button#btn-plan.gs-btn.gs-btn--gold {
+  background: #ffffff !important;          /* normal: fondo blanco */
+  color: #000 !important;                   /* texto negro */
+  border: 2px solid #C41616 !important;     /* 🔴 borde ROJO, no dorado */
+  border-top-color: #C41616 !important;
+  border-right-color: #C41616 !important;
+  border-bottom-color: #C41616 !important;
+  border-left-color: #C41616 !important;
+
+  /* Anula posibles “tintes” */
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: none !important;
+  text-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  transition: background .25s ease, color .25s ease, transform .2s ease;
+}
+
+/* 2) Hover: fondo rojo y texto blanco */
+.gs-proy .gs-proy__viewer .gs-proy__actions > button#btn-plan.gs-btn.gs-btn--gold:hover {
+  background: #C41616 !important;           /* 🔴 rojo sólido */
+  color: #ffffff !important;                 /* texto blanco */
+  border-color: #C41616 !important;
+  transform: scale(1.03);
+}
+
+/* 3) Active/focus */
+.gs-proy .gs-proy__viewer .gs-proy__actions > button#btn-plan.gs-btn.gs-btn--gold:active,
+.gs-proy .gs-proy__viewer .gs-proy__actions > button#btn-plan.gs-btn.gs-btn--gold:focus {
+  background: #A81212 !important;           /* rojo más oscuro */
+  color: #ffffff !important;
+  border-color: #A81212 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 4) Por si alguna regla global sigue asignando “dorado” via variable */
+:root, .gs-proy {
+  --gold: none !important;
+  --gold-700: none !important;
+}
+
+
+#visor360.gs-pano {
+  height: 55vh !important;   /* antes 60vh → ahora ocupa más pantalla */
+}
+
+
+#proy-nombre,
+#proy-direccion,
+#proy-descripcion {
+  color: #000000 !important;    /* texto negro */
+}
+
+/* Si deseas mantener el título un poco más fuerte */
+#proy-nombre {
+  font-weight: 700 !important;
+}
+
+/* Dirección y descripción con tono gris oscuro opcional */
+#proy-direccion,
+#proy-descripcion {
+  color: #222222 !important;
+}
+
+/* =========================================================
+   🔁 CARRUSEL HORIZONTAL DE PROYECTOS + HERO
+   (override sobre estilos anteriores)
+========================================================= */
+
+/* Layout general: una sola columna (top + viewer) */
+.gs-proy__layout{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+/* Cabecera superior (título + buscador) */
+.gs-proy__top{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gs-proy__top-head{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Buscador, mantenemos tu estilo base */
+.gs-proy__search{
+  min-width: 220px;
+}
+
+/* ░░░ Carrusel tipo "conteo horizontal" ░░░ */
+.gs-strip{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Botones flecha */
+.gs-strip__arrow{
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+.gs-strip__arrow:hover{
+  transform: translateY(-1px);
+}
+
+/* Lista como carrusel horizontal en móvil, y Acordeón Flexbox en Desktop */
+.gs-strip__list{
+  list-style: none;
+  margin: 0;
+  padding: 4px 4px 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.gs-proy__item{
+  scroll-snap-align: start;
+  flex: 0 0 260px;
+  max-width: 280px;
+  min-height: auto;
+  padding: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #ffffff;
+  color: #111;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.gs-proy__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: rgba(212, 60, 60, 0.3);
+}
+
+.gs-proy__item.is-active {
+  border-color: #D43C3C !important;
+  box-shadow: 0 0 15px rgba(212, 60, 60, 0.35) !important;
+  outline: 2px solid #D43C3C;
+}
+
+/* 💻 MODO DESKTOP: Acordeón horizontal de proyectos */
+@media (min-width: 768px) {
+  .gs-strip {
+    height: 400px;
+    width: 100% !important;
+  }
+  .gs-strip__list {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    gap: 16px !important;
+  }
+  .gs-proy__item {
+    flex: 1 !important;
+    height: 100% !important;
+    max-width: none !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    transition: flex 0.7s cubic-bezier(0.25, 1, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease !important;
+    background: #000000 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    will-change: flex, transform !important; /* Aceleración por GPU */
+  }
+  
+  /* Cuando el listado está en hover, las tarjetas colapsadas se reducen moderadamente */
+  .gs-strip__list:hover .gs-proy__item {
+    flex: 0.8 !important;
+  }
+  
+  /* Tarjeta Expandida (Hover) */
+  .gs-strip__list:hover .gs-proy__item:hover {
+    flex: 2.2 !important;
+    transform: none !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35) !important;
+    border-color: rgba(212, 60, 60, 0.4) !important;
+  }
+  .gs-proy__item.is-active {
+    outline: 2px solid #D43C3C !important;
+    border-color: #D43C3C !important;
+  }
+  
+  /* Imagen de fondo en modo acordeón */
+  .gs-proy__thumb {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    z-index: 0 !important;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.2, 1) !important;
+  }
+  .gs-proy__item:hover .gs-proy__thumb {
+    transform: scale(1.06) !important;
+  }
+
+  /* Contenido sobre la imagen con degradado */
+  .gs-proy__item > div {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 40px 20px 20px !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%) !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centrado horizontal del contenido */
+    gap: 6px !important;
+    pointer-events: none;
+  }
+  
+  .gs-proy__name {
+    color: #ffffff !important;
+    font-size: clamp(0.9rem, 1.15vw, 1.25rem) !important; /* Fluido para mantenerse en una sola fila en PC */
+    font-weight: 800 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+    text-align: center !important; /* Texto centrado */
+    white-space: nowrap !important; /* Forzar siempre una sola fila */
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    width: 100% !important;
+    transition: font-size 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  }
+  
+  /* Cuando el listado se encuentra en hover: las tarjetas que NO están en hover (se encogen) reducen su tipografía */
+  .gs-strip__list:hover .gs-proy__item:not(:hover) .gs-proy__name {
+    font-size: clamp(0.72rem, 0.8vw, 0.88rem) !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+    overflow: hidden !important;
+  }
+  
+  /* La tarjeta que SÍ está en hover (se expande) mantiene la tipografía grande */
+  .gs-proy__item:hover .gs-proy__name {
+    font-size: clamp(1.15rem, 1.5vw, 1.45rem) !important; /* Crece de forma inmersiva y responsiva */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  /* Mostrar los chips de lotes solo en hover */
+  .gs-proy__chips {
+    opacity: 0 !important;
+    transform: translateY(15px) !important;
+    transition: opacity 0.35s ease, transform 0.35s ease !important;
+  }
+  .gs-proy__item:hover .gs-proy__chips {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition-delay: 0.18s !important;
+  }
+  .gs-chip {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(4px);
+  }
+  .gs-chip--warn {
+    background: rgba(234, 88, 12, 0.25) !important;
+    border-color: rgba(234, 88, 12, 0.4) !important;
+  }
+  .gs-chip--ok {
+    background: rgba(5, 150, 105, 0.25) !important;
+    border-color: rgba(5, 150, 105, 0.4) !important;
+  }
+}
+
+/* Imagen superior de la tarjeta */
+.gs-proy__thumb{
+  width: 100%;
+  height: 160px;
+  border-radius: 0;
+  object-fit: cover;
+  display: block;
+}
+
+/* Contenido inferior */
+.gs-proy__item > div{
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gs-proy__name{
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: #111;
+}
+
+.gs-proy__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.gs-chip{
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* Estado activo (tarjeta seleccionada) */
+.gs-proy__item.is-active{
+  outline: 2px solid #C41616;
+  box-shadow: 0 0 0 1px rgba(196,22,22,0.25), 0 12px 24px rgba(0,0,0,0.18);
+}
+
+/* En móviles, tarjetas un poco más pequeñas */
+@media (max-width: 700px){
+  .gs-proy__item{
+    flex: 0 0 220px;
+  }
+  .gs-proy__thumb{
+    height: 140px;
+  }
+}
+
+
+/* ░░░ Bloque principal: viewer con fondo blanco ░░░ */
+.gs-proy__viewer{
+  background: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: #000;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+
+  /* 🧊 Aire lateral y abajo */
+  padding: 18px 100px 90px !important;  /* más aire en la parte baja */
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Info textual */
+.gs-proy__info{
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.gs-proy__nombre{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #111 !important;
+}
+
+.gs-proy__dir,
+.gs-proy__desc{
+  margin: 0;
+  color: #222 !important;
+}
+
+/* Las declaraciones heredadas de .gs-hero y .gs-plan han sido removidas para dar paso al nuevo visor enriquecido al final del archivo */
+
+#visorPlano img{
+  width: 70%;
+  max-width: 780px;
+  border-radius: 14px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+}
+
+/* ░░░ VISOR 360 ░░░ */
+#visor360.gs-pano{
+  background: #000 !important;
+  width: 100%;
+  height: min(70vh, 720px) !important;
+  border-radius: 16px;
+  margin: 0 0 72px !important;      /* ← ANTES 44px → AHORA TRIPLE */
+}
+
+/* Miniaturas más separadas del visor 360 */
+.gs-thumbs{
+  margin-top: 72px !important;      /* ← ANTES 44px → AHORA TRIPLE */
+}
+
+/* ░░░ Responsive: aire y alturas ░░░ */
+@media (max-width: 1400px){
+  .gs-proy__viewer{
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (max-width: 1100px){
+  .gs-proy__viewer{
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+}
+
+@media (max-width: 900px){
+  .gs-proy__viewer{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+  #visor360.gs-pano{
+    height: min(60vh, 600px) !important;
+  }
+}
+
+@media (max-width: 600px){
+  .gs-proy__viewer{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 40px !important;
+  }
+
+  #visor360.gs-pano{
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    max-height: 380px;
+    border-radius: 14px;
+  }
+
+  #visorPlano img,
+  .gs-plan__img{
+    width: 90%;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 420px){
+  .gs-proy__viewer{
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  #visor360.gs-pano{
+    max-height: 340px;
+  }
+}
+
+
+/* El slider de amenidades/modelos anterior ha sido removido para dar paso al nuevo Acordeón Flexbox al final del archivo */
+
+/* =========================================================
+   💎 MEJORAS DE DISEÑO UI/UX - VISOR DE PROYECTOS ENRIQUECIDO
+========================================================= */
+
+/* Tarjeta del proyecto principal (Hero Card) */
+.gs-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0; /* Sin bordes redondeados en los costados ni abajo si ocupa todo el ancho */
+  background: #181313;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  margin: 0 !important; /* Reset default browser figure margins */
+  height: clamp(450px, 70vh, 850px);
+  width: 100% !important;
+}
+
+.gs-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+.gs-hero:hover .gs-hero__img {
+  transform: scale(1.04);
+}
+
+/* Container wrapper para alinear los contenidos hacia el canto izquierdo */
+.gs-hero__container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Badge de estado dinámico */
+.gs-hero__badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  margin-bottom: 4px;
+  display: none; /* Se activa dinámicamente con JS */
+}
+
+.gs-hero__badge--venta {
+  background: rgba(5, 150, 105, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+.gs-hero__badge--ultimos {
+  background: rgba(234, 88, 12, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(234, 88, 12, 0.3);
+}
+
+.gs-hero__badge--vendido {
+  background: rgba(75, 85, 99, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+/* Overlay de degradado con textos */
+.gs-hero__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 60px 28px 28px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+#proy-nombre.gs-hero__nombre {
+  font-size: clamp(1.5rem, 3vw, 2.2rem) !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: -0.3px;
+}
+
+#proy-direccion.gs-hero__dir {
+  font-size: clamp(0.9rem, 1.8vw, 1.05rem) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  margin: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+#proy-direccion.gs-hero__dir i {
+  color: #ff3b30;
+  font-size: 1.1rem;
+}
+
+/* Descripción del proyecto */
+.gs-proy__desc {
+  font-size: 1.08rem !important;
+  line-height: 1.7 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin: 0 0 28px 0 !important;
+  max-width: 900px;
+}
+
+/* Fila de botones de acción (CTAs) */
+.gs-proy__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+
+.gs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gs-btn--wa {
+  background: #25D366;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25);
+}
+
+.gs-btn--wa:hover {
+  background: #1ebe57;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+}
+
+.gs-btn--secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.gs-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.gs-btn:active {
+  transform: translateY(0);
+}
+
+/* Sección del plano del proyecto */
+.gs-plan-section {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gs-plan-section__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gs-plan {
+  border-radius: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.gs-plan__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Ajustes de responsividad para móvil */
+@media (max-width: 768px) {
+  .gs-hero {
+    aspect-ratio: auto;
+    height: 380px;
+    border-radius: 0;
+    margin: 0 !important;
+  }
+  .gs-hero__nombre {
+    font-size: 1.4rem !important;
+  }
+  .gs-proy__actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .gs-btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+/* =========================================================
+   💎 REFINAMIENTOS DE LA UI: TARJETA, BOTONES Y SECCIONES
+========================================================= */
+
+/* Tarjeta de información del proyecto */
+.gs-proy__info-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 24px !important;
+  padding: 32px !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04) !important;
+  margin-bottom: 48px !important;
+  margin-top: -8px !important; /* Acercarlo un poco al Hero */
+}
+
+.gs-proy__info-title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #111111 !important;
+  margin: 0 0 14px 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Descripción del proyecto refinada */
+.gs-proy__desc {
+  font-size: 1.08rem !important;
+  line-height: 1.75 !important;
+  color: #444444 !important; /* Gris oscuro elegante y legible */
+  margin: 0 0 28px 0 !important;
+  max-width: 100% !important;
+}
+
+/* Ajustes específicos de botones */
+.gs-btn {
+  padding: 14px 32px !important;
+  font-size: 0.96rem !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+/* Botón de WhatsApp - Verde Oficial */
+.gs-btn--wa {
+  background: #25D366 !important;
+  color: #ffffff !important;
+  border: 1px solid #20ba5a !important;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.2) !important;
+}
+.gs-btn--wa:hover {
+  background: #1ebe57 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35) !important;
+}
+
+/* Botones Secundarios (Visor 360 y Plano) - Estilo Outlined Negro */
+.gs-btn--secondary {
+  background: transparent !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.gs-btn--secondary:hover {
+  background: rgba(17, 17, 17, 0.06) !important;
+  border-color: #111111 !important;
+  color: #111111 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Encabezados de Sección */
+.gs-section-header {
+  margin: 64px 0 32px !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+.gs-section-header--pano {
+  margin-top: 80px !important;
+}
+.gs-section-title {
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+  color: #111111 !important;
+  margin: 0 0 8px 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.gs-section-subtitle {
+  font-size: 1rem !important;
+  color: #666666 !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
+/* Rediseño del Carrusel de Modelos en modo Acordeón Flexbox (gs-amenities) */
+.gs-amenities {
+  background: #fdfdfd !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 24px !important;
+  padding: 48px 24px !important;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.01) !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.gs-amenities__viewport {
+  width: 100% !important;
+  overflow: visible !important;
+  border-radius: 16px !important;
+}
+
+/* 💻 MODO DESKTOP: Acordeón Flexbox para los 3 modelos */
+@media (min-width: 768px) {
+  .gs-amenities__track {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    height: 380px !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  .gs-amenity {
+    position: relative !important;
+    flex: 1 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+    background: #000000 !important;
+    cursor: pointer !important;
+    transition: flex 0.7s cubic-bezier(0.25, 1, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease !important;
+    will-change: flex, transform !important; /* Aceleración por GPU */
+  }
+  .gs-amenity:hover {
+    flex: 2.2 !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.20) !important;
+    border-color: rgba(196, 22, 22, 0.25) !important;
+  }
+  .gs-amenity__img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    z-index: 0 !important;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.2, 1) !important;
+  }
+  .gs-amenity:hover .gs-amenity__img {
+    transform: scale(1.05) !important;
+  }
+}
+
+/* 📱 MODO MÓVIL: Apilado vertical estético */
+@media (max-width: 767px) {
+  .gs-amenities__track {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+  .gs-amenity {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    background: #000000 !important;
+  }
+  .gs-amenity__img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    z-index: 0 !important;
+  }
+}
+
+/* Comportamiento común de insignias y elementos de las diapositivas */
+.gs-amenity__badge {
+  position: absolute !important;
+  top: 20px !important;
+  left: 20px !important;
+  z-index: 2 !important;
+  transform: none !important;
+}
+.gs-amenity__badge span {
+  background: rgba(196, 22, 22, 0.9) !important;
+  border: 1px solid rgba(196, 22, 22, 0.2) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  color: #ffffff !important;
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 15px rgba(196, 22, 22, 0.35) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  display: inline-block !important;
+}
+
+/* Ocultar flechas del slider viejo, ya no son necesarias */
+.gs-amenities__arrow {
+  display: none !important;
+}
+
+/* Visor 360 y Miniaturas */
+.gs-pano {
+  border-radius: 24px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12) !important;
+}
+.gs-thumbs {
+  padding: 12px 4px !important;
+}
+.gs-thumb {
+  border-radius: 12px !important;
+  border: 2px solid transparent !important;
+  transition: all 0.25s ease !important;
+  overflow: hidden !important;
+}
+.gs-thumb.is-active {
+  border-color: #C41616 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(196, 22, 22, 0.2) !important;
+}
+
+/* Plano de Lotes */
+.gs-plan-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+.gs-plan {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05) !important;
+  padding: 24px !important;
+}
+.gs-plan__img {
+  border-radius: 16px !important;
+}
+
+/* Responsivo general */
+@media (max-width: 768px) {
+  .gs-proy__info-card {
+    padding: 24px 16px !important;
+    margin-bottom: 32px !important;
+  }
+  .gs-proy__actions {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .gs-btn {
+    width: 100% !important;
+    padding: 12px 20px !important;
+  }
+  .gs-section-title {
+    font-size: 1.4rem !important;
+  }
+  .gs-section-subtitle {
+    font-size: 0.9rem !important;
+  }
+  .gs-amenities {
+    padding: 32px 12px !important;
+  }
+}
+
+/* =========================================================
+   🎯 REFINAMIENTOS DE LA TIRA DE MINIATURAS (360 THUMBS)
+========================================================= */
+
+.gs-thumbs {
+  display: flex !important;
+  justify-content: center !important; /* Centrado absoluto de las imágenes */
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 24px auto 0 !important;
+  padding: 8px 16px !important;
+  width: 100% !important;
+  max-width: 600px !important; /* Límite para que no se extienda de más */
+  overflow: visible !important; /* Elimina cortes extraños */
+  -webkit-mask-image: none !important; /* Elimina la máscara opaca de degradado */
+  mask-image: none !important;
+}
+
+.gs-thumb {
+  flex: 0 0 auto !important;
+  width: 120px !important; /* Aumentamos el ancho */
+  height: 80px !important; /* Aumentamos el alto para mejor visibilidad */
+  border-radius: 14px !important;
+  border: 2px solid rgba(0, 0, 0, 0.15) !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.2, 1) !important;
+  opacity: 0.75 !important; /* Opacidad sutil por defecto para las inactivas */
+  filter: grayscale(20%) !important;
+}
+
+.gs-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Hover: Iluminación y aumento de tamaño */
+.gs-thumb:hover {
+  opacity: 1 !important;
+  filter: grayscale(0%) !important;
+  transform: translateY(-4px) scale(1.05) !important;
+  border-color: rgba(196, 22, 22, 0.4) !important;
+  box-shadow: 0 8px 20px rgba(196, 22, 22, 0.15) !important;
+}
+
+/* Miniatura Activa - Resaltado rojo corporativo con sombra */
+.gs-thumb.is-active {
+  opacity: 1 !important;
+  filter: grayscale(0%) !important;
+  border-color: #C41616 !important;
+  box-shadow: 0 8px 25px rgba(196, 22, 22, 0.35) !important;
+  transform: translateY(-4px) scale(1.05) !important;
+}
+
+@media (max-width: 480px) {
+  .gs-thumbs {
+    gap: 12px !important;
+    padding: 8px !important;
+  }
+  .gs-thumb {
+    width: 90px !important;
+    height: 60px !important;
+  }
+}
+
+/* =========================================================
+   ⚡ SKELETON LOADER ANIMADO (Placeholder para Visor 360)
+========================================================= */
+
+.gs-pano__skeleton {
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 37%,
+    rgba(255, 255, 255, 0.03) 63%
+  ) !important;
+  background-size: 400% 100% !important;
+  animation: gs-skeleton-pulse 1.4s ease infinite !important;
+}
+
+@keyframes gs-skeleton-pulse {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* =========================================================
+   🏢 GALERÍA DE MODELOS DE VIVIENDA (ESTILO COLLAGE)
+========================================================= */
+
+.gs-models-gallery {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto 40px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+}
+
+/* La rejilla principal */
+.gs-gallery-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Contenedor de la columna (para el bloque de 2x2) */
+.gs-gallery-column {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  flex: 1 !important; /* 25% de ancho cada una */
+}
+
+/* El elemento individual de la galería */
+.gs-gallery-item {
+  position: relative !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  border: 2px solid #ffffff !important; /* Borde blanco inicial de 2px a petición del cliente */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+  aspect-ratio: 3 / 2 !important;
+}
+
+/* El elemento principal (grande en la izquierda) */
+.gs-gallery-item--main {
+  flex: 2 !important; /* 50% de ancho */
+  aspect-ratio: auto !important; /* Altura flex acoplada al contenido */
+}
+
+/* Las imágenes dentro de cada celda */
+.gs-gallery-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.4s ease !important;
+}
+
+/* Hover: Escala la imagen e intensifica el borde a Rojo de Sierra con brillo */
+.gs-gallery-item:hover {
+  border-color: #D43C3C !important; /* Rojo de Sierra para darle vida */
+  box-shadow: 0 12px 28px rgba(212, 60, 60, 0.25) !important; /* Brillo rojo corporativo */
+  transform: translateY(-3px) scale(1.01) !important;
+}
+
+.gs-gallery-item:hover .gs-gallery-img {
+  transform: scale(1.05) !important; /* Zoom suave de la imagen */
+}
+
+/* Badges flotantes elegantes */
+.gs-gallery-badge {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  background: rgba(17, 17, 17, 0.8) !important;
+  color: #ffffff !important;
+  padding: 6px 14px !important;
+  border-radius: 99px !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 2 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+}
+
+/* Celda con overlay (ver más fotos) */
+.gs-gallery-item--more {
+  position: relative !important;
+}
+
+.gs-gallery-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 3 !important;
+  transition: background 0.3s ease !important;
+}
+
+.gs-gallery-item--more:hover .gs-gallery-overlay {
+  background: rgba(212, 60, 60, 0.4) !important; /* Rojo de sierra suave en hover */
+}
+
+.gs-gallery-overlay-text {
+  color: #ffffff !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* Responsividad para móviles y tablets */
+@media (max-width: 900px) {
+  .gs-gallery-grid {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .gs-gallery-item--main {
+    aspect-ratio: 16 / 10 !important;
+  }
+  .gs-gallery-column {
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .gs-gallery-item {
+    flex: 1 !important;
+    aspect-ratio: 3 / 2 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gs-gallery-column {
+    flex-direction: column !important;
+  }
+}
+
+/* =========================================================
+   💡 LIGHTBOX DE VISUALIZACIÓN PREMIUM (TODAS LAS FOTOS)
+========================================================= */
+
+.gs-lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(10, 5, 5, 0.95) !important; /* Vino-negro muy oscuro */
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.35s ease !important;
+}
+
+.gs-lightbox.is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.gs-lightbox__close {
+  position: absolute !important;
+  top: 24px !important;
+  right: 24px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-size: 28px !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s ease !important;
+  z-index: 10001 !important;
+}
+
+.gs-lightbox__close:hover {
+  background: #D43C3C !important;
+  border-color: #D43C3C !important;
+  transform: rotate(90deg) !important;
+}
+
+.gs-lightbox__container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 92% !important;
+  max-width: 1200px !important;
+  position: relative !important;
+}
+
+.gs-lightbox__content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.gs-lightbox__img-wrapper {
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 3px solid #ffffff !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #000 !important;
+}
+
+.gs-lightbox__img {
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  display: block !important;
+  transition: opacity 0.25s ease !important;
+}
+
+.gs-lightbox__arrow {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  font-size: 32px !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s ease !important;
+  user-select: none !important;
+}
+
+.gs-lightbox__arrow:hover {
+  background: #D43C3C !important;
+  border-color: #D43C3C !important;
+  transform: scale(1.08) !important;
+}
+
+.gs-lightbox__meta {
+  margin-top: 20px !important;
+  color: #ffffff !important;
+  text-align: center !important;
+}
+
+.gs-lightbox__title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+transform: translateY(-3px) scale(1.01) !important;
+}
+
+.gs-gallery-item:hover .gs-gallery-img {
+  transform: scale(1.05) !important; /* Zoom suave de la imagen */
+}
+
+/* Badges flotantes elegantes */
+.gs-gallery-badge {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  background: rgba(17, 17, 17, 0.8) !important;
+  color: #ffffff !important;
+  padding: 6px 14px !important;
+  border-radius: 99px !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 2 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+}
+
+/* Celda con overlay (ver más fotos) */
+.gs-gallery-item--more {
+  position: relative !important;
+}
+
+.gs-gallery-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 3 !important;
+  transition: background 0.3s ease !important;
+}
+
+.gs-gallery-item--more:hover .gs-gallery-overlay {
+  background: rgba(212, 60, 60, 0.4) !important; /* Rojo de sierra suave en hover */
+}
+
+.gs-gallery-overlay-text {
+  color: #ffffff !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* Responsividad para móviles y tablets */
+@media (max-width: 900px) {
+  .gs-gallery-grid {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .gs-gallery-item--main {
+    aspect-ratio: 16 / 10 !important;
+  }
+  .gs-gallery-column {
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .gs-gallery-item {
+    flex: 1 !important;
+    aspect-ratio: 3 / 2 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gs-gallery-column {
+    flex-direction: column !important;
+  }
+}
+
+/* =========================================================
+   💡 LIGHTBOX DE VISUALIZACIÓN PREMIUM (TODAS LAS FOTOS)
+========================================================= */
+
+.gs-lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(10, 5, 5, 0.95) !important; /* Vino-negro muy oscuro */
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.35s ease !important;
+}
+
+.gs-lightbox.is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.gs-lightbox__close {
+  position: absolute !important;
+  top: 24px !important;
+  right: 24px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-size: 28px !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s ease !important;
+  z-index: 10001 !important;
+}
+
+.gs-lightbox__close:hover {
+  background: #D43C3C !important;
+  border-color: #D43C3C !important;
+  transform: rotate(90deg) !important;
+}
+
+.gs-lightbox__container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 92% !important;
+  max-width: 1200px !important;
+  position: relative !important;
+}
+
+.gs-lightbox__content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.gs-lightbox__img-wrapper {
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 3px solid #ffffff !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #000 !important;
+}
+
+.gs-lightbox__img {
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  display: block !important;
+  transition: opacity 0.25s ease !important;
+}
+
+.gs-lightbox__arrow {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  font-size: 32px !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s ease !important;
+  user-select: none !important;
+}
+
+.gs-lightbox__arrow:hover {
+  background: #D43C3C !important;
+  border-color: #D43C3C !important;
+  transform: scale(1.08) !important;
+}
+
+.gs-lightbox__meta {
+  margin-top: 20px !important;
+  color: #ffffff !important;
+  text-align: center !important;
+}
+
+.gs-lightbox__title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 6px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.gs-lightbox__counter {
+  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* =========================================================
+   🎨 AJUSTE UNIFORME DE BORDES EN EL ACORDEÓN DE PROYECTOS
+========================================================= */
+
+.gs-proy__item {
+  border: none !important; /* Elimina cualquier borde físico que sangre */
+  outline: none !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important; /* Solo la sombra base */
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Hover: Simula borde Rojo Sierra de 2px con resplandor */
+.gs-proy__item:hover,
+.gs-strip__list:hover .gs-proy__item:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px #D43C3C, 0 12px 28px rgba(212, 60, 60, 0.25) !important;
+}
+
+/* Activo: Simula borde Rojo Sierra de 2px con resplandor más intenso */
+.gs-proy__item.is-active,
+.gs-proy__item.is-active:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px #D43C3C, 0 12px 28px rgba(212, 60, 60, 0.35) !important;
+}

@@ -1,0 +1,118 @@
+=== assets\css\1responsive.css ===
+=== assets\css\2fondoPrincipal.css ===
+=== assets\css\home.css ===
+47:   border:1px solid var(--stroke);
+48:   border-radius:14px;
+72:   border-radius:999px;
+73:   border: 1px solid rgba(255, 255, 255, 0.15);
+81:   border-color: rgba(255, 59, 48, 0.6);
+106:   border: 1px solid rgba(255, 255, 255, 0.08);
+107:   border-radius: 16px;
+117:   border-color: rgba(255, 59, 48, 0.3);
+123:   border-color: rgba(255, 59, 48, 0.6) !important;
+128:   width:64px;height:64px;border-radius:10px;object-fit:cover;background:#101a38;
+133:   font-size:11px;padding:3px 8px;border-radius:999px;
+134:   border:1px solid var(--stroke);background:rgba(255,255,255,.04)
+136: .gs-chip--ok{border-color:rgba(58,190,109,.28)}
+137: .gs-chip--warn{border-color:rgba(252,165,3,.30)}
+142:   border: 1px solid rgba(255, 255, 255, 0.1);
+143:   border-radius: 20px;
+158:   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+187:   padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);
+191: .gs-btn--gold{background:var(--gold);color:#1b1505;border-color:#d27f03}
+197:   border-radius: 16px;
+202:   border: 1px solid rgba(255, 255, 255, 0.08);
+203:   transition: border-color 0.3s ease;
+206:   border-color: rgba(255, 59, 48, 0.2);
+226:   box-sizing: border-box;
+246:   border-radius: 12px;
+247:   border: 1px solid rgba(255, 255, 255, 0.12);
+263:   border-color: rgba(255, 59, 48, 0.4);
+266:   border-color: #ff3b30 !important;
+272:   position:absolute;left:6px;top:6px;font-size:11px;padding:2px 6px;border-radius:999px;
+281:   border-radius: 999px;
+285:   border-radius: 999px;
+286:   border: 2px solid rgba(0,0,0,.15);
+293: .gs-thumbs::-webkit-scrollbar-track{ background: rgba(0,0,0,.25); border-radius:999px; }
+296:   border-radius: 999px;
+297:   border: 2px solid rgba(0,0,0,.15);
+325:   position:relative;margin-top:10px;border:1px solid var(--stroke);
+326:   border-radius:12px;overflow:hidden;background:rgba(13,23,54,.55);
+331:   position:absolute;right:8px;top:8px;border:0;background:rgba(0,0,0,.5);
+332:   color:#fff;width:32px;height:32px;border-radius:999px;cursor:pointer
+420:   border-color: var(--stroke) !important;
+438:   border-color: var(--stroke) !important;
+446:   border-color: rgba(255,255,255,.22) !important;
+449: .gs-chip--ok{ border-color: rgba(58,190,109,.55) !important; }
+450: .gs-chip--warn{ border-color: rgba(252,165,3,.55) !important; }
+459:   border-color: rgba(255,255,255,.25) !important;
+468:   border-color: #d27f03 !important;
+505:   border: 2px solid rgba(0,0,0,.25) !important;
+556:   border: 1px solid rgba(0, 0, 0, 0.15) !important;
+580:   border: 1px solid rgba(0, 0, 0, 0.25) !important;
+591:   border-color: rgba(0, 0, 0, 0.15) !important;
+607:   border: 1px solid #A01111 !important;
+635:   border: 2px solid #C41616 !important;     /* 🔴 borde ROJO, no dorado */
+636:   border-top-color: #C41616 !important;
+637:   border-right-color: #C41616 !important;
+638:   border-bottom-color: #C41616 !important;
+639:   border-left-color: #C41616 !important;
+650:   border-radius: 999px !important;
+659:   border-color: #C41616 !important;
+668:   border-color: #A81212 !important;
+747:   border-radius: 999px;
+748:   border: 1px solid rgba(0,0,0,0.15);
+790:   border-radius: 16px;       /* Bordes más redondeados y modernos */
+791:   border: 1px solid rgba(0,0,0,0.08);
+799:   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+804:   border-color: rgba(212, 60, 60, 0.3);
+807:   border-color: #D43C3C !important;
+815:   border-radius: 0;
+844:   border-radius: 999px;
+867:   border-radius: 16px;
+868:   border: 1px solid rgba(0,0,0,0.12);
+902:   border-radius: 18px;
+904:   border: 1px solid rgba(0,0,0,0.15);
+924:   border-radius: 14px;
+934:   border-radius: 14px;
+946:   border-radius: 16px;
+996:     border-radius: 14px;
+1054:   border-radius: 26px;
+1080:   border-radius: inherit;
+1096:   border-radius: 22px;
+1111:   border-radius: 999px;
+1112:   border: 0;
+=== assets\css\style.css ===
+=== includes\1menu.css ===
+32: .gs-header, .gs-nav, .gs-nav__list{ box-sizing:border-box; }
+47:   border: 1px solid rgba(212, 60, 60, 0.28); /* Borde con el rojo de la empresa */
+48:   border-radius: 999px;
+54:   border-color: rgba(212, 60, 60, 0.40) !important;
+94:   border-radius: 10px;
+130:   border-radius: 999px;
+131:   border: 1px solid rgba(212, 60, 60, 0.25);
+244:     border-bottom: 1px solid var(--header-stroke);
+287:   border-radius: 22px;
+289:   border: 1px solid rgba(255,255,255,0.25);
+300:   border-radius: 14px;
+441:     border-radius: 14px !important;
+495:     border-radius: 24px;
+496:     border: 1px solid rgba(212, 60, 60, 0.25);
+555:     border-radius: 999px;
+601:     border-radius: 14px !important;
+637:   border-radius: 999px !important;
+=== includes\2pie.css ===
+39:   border-top: 1px solid var(--foot-stroke);
+84:   border: 1px solid var(--foot-stroke);
+85:   border-radius: var(--radius);
+137:   width:44px; height:44px; border-radius:50%;
+177:   border-bottom: 1px dotted transparent;
+178:   transition: color .2s ease, border-color .2s ease;
+183:   border-color: var(--gold);
+189:   border-radius: calc(var(--radius) - 6px);
+191:   border:1px solid var(--foot-stroke);
+201:   border:0;
+207:   border-top:1px solid var(--foot-stroke);
+212:   border-bottom:1px solid rgba(255,255,255,.25);
+213:   transition:color .2s, border-color .2s;
+215: .gs-footer__bottom a:hover{ color:var(--gold); border-color:var(--gold); }

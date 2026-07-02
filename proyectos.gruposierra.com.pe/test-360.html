@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<div id="pano" style="width:100%;height:60vh;border-radius:12px;overflow:hidden;background:#000"></div>
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+<script>
+  pannellum.viewer('pano', {
+    type: 'equirectangular',
+    panorama: 'https://i.ibb.co/5hFrh5VY/6almacen360.png', // ✅ URL directa
+    autoLoad: true,
+    autoRotate: 0,        // sin rotación automática
+    showZoomCtrl: true,
+    showFullscreenCtrl: true, // permite pantalla completa
+    keyboardZoom: true,       // habilita zoom con teclado
+    mouseZoom: true,          // zoom con scroll
+    touchZoom: true,          // zoom táctil
+    hotSpotDebug: false,
+    hfov: 100,                // campo de visión inicial
+    minHfov: 40,              // zoom máximo
+    maxHfov: 120,             // zoom mínimo
+    pitch: 0, yaw: 0,
+    orientationOnByDefault: false, // desactiva giroscopio inicial
+    compass: true,            // brújula
+    previewTitle: "Vista 360° - Almacén",
+    previewAuthor: "Grupo Sierra"
+  });
+</script>

@@ -1,0 +1,839 @@
+/* ========================================================= 
+   🎛️ Header Reutilizable — Grupo Sierra
+========================================================= */
+html, body{
+  scroll-behavior: auto;
+}
+@media (prefers-reduced-motion: reduce){
+  html, body{ scroll-behavior: auto; }
+}
+
+/* ========= Variables generales */
+:root{
+  --brand: #414141;        /* Neutro cálido / gris carbón */
+
+  --text:  #111111;        /* Negro */
+  --bg:    #181313;        /* Vino-negro */
+
+  --header-bg: #FFFFFF;    /* Blanco */
+  --header-stroke: rgba(0,0,0,0.10); /* Trazo oscuro suave */
+
+  --header-height: 70px;
+  --header-z: 1000;
+  --header-offset: calc(var(--header-height) + 8px);
+}
+
+/* ========= Estructura base */
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 14px;
+}
+.gs-header, .gs-nav, .gs-nav__list{ box-sizing:border-box; }
+.gs-nav__list{ list-style:none; margin:0; padding:0; }
+
+/* ========= Header flotante */
+.gs-header{
+  position:fixed;
+  top:16px; left:50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  z-index:var(--header-z);
+  height:var(--header-height);
+  background: #ffffff;                      /* Sólido blanco original */
+  border: none;                             /* Sin bordes duros para evitar el efecto línea */
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(212, 60, 60, 0.08); /* Sombra flotante premium con brillo rojo tenue */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gs-header--scrolled{
+  background: #ffffff !important;           /* Sólido blanco original */
+  border: none !important;
+  box-shadow: 0 15px 35px rgba(212, 60, 60, 0.12) !important;
+}
+.gs-header__wrap{
+  height:var(--header-height);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+/* ========= Logo (grande) */
+.gs-logo{ display:flex; align-items:center; }
+.gs-logo__img{
+  height:58px;
+  width:auto;
+  display:block;
+  object-fit:contain;
+  filter: none !important;                  /* Conserva los colores originales exactos (S roja y texto negro) */
+}
+
+/* ========= Navegación (desktop) */
+.gs-nav{ display:block; }
+.gs-nav__list{ display:flex; gap:12px; }
+
+/* ===== Enlaces ===== */
+.gs-nav__link{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+
+  color: var(--text);
+  text-decoration:none;
+  font-family: 'Inter', system-ui, Arial;
+  font-weight: 400;
+  font-size: .95rem;
+  line-height: 1.1;
+
+  padding: 4px 6px;
+  border-radius: 10px;
+
+  transition: color .2s ease, transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.gs-nav__icon{
+  font-size: .95rem;
+  opacity:.9;
+  color: var(--text);
+}
+
+.gs-nav__link:hover{
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+.gs-nav__link:hover::after{ transform: scaleX(1); }
+
+/* ===== Activo: solo línea roja, sin pill ===== */
+.gs-nav__link.is-active{
+  color: var(--text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.gs-nav__link.is-active::after{ transform: scaleX(1) !important; }
+.gs-nav__link.is-active:hover{ color: var(--text) !important; }
+.gs-nav__link:active{ transform: translateY(0); }
+
+/* =========================================================
+   Hamburguesa → X con texto dinámico (Menú ⇄ Cerrar)
+========================================================= */
+.gs-burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: auto;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 60, 60, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  color: #111111;
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===== Texto ===== */
+.gs-burger__text {
+  position: relative;
+  display: inline-block;
+  width: 60px;            /* 💡 ancho fijo para evitar movimiento */
+  height: 1em;            /* asegura espacio vertical */
+  overflow: hidden;
+  text-align: center;
+  line-height: 1em;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Animación interna (Menú ⇄ Cerrar) */
+.gs-burger__text::before,
+.gs-burger__text::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.gs-burger__text::before {
+  content: "Menú";
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.gs-burger__text::after {
+  content: "Cerrar";
+  transform: translateY(130%);
+  opacity: 0;
+}
+
+/* El SVG no recorta los extremos redondeados del trazo */
+.gs-burger__icon{
+  width: 24px;
+  height: 24px;
+  display: block;
+  overflow: visible;              /* ⬅️ evita clipping */
+}
+
+.gs-burger__icon .line{
+  stroke: #111111;
+  stroke-width: 2.6;              /* un pelín más grueso para legibilidad */
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform .3s ease, opacity .3s ease, stroke .25s ease;
+}
+
+/* Estado ABIERTO: la X roja (con traslación acorde al nuevo grid) */
+html.gs-nav-open .gs-burger__icon .line { stroke:#ff0000; }
+html.gs-nav-open .gs-burger__icon .line.top { transform: translateY(6px) rotate(45deg); }
+html.gs-nav-open .gs-burger__icon .line.mid { opacity: 0; }
+html.gs-nav-open .gs-burger__icon .line.bot { transform: translateY(-6px) rotate(-45deg); }
+
+/* toque de presencia a la X */
+html.gs-nav-open .gs-burger__icon { transform: translateZ(0); }
+html.gs-nav-open .gs-burger__icon .line.top,
+html.gs-nav-open .gs-burger__icon .line.bot { will-change: transform; }
+
+/* Cerrar */
+/* Animación: cambia el texto al abrir el menú */
+/* Animación: cambia el texto al abrir el menú */
+html.gs-nav-open .gs-burger__text::before{transform:translateY(-130%);opacity:0;}
+html.gs-nav-open .gs-burger__text::after{transform:translateY(0);opacity:1;color:#ff0000;}
+
+/* ===== Ajuste móvil ===== */
+@media (max-width: 900px) {
+  .gs-burger {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  .gs-burger__text {
+    width: 54px; /* se ajusta levemente */
+  }
+}
+
+/* =========================================================
+   📱 Responsive — móvil / tablet
+========================================================= */
+
+@media (max-width: 900px) and (max-width: 1180px){
+  :root{ --header-height: 60px; }
+  :root{ --header-offset: calc(var(--header-height) + 8px); }
+
+  .gs-logo__img{ height:52px; }
+  .gs-burger{ display:flex; }
+
+  .gs-nav{
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0;
+    height: 0;
+    overflow: hidden;
+    background: rgba(24,19,19,0.94);
+    background: color-mix(in oklab, var(--bg) 88%, #000 12%);
+    border-bottom: 0px solid transparent;
+    transition: height .25s ease, border-color .25s ease;
+  }
+  html.gs-nav-open .gs-nav{
+    height: calc(100dvh - var(--header-height));
+    border-bottom: 1px solid var(--header-stroke);
+  }
+
+  /* 👇 SIN padding aquí, solo layout base */
+  .gs-nav__list{
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .gs-nav__link{
+    font-size: 1.05rem;
+    font-weight: 400;
+    padding: 6px 8px;
+  }
+  .gs-nav__icon{ font-size: 1.05rem; }
+  .gs-nav__link:hover,
+  .gs-nav__link.is-active{
+    color: var(--text);
+  }
+}
+
+
+/* ========= Offset global si tu contenido va debajo del header fijo */
+.gs-offset{ padding-top: var(--header-offset); }
+
+/* =========================================================
+   Barra lateral vertical — glass gris claro
+========================================================= */
+.gs-social-rail {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;                              /* ⬅️ OCULTA por defecto */
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 10px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.22);         /* glass casi transparente */
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 1200;
+}
+
+/* ==== Botones individuales ==== */
+.gs-rail__btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(206, 199, 199, 0.55);
+  text-decoration: none;
+  transition: transform .2s ease, background .25s ease, box-shadow .25s ease;
+}
+.gs-rail__btn:hover {
+  transform: translateY(-2px);
+  background: rgba(245, 239, 239, 0.7);
+}
+.gs-rail__btn i {
+  font-size: 22px;
+  transition: transform .25s ease, color .25s ease;
+}
+.gs-rail__btn:hover i {
+  transform: scale(1.1);
+}
+
+/* ==== Íconos con colores oficiales exactos ==== */
+.gs-rail__btn--tiktok i {
+  color: #000000;
+  background: linear-gradient(90deg, #69C9D0 0%, #EE1D52 100%);
+  background-clip: text;          /* ✅ versión estándar */
+  -webkit-background-clip: text;  /* ✅ prefijo para Safari/iOS */
+  -webkit-text-fill-color: transparent;
+}
+
+.gs-rail__btn--youtube i   { color: #FF0000; }
+.gs-rail__btn--whatsapp i  { color: #0baa45; }
+.gs-rail__btn--phone i     { color: #000000; }
+
+/* ==== Responsive: visible solo en tablet/móvil ==== */
+@media (max-width: 900px) {
+  .gs-social-rail {
+    display: flex;                           /* ⬅️ MOSTRAR en ≤900px */
+    right: 10px;
+    padding: 10px 8px;
+    gap: 10px;
+    background: rgba(255,255,255,0.3);
+  }
+  .gs-rail__btn {
+    width: 42px;
+    height: 42px;
+  }
+  .gs-rail__btn i {
+    font-size: 20px;
+  }
+}
+
+/* ===== PARCHE — Header compacto y offsets coherentes (solo DESKTOP) ===== */
+@media (min-width: 901px){
+  :root{
+    --header-height: 80px !important;
+    --header-offset: calc(var(--header-height) + 8px) !important;
+  }
+
+  .gs-header,
+  .gs-header__wrap{
+    height: var(--header-height) !important;
+  }
+
+  .gs-logo__img{
+    height: calc(var(--header-height) - 6px) !important;
+    width: auto;
+  }
+}
+
+
+/* Menú más junto (forzado) */
+.gs-nav__list{ gap: 10px !important; }
+.gs-nav__link{
+  padding: 3px 6px !important;
+  gap: 5px !important;
+  font-size: .95rem !important;
+  line-height: 1.1 !important;
+}
+
+
+:root{
+  /* ya lo tienes, lo reutilizamos */
+  --header-offset: calc(var(--header-height) + 8px);
+  /* 👇 padding global para TODAS las anclas */
+  scroll-padding-top: var(--header-offset);
+}
+
+/* inicio necesita un extra por la sombra/hero */
+#inicio{
+  scroll-margin-top: calc(var(--header-offset) + 15px) !important;
+}
+
+/* los demás usan el offset estándar */
+#proyectos,
+#servicios,
+#quienes{
+  scroll-margin-top: var(--header-offset) !important;
+}
+/* Anclas con offset correcto */
+#inicio {
+  scroll-margin-top: calc(var(--header-offset) + 15px) !important;
+}
+
+#proyectos,
+#servicios,
+#quienes {
+  scroll-margin-top: var(--header-offset) !important;
+}
+
+
+.gs-hero{ margin-top: 0 !important; }
+
+@media (max-width: 900px){
+  :root{
+    --header-height: 58px !important;
+    --header-offset: calc(var(--header-height) + 8px) !important;
+  }
+  .gs-logo__img{ height: calc(var(--header-height) - 4px) !important; }
+}
+
+/* Desktop: separación final */
+@media (min-width: 901px){
+  .gs-nav__list{ gap: 12px !important; }
+}
+
+/* =========================================================
+   Margen lateral en header (espaciado visual)
+========================================================= */
+.gs-header__wrap {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+@media (max-width: 900px){
+  .gs-header__wrap {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+
+/* ===== Resalte en ROJO + sin botón en activo ===== */
+.gs-nav__link::after{
+  background: linear-gradient(
+    90deg,
+    rgba(255,0,0,0) 0%,
+    rgba(255,0,0,1) 20%,
+    rgba(255,0,0,1) 80%,
+    rgba(255,0,0,0) 100%
+  ) !important;
+}
+.gs-nav__link:hover{ color: #ff0000 !important; }
+.gs-nav__link.is-active{
+  color: var(--text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.gs-nav__link.is-active::after{ transform: scaleX(1) !important; }
+.gs-nav__link.is-active:hover{ color: var(--text) !important; }
+
+/* ===== Fondo blanco en menú hamburguesa ===== */
+@media (max-width: 900px){
+  .gs-nav{
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0;
+    height: 0;
+    overflow: hidden;
+    background: #FFFFFF !important;             /* fondo blanco */
+    color: #111111 !important;                  /* texto negro */
+    border-bottom: 1px solid var(--header-stroke);
+    transition: height .25s ease;
+  }
+
+  html.gs-nav-open .gs-nav{
+    height: calc(100dvh - var(--header-height));
+  }
+
+  /* Colores del texto dentro del menú */
+  .gs-nav__link,
+  .gs-nav__icon {
+    color: #111111 !important;                  /* texto negro */
+  }
+
+  .gs-nav__link:hover{
+    color: #ff0000 !important;                  /* hover rojo */
+  }
+
+  .gs-nav__link::after{
+    background: linear-gradient(
+      90deg,
+      rgba(255,0,0,0) 0%,
+      rgba(255,0,0,1) 20%,
+      rgba(255,0,0,1) 80%,
+      rgba(255,0,0,0) 100%
+    ) !important;
+  }
+}
+
+/* 3) En desktop (≥901px), forzamos navegación normal y sin hamburguesa */
+@media (min-width: 901px){
+  .gs-burger{ display: none !important; }  /* por si acaso */
+  /* la nav de escritorio se queda tal cual (horizontal) */
+}
+
+/* Quitar completamente el subrayado */
+.gs-nav__link::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* Hover/focus: botón de cristal rojo muy tenue */
+.gs-nav__link{
+  border-radius: 999px !important;
+  transition: all 0.25s ease !important;
+  color: #2b2b2b !important;                /* Texto oscuro legible sobre el cristal claro */
+}
+.gs-nav__link:hover,
+.gs-nav__link:focus-visible{
+  background: rgba(212, 60, 60, 0.06) !important;
+  color: #D43C3C !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Activo/seleccionado: botón de cristal rojo corporativo */
+.gs-nav__link.is-active{
+  background: #D43C3C !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(212, 60, 60, 0.30) !important;
+  font-weight: 700 !important;
+}
+.gs-nav__link.is-active:hover{
+  background: #ff3b30 !important;
+}
+
+/* Móvil/Tablet: mismo comportamiento usando rojo corporativo */
+@media (max-width: 900px){
+  .gs-nav__link::after{ content:none !important; display:none !important; }
+
+  .gs-nav__link:hover,
+  .gs-nav__link:focus-visible{
+    background: rgba(212, 60, 60, 0.06) !important;
+    color: #D43C3C !important;
+    box-shadow: none !important;
+  }
+
+  .gs-nav__link.is-active{
+    background: #D43C3C !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(212, 60, 60, 0.3) !important;
+  }
+
+  .gs-nav__link:hover{ color:#D43C3C !important; }
+}
+
+/* Fallback inmediato: si JS aún no fijó el alto, usa 80px */
+:root{
+  --header-height: 80px;
+  --header-offset: calc(var(--header-height) + 8px);
+  /* Esto hace que los anclajes nativos respeten el offset desde el inicio */
+  scroll-padding-top: var(--header-offset);
+}
+
+/* Cubre cualquier sección con id como ancla (por si algún navegador ignora scroll-padding-top en algunos casos) */
+[id] { scroll-margin-top: var(--header-offset); }
+
+/* Si #inicio requiere un extra por la sombra/hero: */
+#inicio { scroll-margin-top: calc(var(--header-offset) + 15px); }
+
+/* =========================================================
+   📲 Tablet horizontal — ajustes completos
+========================================================= */
+@media (min-width: 901px) and (max-width: 1180px){
+
+  /* Quitar bordes laterales gigantes */
+  .gs-header__wrap{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  /* Menú más compacto */
+  #gs-main-nav .gs-nav__link{
+    font-size: 0.80rem !important;       /* texto reducido */
+    padding: 4px 6px !important;         /* menos espacio interno */
+    letter-spacing: 0.02em !important;
+  }
+
+  /* Controlar separación entre los items */
+  #gs-main-nav .gs-nav__list{
+    gap: 14px !important;
+  }
+}
+
+/* =========================================================
+   📲 Tablets grandes / pantallas tipo Tab S9, iPad Pro
+========================================================= */
+@media (min-width: 1181px) and (max-width: 1439px){
+
+  /* Quitar bordes laterales exagerados */
+  .gs-header__wrap{
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+
+  /* Menú un poco más compacto que desktop full */
+  #gs-main-nav .gs-nav__link{
+    font-size: 0.90rem !important;      /* más chico que 1.02rem */
+    padding: 4px 8px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  #gs-main-nav .gs-nav__list{
+    gap: 16px !important;
+  }
+}
+
+
+/* =========================================================
+   📱 Logo responsive para iPhone / móviles pequeños
+========================================================= */
+
+/* Móviles en general (≤ 900px) */
+@media (max-width: 900px){
+  .gs-logo__img{
+    /* Dejamos que el alto se adapte a la imagen */
+    height: auto !important;
+    /* Limitamos el alto para que no robe mucho header */
+    max-height: 42px !important;
+    /* Evita que el logo sea más ancho que la pantalla */
+    max-width: 60vw !important;
+    width: auto !important;
+    object-fit: contain;
+  }
+}
+
+/* iPhone y móviles muy estrechos (≤ 430px aprox.) */
+@media (max-width: 430px){
+  :root{
+    /* Header un poco más compacto en iPhone pequeños */
+    --header-height: 56px !important;
+    --header-offset: calc(var(--header-height) + 8px) !important;
+  }
+
+  .gs-header,
+  .gs-header__wrap{
+    height: var(--header-height) !important;
+  }
+
+  .gs-logo__img{
+    max-height: 36px !important;
+    max-width: 65vw !important;
+  }
+}
+
+/* =========================================================
+   ✨ Tipografía mejorada para el menú principal
+   (pegar al FINAL del CSS)
+========================================================= */
+#gs-main-nav .gs-nav__link{
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 600 !important;          /* ⬅️ PESO NORMAL */
+  font-size: 1.02rem !important;
+  letter-spacing: 0.03em !important;
+  padding: 6px 10px !important;
+  line-height: 1.3 !important;
+}
+
+@media (max-width: 900px){
+  #gs-main-nav .gs-nav__link{
+    font-size: 1.18rem !important;
+    font-weight: 600 !important;        /* ⬅️ igual en móvil */
+    letter-spacing: 0.04em !important;
+  }
+}
+
+
+/* =========================================================
+   🎯 OFFSET GLOBAL FIJO (HEADER + CONTENIDO)
+   - No depende de si el menú está abierto o cerrado
+========================================================= */
+
+/* Desktop / base */
+:root{
+  --header-height: 80px;
+  --header-offset: calc(var(--header-height) + 16px);
+  scroll-padding-top: var(--header-offset);
+}
+
+/* Contenido general debajo del header fijo */
+.gs-offset{
+  padding-top: var(--header-offset) !important;
+}
+
+/* Todas las secciones con id respetan el mismo offset */
+[id]{
+  scroll-margin-top: var(--header-offset) !important;
+}
+
+
+/* =========================================================
+   📱 MÓVIL (≤ 900px) — HEADER + MENÚ HAMBURGUESA
+========================================================= */
+@media (max-width: 900px){
+
+  /* Altura fija y posicionamiento del header móvil flotante */
+  :root{
+    --header-height: 58px;
+    --header-offset: calc(var(--header-height) + 20px);
+    scroll-padding-top: var(--header-offset);
+  }
+
+  .gs-header{
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    transform: none;
+    height: var(--header-height) !important;
+    border-radius: 999px;
+  }
+
+  .gs-header__wrap{
+    height: var(--header-height) !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .gs-logo__img{
+    max-height: 38px !important;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Burguer visible en móvil */
+  .gs-burger{
+    display:flex !important;
+  }
+
+  /* NAV flotante desplegable tipo tarjeta en móvil */
+  .gs-nav{
+    position: absolute;
+    top: calc(100% + 8px) !important;
+    left: 8px;
+    right: 8px;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #111111 !important;
+    border-radius: 24px;
+    border: none;                             /* Sin borde cuando está cerrado para evitar la línea horizontal */
+    box-shadow: none;                         /* Sin sombra cuando está cerrado */
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, border 0.3s ease;
+    z-index: 999;
+    padding: 0 !important;
+  }
+
+  html.gs-nav-open .gs-nav{
+    max-height: 450px !important;
+    padding: 16px 0 !important;
+    border: 1px solid rgba(212, 60, 60, 0.25); /* Borde visible solo al abrir el menú */
+    box-shadow: 0 12px 36px rgba(212, 60, 60, 0.08);
+  }
+
+  /* Lista del menú: mismo padding abierto/cerrado (no se toca con gs-nav-open) */
+  #gs-main-nav .gs-nav__list{
+    list-style: none;
+    margin: 0 !important;
+    padding: 32px 0 60px !important;  /* 👈 espacio fijo entre línea gris e "Inicio" */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  #gs-main-nav .gs-nav__link{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border-radius: 14px;
+    color: #111111;
+    background: transparent;
+    border: none;
+  }
+
+  #gs-main-nav .gs-nav__icon{
+    font-size: 1.25rem;
+    margin-right: 8px;
+    color: #111111;
+  }
+
+  #gs-main-nav .gs-nav__link:hover,
+  #gs-main-nav .gs-nav__link:focus-visible{
+    background: rgba(0,0,0,0.06);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  }
+
+  #gs-main-nav .gs-nav__link.is-active{
+    background: rgba(0,0,0,0.10);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+  }
+
+  /* Contenido bajo header en móvil: igual abierto/cerrado */
+  .gs-offset{
+    padding-top: var(--header-offset) !important;
+  }
+
+  [id]{
+    scroll-margin-top: var(--header-offset) !important;
+  }
+}
+
+/* =========================================================
+   📲 Tablet horizontal — texto del menú más pequeño
+========================================================= */
+@media (min-width: 901px) and (max-width: 1180px){
+
+  .gs-header__wrap{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  #gs-main-nav .gs-nav__link{
+    font-size: 0.90rem !important;      /* ⬅️ más pequeño */
+    padding: 4px 6px !important;        /* menos ancho */
+    letter-spacing: 0.02em !important;
+    font-weight: 600 !important;        /* mantienes el peso */
+  }
+
+  #gs-main-nav .gs-nav__list{
+    gap: 10px !important;               /* items más juntos */
+  }
+}

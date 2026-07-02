@@ -1,0 +1,62 @@
+/* =========================================================
+   🏦 Fondo Blanco Total — sin márgenes ni bordes
+   - Cubre toda la pantalla
+   - Sin sombras, sin gradientes
+   - Ideal para diseño tipo "banco" limpio y minimalista
+========================================================= */
+
+:root {
+  --white: #ffffff;
+  --text: #000000; /* texto negro sobre fondo blanco */
+}
+
+/* =============================
+   ⚙️ Base general
+============================= */
+html {
+  background-color: #FFFFFF; /* Fondo original blanco limpio */
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;      /* Permite crecer con el contenido */
+  width: 100%;
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+}
+
+/* =============================
+   🏦 Fondo principal blanco (aplicado a body)
+============================= */
+body.fondo-principal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+  color: var(--text);
+  overflow-x: hidden;       /* Evita scroll horizontal */
+}
+
+/* El cuerpo principal (main) se expande para empujar el footer hacia abajo */
+body.fondo-principal .gs-main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* =========================================================
+   Unified Typography Rule: Inter Font Family
+========================================================= */
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, a, span, div, li, ul, ol, section, article, main, header, footer, figure, figcaption {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+}
+
+/* Explicitly preserve FontAwesome icon glyphs */
+i, .fa, .fas, .far, .gs-list--check li::before, #visorPlano::after, #visorPlano img::after {
+  font-family: "Font Awesome 5 Free", var(--fa-font-family, "Font Awesome 5 Free") !important;
+}
+.fab {
+  font-family: "Font Awesome 5 Brands", var(--fa-font-family, "Font Awesome 5 Brands") !important;
+}

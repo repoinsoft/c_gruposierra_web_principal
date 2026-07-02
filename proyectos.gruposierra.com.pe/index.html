@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GrupoSierra.com.pe</title>
+  <meta name="description" content="Grupo Sierra Inmobiliario: proyectos, terrenos y viviendas con respaldo profesional. Confía en nosotros para tu próxima inversión inmobiliaria." />
+  <link rel="icon" type="image/x-icon" href="/img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="/img/iconos/logito.png" />
+  
+  <!-- Precarga de fuentes e imagen del logo para evitar retrasos y CLS -->
+  <link rel="preload" href="/img/logos/grupoSierra1.png" as="image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- 1) Sistema responsive -->
+  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.5" />
+  <!-- 2) Fondo Principal-->
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.5" />
+  <!-- 3) CSS de  grupoSierra -->
+  <link rel="stylesheet" href="/assets/css/home.css?v=3.5">
+  <script src="/assets/js/home.js?v=3.5" defer></script>
+
+  <!-- 4) Menú y Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="/includes/1menu.css?v=3.5" />
+
+</head>
+
+<!-- Aplicamos el fondo moderno reutilizable -->
+<body class="fondo-principal">
+  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
+  <!-- Header Reutilizable Estático y Unificado -->
+  <header class="gs-header" role="banner">
+    <div class="container gs-header__wrap">
+      
+      <!-- Izquierda: Controles de navegación y Título -->
+      <div class="gs-header__left">
+        <div class="gs-header__nav-arrows">
+          <a href="https://gruposierra.com.pe/" class="gs-header__arrow gs-header__arrow--home" aria-label="Ir a la página principal">
+            <i class="fas fa-home"></i>
+          </a>
+          <button type="button" class="gs-header__arrow" id="proy-prev" aria-label="Proyecto anterior">‹</button>
+          <button type="button" class="gs-header__arrow" id="proy-next" aria-label="Proyecto siguiente">›</button>
+        </div>
+        <h2 class="gs-header__title">Proyectos</h2>
+      </div>
+
+      <!-- Centro: Logo -->
+      <a class="gs-logo" href="https://gruposierra.com.pe/" aria-label="Ir al inicio de la página principal">
+        <img src="/img/logos/grupoSierra1.png" alt="Grupo Sierra" class="gs-logo__img">
+      </a>
+
+      <!-- Derecha: Buscador con icono de lupa + Navegación -->
+      <div class="gs-header__right">
+        <div class="gs-header__search">
+          <i class="fas fa-search gs-header__search-icon"></i>
+          <input id="proy-search" type="search" placeholder="Buscar proyecto…" aria-label="Buscar proyecto">
+        </div>
+        
+        <!-- Botón hamburguesa (móvil) -->
+        <button class="gs-burger" id="burger-btn" aria-label="Abrir menú" aria-controls="gs-main-nav" aria-expanded="false">
+          <span class="gs-burger__text"></span>
+          <svg class="gs-burger__icon" viewBox="0 0 32 32" width="24" height="24" aria-hidden="true">
+            <line class="line top" x1="6" y1="10" x2="26" y2="10" />
+            <line class="line mid" x1="6" y1="16" x2="26" y2="16" />
+            <line class="line bot" x1="6" y1="22" x2="26" y2="22" />
+          </svg>
+        </button>
+
+        <!-- Navegación principal -->
+        <nav id="gs-main-nav" class="gs-nav" aria-label="Navegación principal">
+          <ul class="gs-nav__list">
+            <li><a class="gs-nav__link" href="https://gruposierra.com.pe/"><i class="fas fa-home gs-nav__icon"></i><span>Inicio</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+  </header>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
+  <main id="inicio" class="gs-main">
+    <!-- Imagen HERO del proyecto con Overlay de información y Badge (Puesto al inicio para ocupar toda la cabecera) -->
+    <figure class="gs-hero">
+      <img id="proy-hero"
+          src="https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75"
+          alt="Imagen del proyecto seleccionado"
+          class="gs-hero__img">
+      
+      <!-- Degradado inferior con título y ubicación -->
+      <figcaption class="gs-hero__overlay">
+        <div class="gs-hero__container">
+          <!-- Badge de estado dinámico -->
+          <span id="proy-estado" class="gs-hero__badge">Cargando...</span>
+          <h3 id="proy-nombre" class="gs-hero__nombre">Selecciona un proyecto</h3>
+          <p id="proy-direccion" class="gs-hero__dir"></p>
+        </div>
+      </figcaption>
+    </figure>
+
+    <!-- =============== PROYECTOS (CARRUSEL) + HERO + VISOR 360 =============== -->
+    <section id="gs-proyectos360" class="gs-proy">
+      <div class="gs-proy__layout">
+        
+        <!-- Fila superior (ahora abajo del hero): carrusel horizontal de selección de proyectos -->
+        <div class="gs-proy__top">
+          <div class="gs-strip">
+            <ul id="proy-list" class="gs-strip__list" role="list" aria-live="polite">
+              <!-- JS llena los <li> como tarjetas horizontales -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bloque principal: info + plano + visor 360 -->
+        <div class="gs-proy__viewer">
+
+          <!-- Tarjeta de información del proyecto -->
+          <div class="gs-proy__info-card">
+            <h4 class="gs-proy__info-title">Sobre el Proyecto</h4>
+            <!-- Descripción del proyecto -->
+            <p id="proy-descripcion" class="gs-proy__desc"></p>
+
+            <!-- Fila de llamados a la acción (CTAs) -->
+            <div class="gs-proy__actions">
+              <a id="btn-whatsapp" href="#" target="_blank" class="gs-btn gs-btn--wa">
+                <i class="fab fa-whatsapp"></i> Cotizar por WhatsApp
+              </a>
+              <button type="button" id="btn-scroll-360" class="gs-btn gs-btn--secondary">
+                <i class="fas fa-vr-cardboard"></i> Recorrido 360°
+              </button>
+              <button type="button" id="btn-scroll-plano" class="gs-btn gs-btn--secondary">
+                <i class="fas fa-map"></i> Ver Plano
+              </button>
+            </div>
+          </div>
+
+          <!-- Encabezado de Sección: Modelos de Vivienda -->
+          <header class="gs-section-header">
+            <h3 class="gs-section-title">Modelos de Vivienda Disponibles</h3>
+            <p class="gs-section-subtitle">Conoce los diseños y distribuciones arquitectónicas para tu próximo hogar</p>
+          </header>
+
+          <!-- AMENIDADES / GALERÍA COLLAGE PREMIUM -->
+          <section class="gs-models-gallery">
+            <div class="gs-gallery-grid">
+              <!-- Imagen Principal (Izquierda, 50% de ancho) -->
+              <div class="gs-gallery-item gs-gallery-item--main" data-index="7">
+                <img src="/img/extras/prueba8.jpg" alt="Vista General del Condominio" class="gs-gallery-img">
+                <div class="gs-gallery-badge">Vista General</div>
+              </div>
+
+              <!-- Columna Derecha 1 (25% de ancho) -->
+              <div class="gs-gallery-column">
+                <div class="gs-gallery-item" data-index="0">
+                  <img src="/img/extras/prueba1.png" alt="Proyecto Modelo A" class="gs-gallery-img">
+                  <div class="gs-gallery-badge">Modelo A</div>
+                </div>
+                <div class="gs-gallery-item" data-index="1">
+                  <img src="/img/extras/prueba2.png" alt="Proyecto Modelo B" class="gs-gallery-img">
+                  <div class="gs-gallery-badge">Modelo B</div>
+                </div>
+              </div>
+
+              <!-- Columna Derecha 2 (25% de ancho) -->
+              <div class="gs-gallery-column">
+                <div class="gs-gallery-item" data-index="2">
+                  <img src="/img/extras/prueba3.jpg" alt="Proyecto Modelo C" class="gs-gallery-img">
+                  <div class="gs-gallery-badge">Modelo C</div>
+                </div>
+                <!-- Cuarta celda con overlay de Ver todas las fotos -->
+                <div class="gs-gallery-item gs-gallery-item--more" data-index="3">
+                  <img src="/img/extras/prueba7.jpg" alt="Proyecto Modelo D" class="gs-gallery-img">
+                  <div class="gs-gallery-overlay">
+                    <span class="gs-gallery-overlay-text">Ver todas las fotos ›</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Encabezado de Sección: Visor 360 -->
+          <header class="gs-section-header gs-section-header--pano">
+            <h3 class="gs-section-title">Recorrido Virtual 360°</h3>
+            <p class="gs-section-subtitle">Explora el proyecto de forma interactiva desde cualquier ángulo</p>
+          </header>
+
+          <!-- Visor 360 -->
+          <div id="visor360" class="gs-pano"></div>
+
+          <!-- Miniaturas 360 -->
+          <div id="thumb-strip" class="gs-thumbs" role="list"></div>
+
+          <!-- Plano del proyecto -->
+          <section id="seccion-plano" class="gs-plan-section" style="display: none;">
+            <header class="gs-section-header">
+              <h3 class="gs-section-title">Plano de Distribución de Lotes</h3>
+              <p class="gs-section-subtitle">Visualiza la ubicación y dimensiones de cada lote disponible</p>
+            </header>
+            <figure class="gs-plan">
+              <img id="proy-plan" src="" alt="Plano del proyecto" class="gs-plan__img">
+            </figure>
+          </section>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+  <!-- ------------------------------------------------------------------------------------- -->
+
+  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
+  <!-- carga el header -->
+  <script src="/includes/1menu.js?v=3.5"></script>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  <!-- Loader del footer -->
+  <script src="/includes/2pie.js?v=3.5"></script>
+  <!-- -------------------------------------------------------------------------------------- -->
+
+  <!-- LÓGICA LIGHTBOX PREMIUM DE MODELOS DE VIVIENDA -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const images = [
+        { src: '/img/extras/prueba1.png', title: 'Condominio Modelo A' },
+        { src: '/img/extras/prueba2.png', title: 'Condominio Modelo B' },
+        { src: '/img/extras/prueba3.jpg', title: 'Condominio Modelo C' },
+        { src: '/img/extras/prueba4.jpg', title: 'Condominio Modelo D' },
+        { src: '/img/extras/prueba5.jpg', title: 'Detalle Diseño Modelo E' },
+        { src: '/img/extras/prueba6.jpg', title: 'Distribución Modelo F' },
+        { src: '/img/extras/prueba7.jpg', title: 'Fachada Modelo G' },
+        { src: '/img/extras/prueba8.jpg', title: 'Vista General Condominio' }
+      ];
+
+      let currentIndex = 0;
+
+      // Crear elementos del Lightbox
+      const lightboxEl = document.createElement("div");
+      lightboxEl.className = "gs-lightbox";
+      lightboxEl.innerHTML = `
+        <button class="gs-lightbox__close" aria-label="Cerrar">&times;</button>
+        <div class="gs-lightbox__container">
+          <button class="gs-lightbox__arrow gs-lightbox__arrow--prev" type="button">&lsaquo;</button>
+          <div class="gs-lightbox__content">
+            <div class="gs-lightbox__img-wrapper">
+              <img src="" alt="" class="gs-lightbox__img">
+            </div>
+            <div class="gs-lightbox__meta">
+              <h4 class="gs-lightbox__title"></h4>
+              <span class="gs-lightbox__counter"></span>
+            </div>
+          </div>
+          <button class="gs-lightbox__arrow gs-lightbox__arrow--next" type="button">&rsaquo;</button>
+        </div>
+      `;
+      document.body.appendChild(lightboxEl);
+
+      const img = lightboxEl.querySelector(".gs-lightbox__img");
+      const title = lightboxEl.querySelector(".gs-lightbox__title");
+      const counter = lightboxEl.querySelector(".gs-lightbox__counter");
+
+      function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        lightboxEl.classList.add("is-open");
+        document.body.style.overflow = "hidden"; // Deshabilita scroll de fondo
+      }
+
+      function closeLightbox() {
+        lightboxEl.classList.remove("is-open");
+        document.body.style.overflow = "";
+      }
+
+      function updateLightbox() {
+        const current = images[currentIndex];
+        img.style.opacity = 0.3;
+        img.src = current.src;
+        img.alt = current.title;
+        title.textContent = current.title;
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        img.onload = () => {
+          img.style.opacity = 1;
+        };
+      }
+
+      function showNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightbox();
+      }
+
+      function showPrev() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightbox();
+      }
+
+      // Conectar con los clicks en la galería HTML
+      document.querySelectorAll(".gs-gallery-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const index = parseInt(item.getAttribute("data-index"), 10);
+          openLightbox(index);
+        });
+      });
+
+      // Event Listeners
+      lightboxEl.querySelector(".gs-lightbox__close").addEventListener("click", closeLightbox);
+      lightboxEl.querySelector(".gs-lightbox__arrow--next").addEventListener("click", showNext);
+      lightboxEl.querySelector(".gs-lightbox__arrow--prev").addEventListener("click", showPrev);
+
+      // Cierre al hacer click fuera
+      lightboxEl.addEventListener("click", (e) => {
+        if (e.target === lightboxEl || e.target.classList.contains("gs-lightbox__container")) {
+          closeLightbox();
+        }
+      });
+
+      // Navegación con teclado
+      document.addEventListener("keydown", (e) => {
+        if (!lightboxEl.classList.contains("is-open")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") showNext();
+        if (e.key === "ArrowLeft") showPrev();
+      });
+    });
+  </script>
+
+</body>
+</html>

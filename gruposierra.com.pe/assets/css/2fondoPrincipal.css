@@ -1,0 +1,67 @@
+/* =========================================================
+   🧱 Fondo principal blanco de tope a tope
+========================================================= */
+
+html {
+  background-color: #FFFFFF; /* Fondo original blanco limpio */
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;   /* Fondo blanco total del cuerpo */
+  color: #111111;        /* Texto negro */
+  width: 100%;
+  min-height: 100%;      /* Permite crecer con el contenido */
+}
+
+/* 🔹 Redefinición completa de fondo-principal (aplicado a body) */
+body.fondo-principal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;      /* Blanco puro */
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow-x: hidden;       /* Evita scroll horizontal */
+}
+
+/* El cuerpo principal (main) se expande para empujar el footer hacia abajo */
+body.fondo-principal .gs-main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* 🔹 Si dentro colocas una imagen (como en tu ejemplo) */
+.fondo-principal img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;        /* Cubre toda el área */
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🔹 Contenido interno (si hay texto o secciones) - Simplificado para evitar romper contenedores */
+.fondo-principal main {
+  max-width: 100%;
+  color: #111111;
+}
+
+/* =========================================================
+   Unified Typography Rule: Inter Font Family
+========================================================= */
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, a, span, div, li, ul, ol, section, article, main, header, footer, figure, figcaption {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+}
+
+/* Explicitly preserve FontAwesome icon glyphs */
+i, .fa, .fas, .far, .gs-list--check li::before, #visorPlano::after, #visorPlano img::after {
+  font-family: "Font Awesome 5 Free", var(--fa-font-family, "Font Awesome 5 Free") !important;
+}
+.fab {
+  font-family: "Font Awesome 5 Brands", var(--fa-font-family, "Font Awesome 5 Brands") !important;
+}
