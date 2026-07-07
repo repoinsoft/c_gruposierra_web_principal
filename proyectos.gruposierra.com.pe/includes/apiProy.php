@@ -159,6 +159,61 @@ if ($action === 'viewer') {
   exit;
 }
 
+/* ------------------------------------------------------------------ */
+/* 3) ENVIAR FORMULARIO DE CONTACTO A LA API CENTRAL                  */
+/* ------------------------------------------------------------------ */
+if ($action === 'submit_contact') {
+  $nombre   = trim($_POST['nombre'] ?? '');
+  $email    = trim($_POST['email'] ?? '');
+  $telefono = trim($_POST['telefono'] ?? '');
+  $proyecto = trim($_POST['proyecto'] ?? '');
+  $tema     = trim($_POST['tema'] ?? '');
+  $mensaje  = trim($_POST['mensaje'] ?? '');
+
+  if ($nombre === '' || $telefono === '' || $proyecto === '' || $mensaje === '') {
+    http_response_code(400);
+    echo json_encode(['ok' => false, 'error' => 'FIELDS_REQUIRED']);
+    exit;
+  }
+
+  // Llamada HTTP cURL segura a la API central en PHP
+  $apiSecret = 'sierra_insoft_key_access'; 
+  $apiUrl = 'https://api.insoft.com.pe/sierra/b_sierra_consultas_web.php?action=create';
+
+  $postData = json_encode([
+    'nombre'   => $nombre,
+    'email'    => $email,
+    'telefono' => $telefono,
+    'proyecto' => $proyecto,
+    'tema'     => $tema,
+    'mensaje'  => $mensaje
+  ]);
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $apiUrl);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+    'X-API-SECRET: ' . $apiSecret
+  ]);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+  $res = curl_exec($ch);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+
+  if ($httpCode !== 200) {
+    http_response_code($httpCode ?: 500);
+    echo json_encode(['ok' => false, 'error' => 'API_ERROR', 'detail' => $res]);
+    exit;
+  }
+
+  echo $res;
+  exit;
+}
+
 /* Acción desconocida */
 http_response_code(400);
 echo json_encode(['ok'=>false,'error'=>'BAD_ACTION','detail'=>'Acción no soportada'], JSON_UNESCAPED_UNICODE);

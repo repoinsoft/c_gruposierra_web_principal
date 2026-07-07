@@ -269,6 +269,14 @@
       escenas360 = img360;
 
       nombreEl.textContent=proyecto.nombre||"Proyecto";
+
+      // Sincronizar con el desplegable del formulario de contacto
+      const pSelect = document.getElementById("contact-project");
+      if (pSelect && proyecto.nombre) {
+        pSelect.value = proyecto.nombre;
+        // Forzar disparador de cambio para que la etiqueta flotante se mueva (si aplica)
+        pSelect.dispatchEvent(new Event("change"));
+      }
       
       // 📍 Añadir pin de mapa a la dirección
       if (dirEl) {
@@ -304,7 +312,7 @@
       // 🔹 Actualizar enlace de WhatsApp
       if (btnWa) {
         const rawMsg = `Hola Grupo Sierra, estoy interesado en obtener más información sobre el proyecto: ${proyecto.nombre || 'el proyecto'}. ¿Me podrían brindar detalles de los lotes disponibles?`;
-        btnWa.href = `https://wa.me/51974441357?text=${encodeURIComponent(rawMsg)}`;
+        btnWa.href = `https://wa.me/51972535066?text=${encodeURIComponent(rawMsg)}`;
       }
 
       // 🔹 Actualizar imagen HERO
@@ -432,6 +440,18 @@
 
       renderLista(proyectos);
 
+      // Rellenar dinámicamente el select de proyectos en el formulario de contacto
+      const projectSelect = document.getElementById("contact-project");
+      if (projectSelect) {
+        projectSelect.innerHTML = '<option value="" disabled selected hidden></option>';
+        proyectos.forEach(p => {
+          const opt = document.createElement("option");
+          opt.value = p.nombre;
+          opt.textContent = p.nombre;
+          projectSelect.appendChild(opt);
+        });
+      }
+
       if(proyectos.length){
         const bySlug = wantSlug && proyectos.find(x=>x.slug===wantSlug);
         const initialId = bySlug
@@ -453,6 +473,65 @@
       console.error(e);
     }
   })();
+
+  // ===== Control de Envío de Formulario a WhatsApp =====
+  const contactForm = document.getElementById("gs-contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+      }
+
+      const nameVal = document.getElementById("contact-name").value.trim();
+      const emailVal = document.getElementById("contact-email").value.trim();
+      const phoneVal = document.getElementById("contact-phone").value.trim();
+      const projectSelect = document.getElementById("contact-project");
+      const projectVal = projectSelect ? projectSelect.value : "";
+      const subjectVal = document.getElementById("contact-subject").value;
+      const messageVal = document.getElementById("contact-message").value.trim();
+
+      // Enviar datos en segundo plano a la API local proxy
+      const formData = new FormData();
+      formData.append("action", "submit_contact");
+      formData.append("nombre", nameVal);
+      formData.append("email", emailVal);
+      formData.append("telefono", phoneVal);
+      formData.append("proyecto", projectVal);
+      formData.append("tema", subjectVal);
+      formData.append("mensaje", messageVal);
+
+      fetch("/includes/apiProy.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Consulta registrada en BD & Notificación Push enviada:", data);
+      })
+      .catch(err => {
+        console.error("Error al guardar consulta en segundo plano:", err);
+      });
+
+      const waMessage = `*Nueva consulta desde la web — Grupo Sierra*
+
+*Nombre:* ${nameVal}
+*Correo electrónico:* ${emailVal}
+*Teléfono:* ${phoneVal}
+*Proyecto de interés:* ${projectVal}
+*Tema de consulta:* ${subjectVal}
+
+*Mensaje:*
+${messageVal}`;
+
+      const waNumber = "51972535066";
+      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+
+      window.open(waUrl, "_blank");
+    });
+  }
 })();
 
 

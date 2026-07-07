@@ -16,16 +16,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <!-- 1) Sistema responsive -->
-  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.5" />
+  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.6" />
   <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.5" />
+  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.6" />
   <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="/assets/css/home.css?v=3.5">
-  <script src="/assets/js/home.js?v=3.5" defer></script>
+  <link rel="stylesheet" href="/assets/css/home.css?v=3.6">
+  <script src="/assets/js/home.js?v=3.6" defer></script>
 
   <!-- 4) Menú y Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="/includes/1menu.css?v=3.5" />
+  <link rel="stylesheet" href="/includes/1menu.css?v=3.6" />
 
 </head>
 
@@ -194,6 +194,64 @@
           <!-- Miniaturas 360 -->
           <div id="thumb-strip" class="gs-thumbs" role="list"></div>
 
+          <!-- SECCIÓN DE CONTACTO ESTILO SERHANT (TEMA SIERRA) -->
+          <section class="gs-contact-section">
+            <div class="gs-contact-container">
+              <!-- Lado Izquierdo: Diseño de Marca -->
+              <div class="gs-contact-brand">
+                <div class="gs-contact-brand-content">
+                  <h3 class="gs-contact-brand-title">Ponte en<br>contacto</h3>
+                  <p class="gs-contact-brand-subtitle">Estamos aquí para ayudarte a elegir tu próximo lote. Envíanos un mensaje directo a nuestro WhatsApp oficial.</p>
+                  <div class="gs-contact-brand-wa-info">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+51 972 535 066</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lado Derecho: Formulario -->
+              <div class="gs-contact-form-wrapper">
+                <form id="gs-contact-form" class="gs-contact-form" novalidate>
+                  <div class="gs-form-group">
+                    <input type="text" id="contact-name" name="name" required placeholder=" ">
+                    <label for="contact-name">Nombre *</label>
+                  </div>
+                  <div class="gs-form-group">
+                    <input type="email" id="contact-email" name="email" required placeholder=" ">
+                    <label for="contact-email">Correo electrónico *</label>
+                  </div>
+                  <div class="gs-form-group">
+                    <input type="tel" id="contact-phone" name="phone" required placeholder=" ">
+                    <label for="contact-phone">Teléfono *</label>
+                  </div>
+                  <div class="gs-form-group">
+                    <select id="contact-project" name="project" required>
+                      <option value="" disabled selected hidden></option>
+                    </select>
+                    <label for="contact-project" class="select-label">Seleccione un proyecto *</label>
+                  </div>
+                  <div class="gs-form-group">
+                    <select id="contact-subject" name="subject" required>
+                      <option value="" disabled selected hidden></option>
+                      <option value="Solicitar catálogo de lotes">Solicitar catálogo de lotes</option>
+                      <option value="Agendar una visita al proyecto">Agendar una visita al proyecto</option>
+                      <option value="Consulta sobre financiamiento">Consulta sobre financiamiento</option>
+                      <option value="Otro tema">Otro tema</option>
+                    </select>
+                    <label for="contact-subject" class="select-label">Seleccione un tema *</label>
+                  </div>
+                  <div class="gs-form-group">
+                    <textarea id="contact-message" name="message" required placeholder=" " rows="4"></textarea>
+                    <label for="contact-message">Tu mensaje *</label>
+                  </div>
+                  <button type="submit" class="gs-contact-submit">
+                    <i class="fab fa-whatsapp"></i> Enviar consulta al WhatsApp
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+
           <!-- Plano del proyecto -->
           <section id="seccion-plano" class="gs-plan-section" style="display: none;">
             <header class="gs-section-header">
@@ -215,11 +273,11 @@
 
   <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
   <!-- carga el header -->
-  <script src="/includes/1menu.js?v=3.5"></script>
+  <script src="/includes/1menu.js?v=3.6"></script>
   <!-- Footer -->
   <div id="footer-placeholder"></div>
   <!-- Loader del footer -->
-  <script src="/includes/2pie.js?v=3.5"></script>
+  <script src="/includes/2pie.js?v=3.6"></script>
   <!-- -------------------------------------------------------------------------------------- -->
 
   <!-- LÓGICA LIGHTBOX PREMIUM DE MODELOS DE VIVIENDA -->
