@@ -411,10 +411,12 @@ html.gs-nav-open .gs-burger__text::after{transform:translateY(0);opacity:1;color
 }
 
 /* ==== Íconos con colores oficiales exactos ==== */
+.gs-rail__btn--facebook i  { color: #1877F2; }
 .gs-rail__btn--tiktok i {
   color: #000000;
   background: linear-gradient(90deg, #69C9D0 0%, #EE1D52 100%);
-  -webkit-background-clip: text;
+  background-clip: text;          /* ✅ versión estándar */
+  -webkit-background-clip: text;  /* ✅ prefijo para Safari/iOS */
   -webkit-text-fill-color: transparent;
 }
 .gs-rail__btn--youtube i   { color: #FF0000; }
@@ -425,17 +427,21 @@ html.gs-nav-open .gs-burger__text::after{transform:translateY(0);opacity:1;color
 @media (max-width: 900px) {
   .gs-social-rail {
     display: flex;                           /* ⬅️ MOSTRAR en ≤900px */
-    right: 10px;
-    padding: 10px 8px;
-    gap: 10px;
-    background: rgba(255,255,255,0.3);
+    right: 8px;
+    padding: 8px 6px;
+    gap: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.45);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
   .gs-rail__btn {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
   }
   .gs-rail__btn i {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 

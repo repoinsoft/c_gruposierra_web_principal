@@ -3,29 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GrupoSierra.com.pe</title>
-  <meta name="description" content="Grupo Sierra Inmobiliario: proyectos, terrenos y viviendas con respaldo profesional. Confía en nosotros para tu próxima inversión inmobiliaria." />
-  <link rel="icon" type="image/x-icon" href="/img/iconos/logito.png" />
-  <link rel="apple-touch-icon" href="/img/iconos/logito.png" />
+  <title>Proyectos y Recorridos 360° — Grupo Sierra Inmobiliaria</title>
+  <meta name="description" content="Explora los proyectos inmobiliarios, planos de lotización y recorridos virtuales 360° interactivos de Grupo Sierra." />
+
+  <!-- Open Graph / Redes Sociales (WhatsApp, Facebook, Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://proyectos.gruposierra.com.pe/" />
+  <meta property="og:title" content="Proyectos y Recorridos 360° — Grupo Sierra" />
+  <meta property="og:description" content="Visualiza planos, recorridos virtuales 360° y cotiza tu lote ideal en Grupo Sierra." />
+  <meta property="og:image" content="https://api.insoft.com.pe/sierra/web/inicio/slider1.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Proyectos y Recorridos 360° — Grupo Sierra" />
+  <meta name="twitter:description" content="Recorridos virtuales 360°, lotes y viviendas en Huaraz y Ancash." />
+  <meta name="twitter:image" content="https://api.insoft.com.pe/sierra/web/inicio/slider1.webp" />
+
+  <link rel="icon" type="image/x-icon" href="./img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="./img/iconos/logito.png" />
+
+  <!-- Schema.org JSON-LD (SEO Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Proyectos — Grupo Sierra",
+    "url": "https://proyectos.gruposierra.com.pe/",
+    "logo": "https://gruposierra.com.pe/img/logos/grupoSierra1.png",
+    "telephone": "+51972535066",
+    "email": "ventas@gruposierra.com.pe",
+    "sameAs": [
+      "https://www.facebook.com/share/18QKd1gdgz/?mibextid=wwXIfr",
+      "https://www.tiktok.com/@gruposierra?_r=1&_t=ZS-99Bopa58j0H",
+      "https://wa.me/message/F6WZUYRKRVOQF1"
+    ],
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Jr. Lima N° 248",
+        "addressLocality": "Juliaca",
+        "addressRegion": "Puno",
+        "addressCountry": "PE"
+      },
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Jr. Cajamarca N° 345",
+        "addressLocality": "Puno",
+        "addressRegion": "Puno",
+        "addressCountry": "PE"
+      }
+    ],
+    "areaServed": ["Puno", "Juliaca", "Huaraz", "Ancash", "Peru"]
+  }
+  </script>
   
   <!-- Precarga de fuentes e imagen del logo para evitar retrasos y CLS -->
-  <link rel="preload" href="/img/logos/grupoSierra1.png" as="image" />
+  <link rel="preload" href="./img/logos/grupoSierra1.png" as="image" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <!-- 1) Sistema responsive -->
-  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.6" />
+  <link rel="stylesheet" href="./assets/css/1responsive.css?v=5.0" />
   <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.6" />
+  <link rel="stylesheet" href="./assets/css/2fondoPrincipal.css?v=5.0" />
   <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="/assets/css/home.css?v=3.6">
-  <script src="/assets/js/home.js?v=3.6" defer></script>
+  <link rel="stylesheet" href="./assets/css/home.css?v=5.0">
+  <script src="./assets/js/home.js?v=5.0" defer></script>
 
   <!-- 4) Menú y Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="/includes/1menu.css?v=3.6" />
+  <link rel="stylesheet" href="./includes/1menu.css?v=5.0" />
 
 </head>
 
@@ -50,7 +97,7 @@
 
       <!-- Centro: Logo -->
       <a class="gs-logo" href="https://gruposierra.com.pe/" aria-label="Ir al inicio de la página principal">
-        <img src="/img/logos/grupoSierra1.png" alt="Grupo Sierra" class="gs-logo__img">
+        <img src="./img/logos/grupoSierra1.png" alt="Grupo Sierra" class="gs-logo__img">
       </a>
 
       <!-- Derecha: Buscador con icono de lupa + Navegación -->
@@ -149,18 +196,18 @@
             <div class="gs-gallery-grid">
               <!-- Imagen Principal (Izquierda, 50% de ancho) -->
               <div class="gs-gallery-item gs-gallery-item--main" data-index="7">
-                <img src="/img/extras/prueba8.jpg" alt="Vista General del Condominio" class="gs-gallery-img">
+                <img src="./img/extras/prueba8.jpg" alt="Vista General del Condominio" class="gs-gallery-img">
                 <div class="gs-gallery-badge">Vista General</div>
               </div>
 
               <!-- Columna Derecha 1 (25% de ancho) -->
               <div class="gs-gallery-column">
                 <div class="gs-gallery-item" data-index="0">
-                  <img src="/img/extras/prueba1.png" alt="Proyecto Modelo A" class="gs-gallery-img">
+                  <img src="./img/extras/prueba1.png" alt="Proyecto Modelo A" class="gs-gallery-img">
                   <div class="gs-gallery-badge">Modelo A</div>
                 </div>
                 <div class="gs-gallery-item" data-index="1">
-                  <img src="/img/extras/prueba2.png" alt="Proyecto Modelo B" class="gs-gallery-img">
+                  <img src="./img/extras/prueba2.png" alt="Proyecto Modelo B" class="gs-gallery-img">
                   <div class="gs-gallery-badge">Modelo B</div>
                 </div>
               </div>
@@ -168,12 +215,12 @@
               <!-- Columna Derecha 2 (25% de ancho) -->
               <div class="gs-gallery-column">
                 <div class="gs-gallery-item" data-index="2">
-                  <img src="/img/extras/prueba3.jpg" alt="Proyecto Modelo C" class="gs-gallery-img">
+                  <img src="./img/extras/prueba3.jpg" alt="Proyecto Modelo C" class="gs-gallery-img">
                   <div class="gs-gallery-badge">Modelo C</div>
                 </div>
                 <!-- Cuarta celda con overlay de Ver todas las fotos -->
                 <div class="gs-gallery-item gs-gallery-item--more" data-index="3">
-                  <img src="/img/extras/prueba7.jpg" alt="Proyecto Modelo D" class="gs-gallery-img">
+                  <img src="./img/extras/prueba7.jpg" alt="Proyecto Modelo D" class="gs-gallery-img">
                   <div class="gs-gallery-overlay">
                     <span class="gs-gallery-overlay-text">Ver todas las fotos ›</span>
                   </div>
@@ -212,6 +259,10 @@
               <!-- Lado Derecho: Formulario -->
               <div class="gs-contact-form-wrapper">
                 <form id="gs-contact-form" class="gs-contact-form" novalidate>
+                  <!-- Campo Honeypot Anti-Spam (invisible para humanos, trampa para bots) -->
+                  <div style="display:none !important;" aria-hidden="true">
+                    <input type="text" name="website_hp" id="website_hp" tabindex="-1" autocomplete="off" />
+                  </div>
                   <div class="gs-form-group">
                     <input type="text" id="contact-name" name="name" required placeholder=" ">
                     <label for="contact-name">Nombre *</label>
@@ -271,27 +322,61 @@
   </main>
   <!-- ------------------------------------------------------------------------------------- -->
 
+  <!-- ===== Barra lateral derecha (redes y contacto directo) ===== -->
+  <aside class="gs-social-rail" aria-label="Redes y contacto">
+    <!-- Facebook -->
+    <a class="gs-rail__btn gs-rail__btn--facebook"
+       href="https://www.facebook.com/share/18QKd1gdgz/?mibextid=wwXIfr"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Facebook">
+      <i class="fab fa-facebook-f" aria-hidden="true"></i>
+    </a>
+
+    <!-- TikTok -->
+    <a class="gs-rail__btn gs-rail__btn--tiktok"
+       href="https://www.tiktok.com/@gruposierra?_r=1&_t=ZS-99Bopa58j0H"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="TikTok">
+      <i class="fab fa-tiktok" aria-hidden="true"></i>
+    </a>
+
+    <!-- WhatsApp -->
+    <a class="gs-rail__btn gs-rail__btn--whatsapp"
+       href="https://wa.me/message/F6WZUYRKRVOQF1"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="WhatsApp">
+      <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Llamar -->
+    <a class="gs-rail__btn gs-rail__btn--phone"
+       href="tel:972535066"
+       aria-label="Llamar por teléfono">
+      <i class="fas fa-phone" aria-hidden="true"></i>
+    </a>
+  </aside>
+
   <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
   <!-- carga el header -->
-  <script src="/includes/1menu.js?v=3.6"></script>
+  <script src="./includes/1menu.js?v=5.0"></script>
   <!-- Footer -->
   <div id="footer-placeholder"></div>
   <!-- Loader del footer -->
-  <script src="/includes/2pie.js?v=3.6"></script>
+  <script src="./includes/2pie.js?v=5.0"></script>
   <!-- -------------------------------------------------------------------------------------- -->
 
   <!-- LÓGICA LIGHTBOX PREMIUM DE MODELOS DE VIVIENDA -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const images = [
-        { src: '/img/extras/prueba1.png', title: 'Condominio Modelo A' },
-        { src: '/img/extras/prueba2.png', title: 'Condominio Modelo B' },
-        { src: '/img/extras/prueba3.jpg', title: 'Condominio Modelo C' },
-        { src: '/img/extras/prueba4.jpg', title: 'Condominio Modelo D' },
-        { src: '/img/extras/prueba5.jpg', title: 'Detalle Diseño Modelo E' },
-        { src: '/img/extras/prueba6.jpg', title: 'Distribución Modelo F' },
-        { src: '/img/extras/prueba7.jpg', title: 'Fachada Modelo G' },
-        { src: '/img/extras/prueba8.jpg', title: 'Vista General Condominio' }
+        { src: './img/extras/prueba1.png', title: 'Condominio Modelo A' },
+        { src: './img/extras/prueba2.png', title: 'Condominio Modelo B' },
+        { src: './img/extras/prueba3.jpg', title: 'Condominio Modelo C' },
+        { src: './img/extras/prueba4.jpg', title: 'Condominio Modelo D' },
+        { src: './img/extras/prueba5.jpg', title: 'Detalle Diseño Modelo E' },
+        { src: './img/extras/prueba6.jpg', title: 'Distribución Modelo F' },
+        { src: './img/extras/prueba7.jpg', title: 'Fachada Modelo G' },
+        { src: './img/extras/prueba8.jpg', title: 'Vista General Condominio' }
       ];
 
       let currentIndex = 0;

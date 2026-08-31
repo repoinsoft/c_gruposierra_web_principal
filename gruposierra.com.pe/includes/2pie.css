@@ -17,9 +17,9 @@
   --radius: 16px;
 
   /* Layout */
-  --side-size: clamp(180px, 17vw, 200px);
-  --panel-min-h: clamp(180px, 24vw, 200px);
-  --container-max: 1000px;
+  --side-size: clamp(200px, 18vw, 240px);
+  --panel-min-h: clamp(180px, 24vw, 210px);
+  --container-max: 1200px;
 
   /* Overlay cálido para el panel del mapa (sin azul) */
   --panel-overlay: rgba(24,19,19,0.45);
@@ -64,9 +64,9 @@
 /* Desktop */
 @media (min-width: 980px){
   .gs-footer__grid{
-    grid-template-columns: var(--side-size) var(--side-size) 1fr;
+    grid-template-columns: var(--side-size) minmax(280px, 350px) 1fr;
     grid-template-areas: "logo contact map";
-    gap: 16px;
+    gap: 18px;
   }
 }
 
@@ -78,7 +78,7 @@
   backdrop-filter: blur(var(--card-blur));
   -webkit-backdrop-filter: blur(var(--card-blur));
   box-shadow: var(--card-shadow);
-  padding: 5px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,22 +87,25 @@
 }
 
 .gs-foot__title{
-  font: 600 .98rem/1.2 'Inter', system-ui, Arial;
+  font: 700 1rem/1.2 'Inter', system-ui, Arial;
   color: #fff;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
 }
 
 /* Áreas */
-.gs-foot__logo   { grid-area: logo; }
+.gs-foot__logo   { grid-area: logo; padding: 10px; }
 .gs-foot__contact{ grid-area: contact; align-items: flex-start; }
-.gs-foot__map    { grid-area: map; align-items: stretch; }
+.gs-foot__map    { grid-area: map; align-items: stretch; padding: 0; }
 
-/* Laterales cuadrados en desktop */
+/* Laterales en desktop */
 @media (min-width: 980px){
-  .gs-foot__logo,
-  .gs-foot__contact{
+  .gs-foot__logo{
     width: var(--side-size);
     aspect-ratio: 1 / 1;
+  }
+  .gs-foot__contact{
+    width: auto;
+    padding: 18px 22px;
   }
 }
 
@@ -170,9 +173,10 @@
   box-shadow: 0 4px 12px rgba(0,0,0,.35);
 }
 
-.gs-foot__social-inline a[aria-label="TikTok"]   { background:#000; }
-.gs-foot__social-inline a[aria-label="YouTube"]  { background:#ff0000; }
-.gs-foot__social-inline a[aria-label="WhatsApp"] { background:#25d366; }
+.gs-foot__social-inline a[aria-label="Facebook"]  { background: #1877F2; }
+.gs-foot__social-inline a[aria-label="TikTok"]    { background: #000; }
+.gs-foot__social-inline a[aria-label="YouTube"]   { background: #ff0000; }
+.gs-foot__social-inline a[aria-label="WhatsApp"]  { background: #25d366; }
 
 .gs-foot__social-inline a:hover{
   transform: translateY(-3px) scale(1.06);
@@ -184,32 +188,40 @@
 .gs-foot__data {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 18px;
+  padding: 0;
   display: grid;
-  gap: 8px;
-  font-size: .8rem;
-  width: 80%;
+  gap: 10px;
+  font-size: .84rem;
+  width: 100%;
 }
 
 .gs-foot__data li {
-  display: grid;
-  grid-template-columns: 18px 1fr;
-  align-items: start;
-  gap: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   color: var(--foot-dim);
+  line-height: 1.35;
 }
 
 .gs-foot__data i {
-  font-size: .9rem;
+  font-size: .92rem;
   color: var(--foot-text);
+  margin-top: 2px;
+  width: 16px;
+  flex-shrink: 0;
+  text-align: center;
 }
 
+.gs-foot__data span,
 .gs-foot__data a {
+  word-break: break-word;
+  overflow-wrap: anywhere;
   color: var(--foot-text);
   text-decoration: none;
   border-bottom: 1px dotted transparent;
   transition: color .2s ease, border-color .2s ease;
 }
+
 .gs-foot__data a:hover {
   color: var(--gold);
   border-color: var(--gold);

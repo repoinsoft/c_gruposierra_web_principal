@@ -1,6 +1,6 @@
 /* ==================== Proyectos 360 + Plano — Grupo Sierra ==================== */
 (() => {
-  const API = "/includes/apiProy.php";
+  const API = "https://api.insoft.com.pe/sierra/web/api_web.php";
 
   const $  = (s, el=document) => el.querySelector(s);
   const $$ = (s, el=document) => [...el.querySelectorAll(s)];
@@ -29,56 +29,59 @@
 
   const MOCK_PROYECTOS = [
     {
-      id: 1,
+      id: 4,
       nombre: "Residencial Villa Andina",
-      slug: "residencial-villa-andina",
+      slug: "residencialvillaandina",
       direccion: "Distrito de Villa Andina, Ancash",
       descripcion: "Hermoso proyecto residencial con amplias áreas verdes y todos los servicios básicos en una zona tranquila.",
-      foto: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/portada/portada.webp",
       entrada: 74,
       salida: 0,
       saldo: 74,
-      plano: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
-      img360: ["/img/360/1almacen360.jpg", "/img/360/2almacen360.jpg", "/img/360/3almacen360.jpg"]
-    },
-    {
-      id: 2,
-      nombre: "Urbanización Maravillas II",
-      slug: "urbanizacion-maravillas-ii",
-      direccion: "Av. Las Maravillas, Huaraz",
-      descripcion: "Segunda etapa del exitoso proyecto Maravillas. Lotes habilitados con pórtico de ingreso y seguridad.",
-      foto: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
-      entrada: 49,
-      salida: 0,
-      saldo: 49,
-      plano: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
-      img360: ["/img/360/4almacen360.jpg"]
+      plano: "",
+      img360: [
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/1almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/2almacen360.jpg"
+      ]
     },
     {
       id: 3,
+      nombre: "Urbanización Maravillas II",
+      slug: "urbanizacionmaravillasii",
+      direccion: "Av. Las Maravillas, Huaraz",
+      descripcion: "Segunda etapa del exitoso proyecto Maravillas. Lotes habilitados con pórtico de ingreso y seguridad.",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/portada/portada.webp",
+      entrada: 49,
+      salida: 0,
+      saldo: 49,
+      plano: "",
+      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/4almacen360.jpg"]
+    },
+    {
+      id: 2,
       nombre: "Urbanización Maravillas",
-      slug: "urbanizacion-maravillas",
+      slug: "urbanizacionmaravillas",
       direccion: "Huaraz, Ancash",
       descripcion: "Urbanización moderna con servicios completos, pistas y veredas. Excelente oportunidad de inversión.",
-      foto: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/portada/portada.webp",
       entrada: 40,
       salida: 0,
       saldo: 40,
-      plano: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
-      img360: ["/img/360/5almacen360.jpg"]
+      plano: "",
+      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/5almacen360.jpg"]
     },
     {
-      id: 4,
+      id: 1,
       nombre: "Residencial Independencia",
-      slug: "residencial-independencia",
+      slug: "residencialindependencia",
       direccion: "Distrito de Independencia, Huaraz",
       descripcion: "Ubicación privilegiada con vista a la cordillera. Lotes listos para construir el hogar de tus sueños.",
-      foto: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/portada/portada.webp",
       entrada: 87,
       salida: 0,
       saldo: 87,
-      plano: "https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75",
-      img360: ["/img/360/1almacen360.jpg"]
+      plano: "",
+      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/1almacen360.jpg"]
     }
   ];
 
@@ -176,22 +179,30 @@
     visor360.innerHTML = "";
     await ensurePannellum();
 
-    viewer360 = pannellum.viewer("visor360", {
-      type: "equirectangular",
-      panorama: url,
-      autoLoad: true,
-      showZoomCtrl: true,
-      showFullscreenCtrl: true,
-      keyboardZoom: true,
-      mouseZoom: true,
-      touchZoom: true,
-      compass: true,
-      hfov: 100,
-      minHfov: 40,
-      maxHfov: 120,
-      previewTitle: "Proyectos",
-      previewAuthor: "GrupoSierra.com.pe"
-    });
+    // Cache-buster para obligar al navegador a recibir la nueva cabecera CORS sin usar caché vieja
+    const panoUrl = url.includes("?") ? `${url}&cors=${Date.now()}` : `${url}?cors=${Date.now()}`;
+
+    try {
+      viewer360 = pannellum.viewer("visor360", {
+        type: "equirectangular",
+        panorama: panoUrl,
+        crossOrigin: "anonymous",
+        autoLoad: true,
+        showZoomCtrl: true,
+        showFullscreenCtrl: true,
+        keyboardZoom: true,
+        mouseZoom: true,
+        touchZoom: true,
+        compass: true,
+        hfov: 100,
+        minHfov: 40,
+        maxHfov: 120,
+        previewTitle: "Recorrido Virtual 360°",
+        previewAuthor: "GrupoSierra.com.pe"
+      });
+    } catch (err) {
+      console.error("Error inicializando visor 360:", err);
+    }
   }
 
   // ===== Render listado (tarjetas del carrusel) =====
@@ -249,20 +260,23 @@
       let img360 = [];
 
       try {
-        const r=await fetch(`${API}?action=viewer&id=${id}`);
+        const found = proyectos.find(p => p.id == id) || MOCK_PROYECTOS.find(p => p.id == id);
+        const slug = found ? (found.slug || '') : '';
+        const r = await fetch(`${API}?action=project_detail&id=${id}&slug=${encodeURIComponent(slug)}`);
         if (!r.ok) throw new Error("API response not ok");
-        const j=await r.json();
+        const j = await r.json();
         if(!j.ok) throw new Error(j.error);
-        proyecto = j.data.proyecto;
+        proyecto = j.data.proyecto || found;
         pUrl = j.data.plano_url || "";
-        img360 = (j.data.img360 || []).filter(Boolean);
+        img360 = (j.data.img360 || []).map(x => typeof x === 'string' ? x : x.url).filter(Boolean);
+        if (j.data.portada) proyecto.portada = j.data.portada;
       } catch (apiError) {
         console.warn("No se pudo cargar el detalle del proyecto de la API, usando mock local.", apiError);
         const mock = proyectos.find(p => p.id == id) || MOCK_PROYECTOS.find(p => p.id == id);
         if (!mock) throw new Error("Proyecto no encontrado en mock");
         proyecto = mock;
         pUrl = mock.plano || "";
-        img360 = mock.img360 || [];
+        img360 = (mock.img360 || []).map(x => typeof x === 'string' ? x : x.url).filter(Boolean);
       }
 
       planoUrl = pUrl;
@@ -485,6 +499,12 @@
         return;
       }
 
+      const hpVal = document.getElementById("website_hp") ? document.getElementById("website_hp").value.trim() : "";
+      if (hpVal) {
+        console.warn("Spam detectado por trampa honeypot");
+        return;
+      }
+
       const nameVal = document.getElementById("contact-name").value.trim();
       const emailVal = document.getElementById("contact-email").value.trim();
       const phoneVal = document.getElementById("contact-phone").value.trim();
@@ -493,9 +513,10 @@
       const subjectVal = document.getElementById("contact-subject").value;
       const messageVal = document.getElementById("contact-message").value.trim();
 
-      // Enviar datos en segundo plano a la API local proxy
+      // Enviar datos en segundo plano a la API central
       const formData = new FormData();
       formData.append("action", "submit_contact");
+      formData.append("website_hp", hpVal);
       formData.append("nombre", nameVal);
       formData.append("email", emailVal);
       formData.append("telefono", phoneVal);
@@ -503,16 +524,16 @@
       formData.append("tema", subjectVal);
       formData.append("mensaje", messageVal);
 
-      fetch("/includes/apiProy.php", {
+      fetch(API, {
         method: "POST",
         body: formData
       })
       .then(res => res.json())
       .then(data => {
-        console.log("Consulta registrada en BD & Notificación Push enviada:", data);
+        console.log("Consulta registrada en BD:", data);
       })
       .catch(err => {
-        console.error("Error al guardar consulta en segundo plano:", err);
+        console.error("Error al guardar consulta en BD:", err);
       });
 
       const waMessage = `*Nueva consulta desde la web — Grupo Sierra*

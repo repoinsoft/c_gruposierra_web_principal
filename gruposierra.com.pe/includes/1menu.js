@@ -141,8 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return p || '/';
     };
 
-    // 👇 Solo consideramos secciones al hacer scroll cuando estamos en la HOME
-    const isHome = normPath(window.location.pathname) === '/';
+    // 👇 Detecta si es la Home (tiene hero slider .gs-hero)
+    const isHome = Boolean(document.querySelector('.gs-hero'));
 
     // Offset real según altura del header (considera el margen del óvalo flotante)
     const applyOffset = () => {
@@ -338,9 +338,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.prepend(placeholder);
   }
 
-  fetch("/includes/1menu.html", { cache: "no-cache" })
-    .then(r => { if (!r.ok) throw new Error("No se pudo cargar /includes/1menu.html"); return r.text(); })
+  // Detectar base URL del script actual
+  const getBasePath = () => {
+    const s = document.currentScript || document.querySelector('script[src*="1menu.js"]');
+    if (s && s.src) {
+      try {
+        const u = new URL(s.src, window.location.href);
+        return u.pathname.replace(/\/includes\/1menu\.js.*$/, '');
+      } catch (_) {}
+    }
+    return '';
+  };
+  const base = getBasePath();
+  const menuUrl = (base ? base : '') + '/includes/1menu.html';
+
+  fetch(menuUrl, { cache: "no-cache" })
+    .then(r => { if (!r.ok) throw new Error("No se pudo cargar " + menuUrl); return r.text(); })
     .then(html => {
+      // Ajustar rutas relativas si estamos en subcarpeta
+      if (base) {
+        html = html.replace(/href="\/(?!\/)/g, `href="${base}/`)
+                   .replace(/src="\/(?!\/)/g, `src="${base}/`);
+      }
       placeholder.innerHTML = html;
       // ejecutar scripts embebidos si los hubiera
       placeholder.querySelectorAll("script").forEach(old => {

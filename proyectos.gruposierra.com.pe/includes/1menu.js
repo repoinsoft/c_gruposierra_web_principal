@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1) Si ya existe el header en el DOM, inicia
   if (BOOT()) return;
 
-  // 2) Si no existe, cargar /includes/1menu.html por fetch
+  // 2) Si no existe, cargar 1menu.html por fetch
   let placeholder = document.getElementById('header-placeholder');
   if (!placeholder) {
     placeholder = document.createElement('div');
@@ -281,9 +281,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.prepend(placeholder);
   }
 
-  fetch("/includes/1menu.html", { cache: "no-cache" })
-    .then(r => { if (!r.ok) throw new Error("No se pudo cargar /includes/1menu.html"); return r.text(); })
+  // Detectar base URL del script actual
+  const getBasePath = () => {
+    const s = document.currentScript || document.querySelector('script[src*="1menu.js"]');
+    if (s && s.src) {
+      try {
+        const u = new URL(s.src, window.location.href);
+        return u.pathname.replace(/\/includes\/1menu\.js.*$/, '');
+      } catch (_) {}
+    }
+    return '';
+  };
+  const base = getBasePath();
+  const menuUrl = (base ? base : '') + '/includes/1menu.html';
+
+  fetch(menuUrl, { cache: "no-cache" })
+    .then(r => { if (!r.ok) throw new Error("No se pudo cargar " + menuUrl); return r.text(); })
     .then(html => {
+      if (base) {
+        html = html.replace(/href="\/(?!\/)/g, `href="${base}/`)
+                   .replace(/src="\/(?!\/)/g, `src="${base}/`);
+      }
       placeholder.innerHTML = html;
       placeholder.querySelectorAll("script").forEach(old => {
         const s = document.createElement("script");

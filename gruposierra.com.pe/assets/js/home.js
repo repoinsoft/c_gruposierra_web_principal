@@ -41,16 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 1) Trae URLs desde API (solo ACTIVO y orden ASC: ya lo hace el endpoint)
+  // 1) Trae URLs desde la API central o fallbacks locales
   async function fetchSlider() {
     try {
-      const r = await fetch('/includes/apiMySli.php?action=list', { cache: 'no-store' });
-      if (!r.ok) throw new Error('HTTP '+r.status);
+      const r = await fetch('https://api.insoft.com.pe/sierra/web/api_web.php?action=sliders', { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       const j = await r.json();
       if (!j.ok) throw new Error('API error');
-      return (j.items || []).map(x => (x.url || '').trim()).filter(Boolean);
+      const urls = (j.data || []).map(x => (x.url || '').trim()).filter(Boolean);
+      if (urls.length) return urls;
+      throw new Error('Sin sliders en API');
     } catch (e) {
-      console.warn('Slider API fail, using local WebP fallbacks:', e);
+      console.warn('Usando fallbacks locales de slider:', e);
       return [
         '/img/imagen/hero1.webp',
         '/img/imagen/hero2.webp',
@@ -210,27 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 /* =========================================================
-   🎬 SERVICIOS y QUIÉNES — Animaciones (como ya usas)
+   🎬 QUIÉNES SOMOS — Animaciones
 ========================================================= */
 (function () {
-  const state = { servicios: { visible: false }, quienes: { visible: false } };
-
-  function runServicios(force = false) {
-    const section = document.getElementById('servicios');
-    if (!section) return;
-    const cards = section.querySelectorAll('.gs-service');
-    if (!cards.length) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (force || !state.servicios.visible) {
-      cards.forEach(c => c.classList.remove('is-in'));
-      section.offsetHeight;
-      cards.forEach((c, i) => {
-        c.style.setProperty('--i', i);
-        if (reduce) c.classList.add('is-in'); else setTimeout(() => c.classList.add('is-in'), i * 90);
-      });
-      state.servicios.visible = true;
-    }
-  }
+  const state = { quienes: { visible: false } };
 
   function runQuienes(force = false) {
     const section = document.getElementById('quienes');
@@ -251,23 +236,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setupObservers() {
     const opts = { threshold: 0.25, rootMargin: '0px 0px -10% 0px' };
-    const obsS = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) runServicios(true); else state.servicios.visible = false; }), opts);
     const obsQ = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) runQuienes(true);  else state.quienes.visible = false; }), opts);
-    const secS = document.getElementById('servicios');
     const secQ = document.getElementById('quienes');
-    if (secS) obsS.observe(secS);
     if (secQ) obsQ.observe(secQ);
   }
 
   window.addEventListener('hashchange', () => {
     const h = location.hash || '';
-    if (h === '#servicios') setTimeout(() => runServicios(true), 300);
-    if (h === '#quienes')   setTimeout(() => runQuienes(true), 300);
+    if (h === '#quienes') setTimeout(() => runQuienes(true), 300);
   });
 
   document.addEventListener('DOMContentLoaded', () => {
     setupObservers();
-    if (location.hash === '#servicios') setTimeout(() => runServicios(true), 400);
-    if (location.hash === '#quienes')   setTimeout(() => runQuienes(true), 400);
+    if (location.hash === '#quienes') setTimeout(() => runQuienes(true), 400);
   });
+})();
+
+/* =========================================================
+   📸 CLIENTES SATISFECHOS — Carrusel Continuo + Lightbox
+========================================================= */
+(function () {
+  const track = document.getElementById('track-testimonios');
+  const marquee = document.getElementById('marquee-testimonios');
+  const lightbox = document.getElementById('gs-lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCaption = document.getElementById('lb-caption');
+  const lbClose = document.getElementById('lb-btn-close');
+  const lbBackdrop = document.getElementById('lb-backdrop');
+  const lbPrev = document.getElementById('lb-btn-prev');
+  const lbNext = document.getElementById('lb-btn-next');
+
+  if (!track || !marquee) return;
+
+  let currentPhotos = [];
+  let currentIndex = 0;
+
+  async function loadTestimonios() {
+    try {
+      const res = await fetch('https://api.insoft.com.pe/sierra/web/api_web.php?action=testimonios', { cache: 'no-cache' });
+      const json = await res.json();
+      if (res.ok && json.ok && json.data && json.data.length > 0) {
+        currentPhotos = json.data;
+      } else {
+        throw new Error('Lista vacía');
+      }
+    } catch (e) {
+      console.info('Cargando fotos de entrega predeterminadas:', e);
+      currentPhotos = [
+        { url: 'https://api.insoft.com.pe/sierra/web/testimonios/entrega_de_lote_urbanizado.jpg', titulo: 'Entrega de Lote y Título de Propiedad' },
+        { url: 'https://api.insoft.com.pe/sierra/web/testimonios/entrega_de_titulo_y_minuta.png', titulo: 'Firma de Contrato y Minuta' },
+        { url: 'https://api.insoft.com.pe/sierra/web/testimonios/entrega_residencial_villa_andina.png', titulo: 'Entrega Oficial en Residencial Villa Andina' },
+        { url: 'https://api.insoft.com.pe/sierra/web/testimonios/familia_feliz_propietaria.jpg', titulo: 'Familia Feliz Propietaria' }
+      ];
+    }
+    renderMarquee(currentPhotos);
+  }
+
+  function renderMarquee(photos) {
+    track.innerHTML = '';
+    if (!photos || !photos.length) {
+      track.innerHTML = '<div style="padding: 24px; color: #6B7280; font-weight: 600; font-size: 1rem; width: 100%; text-align: center;"><i class="fas fa-camera"></i> Próximamente fotos de entregas de lotes y testimonios de nuestros clientes.</div>';
+      return;
+    }
+
+    // Asegura al menos 8 elementos para desplazamiento continuo fluido
+    let loopItems = [...photos];
+    while (loopItems.length < 8) {
+      loopItems = loopItems.concat(photos);
+    }
+
+    loopItems.forEach((p, idx) => {
+      const realIndex = idx % photos.length;
+      const card = document.createElement('div');
+      card.className = 'gs-marquee__card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Ver foto: ${p.titulo || 'Cliente satisfecho'}`);
+
+      card.innerHTML = `
+        <div class="gs-marquee__img-wrap">
+          <img src="${p.url}" alt="${p.titulo || 'Cliente satisfecho Grupo Sierra'}" loading="lazy" class="gs-marquee__img">
+          <div class="gs-marquee__overlay">
+            <span class="gs-marquee__zoom-icon"><i class="fas fa-search-plus"></i></span>
+            <span class="gs-marquee__badge"><i class="fas fa-check-circle"></i> Entrega Verificada</span>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener('click', () => openLightbox(realIndex));
+      card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openLightbox(realIndex); });
+      track.appendChild(card);
+    });
+
+    // Pausar con touch en móvil
+    marquee.addEventListener('touchstart', () => { track.style.animationPlayState = 'paused'; }, { passive: true });
+    marquee.addEventListener('touchend', () => { track.style.animationPlayState = 'running'; }, { passive: true });
+  }
+
+  function openLightbox(index) {
+    if (!lightbox || !currentPhotos.length) return;
+    currentIndex = (index + currentPhotos.length) % currentPhotos.length;
+    updateLightbox();
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLightbox() {
+    const item = currentPhotos[currentIndex];
+    if (!item) return;
+    lbImg.src = item.url;
+    lbImg.alt = item.titulo || 'Cliente satisfecho';
+    if (lbCaption) {
+      lbCaption.innerHTML = `<span><i class="fas fa-camera"></i> ${item.titulo || 'Entrega de lote - Grupo Sierra'}</span> <span>${currentIndex + 1} / ${currentPhotos.length}</span>`;
+    }
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  function nextLightbox() {
+    currentIndex = (currentIndex + 1) % currentPhotos.length;
+    updateLightbox();
+  }
+
+  function prevLightbox() {
+    currentIndex = (currentIndex - 1 + currentPhotos.length) % currentPhotos.length;
+    updateLightbox();
+  }
+
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
+  if (lbNext) lbNext.addEventListener('click', nextLightbox);
+  if (lbPrev) lbPrev.addEventListener('click', prevLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox && !lightbox.hidden) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextLightbox();
+      if (e.key === 'ArrowLeft') prevLightbox();
+    }
+  });
+
+  // Gesto Swipe táctil en móvil
+  let touchStartX = 0;
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    lightbox.addEventListener('touchend', e => {
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      if (diffX < -50) nextLightbox();
+      if (diffX > 50) prevLightbox();
+    }, { passive: true });
+  }
+
+  loadTestimonios();
 })();

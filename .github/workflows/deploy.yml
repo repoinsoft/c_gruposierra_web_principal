@@ -1,0 +1,40 @@
+name: 🚀 Deploy Website to cPanel
+
+on:
+  push:
+    branches:
+      - sierra   # Se ejecuta automáticamente cuando haces git push a la rama 'sierra'
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Obtener último código
+      uses: actions/checkout@v4
+
+    # 1. Desplegar la web principal a public_html
+    - name: 📂 Desplegar Web Principal (gruposierra.com.pe)
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./gruposierra.com.pe/
+        server-dir: ./public_html/   # Carpeta de la web principal en tu cPanel
+        exclude: |
+          **/.git*
+          **/.git*/**
+
+    # 2. Desplegar el subdominio de proyectos
+    - name: 📂 Desplegar Subdominio (proyectos.gruposierra.com.pe)
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./proyectos.gruposierra.com.pe/
+        server-dir: ./proyectos.gruposierra.com.pe/   # Carpeta del subdominio en tu cPanel
+        exclude: |
+          **/.git*
+          **/.git*/**

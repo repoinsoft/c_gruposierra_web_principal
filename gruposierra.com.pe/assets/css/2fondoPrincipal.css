@@ -34,16 +34,7 @@ body.fondo-principal .gs-main {
   width: 100%;
 }
 
-/* 🔹 Si dentro colocas una imagen (como en tu ejemplo) */
-.fondo-principal img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;        /* Cubre toda el área */
-  border: none;
-  margin: 0;
-  padding: 0;
-}
+
 
 /* 🔹 Contenido interno (si hay texto o secciones) - Simplificado para evitar romper contenedores */
 .fondo-principal main {

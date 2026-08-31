@@ -3,69 +3,288 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Usuarios — GrupoSierra</title>
-  <link rel="icon" type="image/x-icon" href="/img/iconos/grupoSierraIco.ico" />
-  <link rel="apple-touch-icon" href="/img/iconos/grupoSierraIco.ico" />
+  <title>Intranet & Panel CMS — Grupo Sierra</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="../../img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="../../img/iconos/logito.png" />
 
-  <!-- 1) Sistema responsive -->
-  <link rel="stylesheet" href="/assets/css/1responsive.css" />
-  <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css" />
-  <!-- Menú y Iconos -->
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="/includes/1menu.css" />
-  <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="/pages/intranet/intranet.css">
-  <script src="/pages/intranet/intranet.js" defer></script>
 
+  <!-- Sistema base -->
+  <link rel="stylesheet" href="../../assets/css/2fondoPrincipal.css?v=5.0" />
+  <link rel="stylesheet" href="../../includes/1menu.css?v=5.0" />
+  <link rel="stylesheet" href="./intranet.css?v=5.0">
+
+  <!-- Pannellum para preview 360 en el panel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" defer></script>
+  <script src="./intranet.js?v=5.0" defer></script>
 </head>
 
-<!-- Aplicamos el fondo moderno reutilizable -->
 <body class="fondo-principal">
-  <!-- ------------------------------------Menu/Encabezado---------------------------------- -->
-  <!-- Header -->
+  <!-- Header principal reutilizable -->
   <div id="header-placeholder"></div>
-  <!-- ------------------------------------------------------------------------------------- -->
-  
-  <!-- ------------------------------------Todo el Cuerpo----------------------------------- -->
-  <main id="inicio" class="gs-main">
-    <!-- SECCIÓN: Acceso Intranet -->
-    <section class="intra-section" aria-labelledby="intra-title">
+
+  <main id="intra-main-wrap" class="gs-main intra-main">
+    
+    <!-- 1. VISTA DE LOGIN -->
+    <section id="view-login" class="intra-section">
       <div class="intra-container">
         <header class="intra-header">
-          <h1 id="intra-title" class="intra-title">Acceso Intranet</h1>
-          <p class="intra-sub">Ingresa tu usuario y contraseña para validar tu acceso.</p>
+          <div class="intra-badge"><i class="fas fa-shield-alt"></i> Portal Seguro</div>
+          <h1 class="intra-title">Acceso Intranet</h1>
+          <p class="intra-sub">Ingresa tus credenciales de SuperAdministrador para gestionar los contenidos web.</p>
         </header>
 
         <form id="intra-form" class="intra-card" autocomplete="off">
           <div class="intra-field">
-            <label for="intra-user">Usuario</label>
-            <input id="intra-user" name="user" type="text" inputmode="numeric" placeholder="Ej. 12345678" required>
+            <label for="intra-user"><i class="fas fa-user"></i> Usuario o DNI</label>
+            <input id="intra-user" name="user" type="text" placeholder="Ej. Admin" required autofocus>
           </div>
 
           <div class="intra-field">
-            <label for="intra-pass">Contraseña</label>
-            <input id="intra-pass" name="pass" type="password" placeholder="•••" required>
+            <label for="intra-pass"><i class="fas fa-lock"></i> Contraseña</label>
+            <div class="pass-wrapper">
+              <input id="intra-pass" name="pass" type="password" placeholder="••••••••" required>
+              <button type="button" id="btn-toggle-pass" class="btn-toggle-pass" aria-label="Mostrar contraseña">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
           </div>
 
-          <button id="btn-intra" type="submit" class="intra-btn">Acceder a aula Virtual</button>
+          <button id="btn-intra" type="submit" class="intra-btn">
+            <span class="btn-text">Ingresar al Panel</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          
           <p id="intra-msg" class="intra-msg" role="status" aria-live="polite"></p>
         </form>
-
-        <div class="after-intra-placeholder" hidden></div>
       </div>
     </section>
+
+    <!-- 2. VISTA DASHBOARD SUPERADMIN CMS -->
+    <section id="view-dashboard" class="cms-dashboard" hidden>
+      <div class="cms-container">
+        
+        <!-- Barra de Control Superior -->
+        <header class="cms-header">
+          <div class="cms-user-info">
+            <div class="cms-avatar"><i class="fas fa-user-shield"></i></div>
+            <div>
+              <div class="cms-user-role">Super Administrador</div>
+              <h2 id="cms-user-name" class="cms-user-title">Administrador Sierra</h2>
+            </div>
+          </div>
+
+          <div class="cms-actions">
+            <a href="https://gruposierra.com.pe/" target="_blank" class="cms-btn cms-btn--secondary" title="Ver Sitio Web">
+              <i class="fas fa-external-link-alt"></i> Ver Web
+            </a>
+            <button id="btn-logout" type="button" class="cms-btn cms-btn--danger">
+              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+          </div>
+        </header>
+
+        <!-- Pestañas de Navegación del CMS -->
+        <nav class="cms-tabs" role="tablist">
+          <button class="cms-tab is-active" data-tab="tab-sliders" role="tab">
+            <i class="fas fa-images"></i> Sliders de Inicio
+          </button>
+          <button class="cms-tab" data-tab="tab-proyectos" role="tab">
+            <i class="fas fa-city"></i> Gestión de Proyectos
+          </button>
+          <button class="cms-tab" data-tab="tab-testimonios" role="tab">
+            <i class="fas fa-camera-retro"></i> Clientes Satisfechos
+          </button>
+          <button class="cms-tab" data-tab="tab-consultas" role="tab">
+            <i class="fas fa-inbox"></i> Consultas Web <span id="badge-consultas-count" class="tab-count">0</span>
+          </button>
+        </nav>
+
+        <!-- ================= TAB 1: SLIDERS ================= -->
+        <div id="tab-sliders" class="cms-tab-content is-active" role="tabpanel">
+          <div class="cms-card">
+            <div class="cms-card-head">
+              <div>
+                <h3 class="cms-card-title"><i class="fas fa-photo-video"></i> Banners Principales de la Home</h3>
+                <p class="cms-card-desc">Imágenes que se muestran en el carrusel de la página de inicio (Recomendado: 1920x900px en formato WEBP o PNG).</p>
+              </div>
+              <div>
+                <label class="cms-btn cms-btn--primary">
+                  <i class="fas fa-plus-circle"></i> Subir Nuevo Slider
+                  <input type="file" id="input-upload-slider" accept="image/*" hidden>
+                </label>
+              </div>
+            </div>
+
+            <!-- Grilla de sliders actuales -->
+            <div id="grid-sliders" class="cms-grid-sliders">
+              <div class="cms-loading"><i class="fas fa-spinner fa-spin"></i> Cargando sliders...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 2: PROYECTOS ================= -->
+        <div id="tab-proyectos" class="cms-tab-content" role="tabpanel">
+          <div class="cms-card">
+            <!-- Selector de Proyecto -->
+            <div class="cms-proj-selector-bar">
+              <label for="select-proj-manage"><strong>Selecciona el Proyecto a Administrar:</strong></label>
+              <select id="select-proj-manage" class="cms-select">
+                <!-- Se llena por JS -->
+              </select>
+            </div>
+
+            <!-- Contenido del Proyecto Seleccionado -->
+            <div class="cms-proj-sections">
+              
+              <!-- 1. Portada / Hero -->
+              <div class="cms-subcard">
+                <div class="cms-subcard-head">
+                  <h4 class="cms-subcard-title"><i class="fas fa-image"></i> Portada Principal / Hero</h4>
+                  <label class="cms-btn cms-btn--sm cms-btn--primary">
+                    <i class="fas fa-sync-alt"></i> Cambiar Portada
+                    <input type="file" id="input-upload-portada" accept="image/*" hidden>
+                  </label>
+                </div>
+                <div id="box-portada" class="cms-media-box cms-media-box--hero">
+                  <img id="img-preview-portada" src="" alt="Portada del proyecto">
+                </div>
+              </div>
+
+              <!-- 2. Plano de Distribución -->
+              <div class="cms-subcard">
+                <div class="cms-subcard-head">
+                  <h4 class="cms-subcard-title"><i class="fas fa-map"></i> Plano de Lotización</h4>
+                  <label class="cms-btn cms-btn--sm cms-btn--primary">
+                    <i class="fas fa-upload"></i> Subir / Cambiar Plano
+                    <input type="file" id="input-upload-plano" accept="image/*" hidden>
+                  </label>
+                </div>
+                <div id="box-plano" class="cms-media-box cms-media-box--plano">
+                  <img id="img-preview-plano" src="" alt="Plano del proyecto">
+                  <div id="plano-empty-msg" class="cms-empty-placeholder" hidden>No hay plano subido aún</div>
+                </div>
+              </div>
+
+              <!-- 3. Recorridos Virtuales 360° (Sesenta) -->
+              <div class="cms-subcard cms-subcard--full">
+                <div class="cms-subcard-head">
+                  <div>
+                    <h4 class="cms-subcard-title"><i class="fas fa-vr-cardboard"></i> Panoramas 360° (Carpeta: sesenta/)</h4>
+                    <p class="cms-card-desc">Sube fotos panorámicas equirectangulares para el recorrido virtual interactivo.</p>
+                  </div>
+                  <label class="cms-btn cms-btn--sm cms-btn--primary">
+                    <i class="fas fa-plus"></i> Agregar Foto 360°
+                    <input type="file" id="input-upload-360" accept="image/*" hidden>
+                  </label>
+                </div>
+
+                <div id="grid-360" class="cms-grid-thumbs">
+                  <!-- Se llena por JS -->
+                </div>
+
+                <!-- Visor interactivo para preview -->
+                <div class="cms-pano-preview-wrap">
+                  <div class="cms-pano-title"><i class="fas fa-eye"></i> Previsualizador 360° en vivo:</div>
+                  <div id="cms-visor360" class="cms-pano-viewer"></div>
+                </div>
+              </div>
+
+              <!-- 4. Modelos de Vivienda (Modelos) -->
+              <div class="cms-subcard cms-subcard--full">
+                <div class="cms-subcard-head">
+                  <div>
+                    <h4 class="cms-subcard-title"><i class="fas fa-home"></i> Modelos de Vivienda / Arquitectura (Carpeta: modelos/)</h4>
+                    <p class="cms-card-desc">Fotos que se muestran en el collage y lightbox de diseños disponibles.</p>
+                  </div>
+                  <label class="cms-btn cms-btn--sm cms-btn--primary">
+                    <i class="fas fa-plus"></i> Agregar Modelo
+                    <input type="file" id="input-upload-modelo" accept="image/*" hidden>
+                  </label>
+                </div>
+
+                <div id="grid-modelos" class="cms-grid-thumbs">
+                  <!-- Se llena por JS -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 3: CONSULTAS WEB (LEADS) ================= -->
+        <div id="tab-consultas" class="cms-tab-content" role="tabpanel">
+          <div class="cms-card">
+            <div class="cms-card-head">
+              <div>
+                <h3 class="cms-card-title"><i class="fas fa-inbox"></i> Bandeja de Consultas Recibidas</h3>
+                <p class="cms-card-desc">Clientes interesados que completaron el formulario web en los proyectos.</p>
+              </div>
+              <button id="btn-refresh-consultas" class="cms-btn cms-btn--secondary">
+                <i class="fas fa-sync-alt"></i> Actualizar
+              </button>
+            </div>
+
+            <div class="cms-table-wrapper">
+              <table class="cms-table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Contacto</th>
+                    <th>Proyecto</th>
+                    <th>Tema / Consulta</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-consultas">
+                  <tr><td colspan="6" class="text-center">Cargando consultas...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 4: CLIENTES SATISFECHOS ================= -->
+        <div id="tab-testimonios" class="cms-tab-content" role="tabpanel">
+          <div class="cms-card">
+            <div class="cms-card-head">
+              <div>
+                <h3 class="cms-card-title"><i class="fas fa-users"></i> Galería de Clientes y Entregas</h3>
+                <p class="cms-card-desc">Fotos de clientes satisfechos, firmas de contratos y entregas de lotes para el carrusel continuo en la web de inicio.</p>
+              </div>
+              <div>
+                <label class="cms-btn cms-btn--primary">
+                  <i class="fas fa-cloud-upload-alt"></i> Subir Foto de Cliente
+                  <input type="file" id="input-upload-testimonio" accept="image/*" hidden>
+                </label>
+              </div>
+            </div>
+
+            <!-- Grilla de fotos de clientes -->
+            <div id="grid-testimonios" class="cms-grid-media">
+              <div class="cms-loading"><i class="fas fa-spinner fa-spin"></i> Cargando fotos de clientes...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
-  <!-- ------------------------------------------------------------------------------------- -->
 
-  <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
-  <!-- carga el header -->
-  <script src="/includes/1menu.js"></script>
-  <!-- Footer -->
+  <!-- Toast Notification -->
+  <div id="cms-toast" class="cms-toast" role="alert" aria-live="assertive" hidden></div>
+
+  <!-- Scripts base -->
+  <script src="../../includes/1menu.js?v=5.0"></script>
   <div id="footer-placeholder"></div>
-  <!-- Loader del footer -->
-  <script src="/includes/2pie.js"></script>
-  <!-- -------------------------------------------------------------------------------------- -->
-
+  <script src="../../includes/2pie.js?v=5.0"></script>
 </body>
 </html>

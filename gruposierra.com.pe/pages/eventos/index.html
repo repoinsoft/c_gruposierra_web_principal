@@ -3,20 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Eventos — GrupoSierra</title>
-  <link rel="icon" type="image/x-icon" href="/img/iconos/grupoSierraIco.ico" />
-  <link rel="apple-touch-icon" href="/img/iconos/grupoSierraIco.ico" />
+  <title>Eventos y Lanzamientos Inmobiliarios — Grupo Sierra</title>
+  <meta name="description" content="Participa en nuestros lanzamientos inmobiliarios, conferencias de inversión y eventos exclusivos de Grupo Sierra." />
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Eventos Inmobiliarios — Grupo Sierra" />
+  <meta property="og:description" content="Inscríbete en nuestros eventos presenciales y virtuales de inversión en lotes y bienes raíces." />
+  <meta property="og:image" content="https://api.insoft.com.pe/sierra/web/inicio/slider2.webp" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="../../img/iconos/logito.png" />
 
   <!-- 1) Sistema responsive -->
-  <link rel="stylesheet" href="/assets/css/1responsive.css?v=2.1" />
-  <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=2.1" />
+  <link rel="stylesheet" href="../../assets/css/2fondoPrincipal.css?v=4.0" />
   <!-- Menú y Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="/includes/1menu.css?v=2.1" />
+  <link rel="stylesheet" href="../../includes/1menu.css?v=4.0" />
   <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="/pages/eventos/eventos.css?v=2.1">
-  <script src="/pages/eventos/eventos.js?v=2.1" defer></script>
+  <link rel="stylesheet" href="./eventos.css?v=4.0">
+  <script src="./eventos.js?v=4.0" defer></script>
 
 </head>
 
@@ -85,9 +91,9 @@
 
           <!-- Solo si es de pago -->
           <div class="form-row" id="row_comprobante" hidden>
-            <label for="f_comprobante_url">Comprobante Yape (URL de imagen) *</label>
-            <input type="url" id="f_comprobante_url" name="comprobante_url" placeholder="https://...jpg|png">
-            <small class="hint">Pega el enlace directo a la imagen de tu voucher.</small>
+            <label for="f_comprobante_file">Adjuntar Comprobante de Pago (Yape / Transferencia) *</label>
+            <input type="file" id="f_comprobante_file" name="comprobante_file" accept="image/*">
+            <small class="hint">Selecciona la captura de pantalla o foto de tu comprobante.</small>
           </div>
 
           <!-- Mensaje de validación -->
@@ -109,11 +115,11 @@
 
   <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
   <!-- carga el header -->
-  <script src="/includes/1menu.js?v=2.1"></script>
+  <script src="../../includes/1menu.js?v=4.0"></script>
   <!-- Footer -->
   <div id="footer-placeholder"></div>
   <!-- Loader del footer -->
-  <script src="/includes/2pie.js?v=2.1"></script>
+  <script src="../../includes/2pie.js?v=4.0"></script>
   <!-- -------------------------------------------------------------------------------------- -->
 
 </body>

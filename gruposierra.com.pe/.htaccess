@@ -35,4 +35,5 @@ Header always set Referrer-Policy "no-referrer-when-downgrade"
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
 # 6) Redirigir 403 a index si prefieres UX
-ErrorDocument 403 /index.php
+ErrorDocument 403 /index.html
+ErrorDocument 404 /index.html

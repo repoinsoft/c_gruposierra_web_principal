@@ -29,9 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join(' ');
   }
 
-  const API_URL  = '/includes/apiMyPro.php?action=list';
+  const API_URL  = 'https://api.insoft.com.pe/sierra/web/api_web.php?action=projects';
+  const isLocal  = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
   const buildURL = (slug) =>
-    `https://proyectos.gruposierra.com.pe/?p=${encodeURIComponent(slug)}`;
+    isLocal
+      ? `/proyectos.gruposierra.com.pe/?p=${encodeURIComponent(slug)}`
+      : `https://proyectos.gruposierra.com.pe/?p=${encodeURIComponent(slug)}`;
 
   // ⮑ Normaliza cada item usando tus columnas reales
   const normalizeItem = (p) => {

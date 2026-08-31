@@ -1,12 +1,39 @@
 // includes/2pie.js
 document.addEventListener('DOMContentLoaded', () => {
+  // Detectar base URL del script actual
+  const getBasePath = () => {
+    const s = document.currentScript || document.querySelector('script[src*="2pie.js"]');
+    if (s && s.src) {
+      try {
+        const u = new URL(s.src, window.location.href);
+        return u.pathname.replace(/\/includes\/2pie\.js.*$/, '');
+      } catch (_) {}
+    }
+    return '';
+  };
+  const base = getBasePath();
+  const pieUrl = (base ? base : '') + '/includes/2pie.html';
+  const cssUrl = (base ? base : '') + '/includes/2pie.css?v=4.0';
+
+  // Asegurar CSS del footer
+  if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(l => (l.href || '').includes('2pie.css'))) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssUrl;
+    document.head.appendChild(link);
+  }
+
   // Cargar el fragmento del footer desde /includes/2pie.html
-  fetch('/includes/2pie.html', { cache: "no-cache" })
+  fetch(pieUrl, { cache: "no-cache" })
     .then(r => {
-      if (!r.ok) throw new Error('No se pudo cargar /includes/2pie.html');
+      if (!r.ok) throw new Error('No se pudo cargar ' + pieUrl);
       return r.text();
     })
     .then(html => {
+      if (base) {
+        html = html.replace(/href="\/(?!\/)/g, `href="${base}/`)
+                   .replace(/src="\/(?!\/)/g, `src="${base}/`);
+      }
       // Insertar en placeholder si existe; si no, al final del body
       const slot = document.getElementById('footer-placeholder');
       if (slot) {

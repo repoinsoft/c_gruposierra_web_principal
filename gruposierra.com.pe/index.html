@@ -3,28 +3,84 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GrupoSierra.com.pe</title>
-  <meta name="description" content="Grupo Sierra Inmobiliario: proyectos, terrenos y viviendas con respaldo profesional. Confía en nosotros para tu próxima inversión inmobiliaria." />
-  <link rel="icon" type="image/x-icon" href="/img/iconos/logito.png" />
-  <link rel="apple-touch-icon" href="/img/iconos/logito.png" />
+  <title>Grupo Sierra — Proyectos Inmobiliarios, Terrenos y Viviendas</title>
+  <meta name="description" content="Grupo Sierra Inmobiliario: proyectos, terrenos y viviendas con respaldo profesional en Huaraz y Ancash. Confía en nosotros para tu próxima inversión inmobiliaria." />
+  
+  <!-- Open Graph / Redes Sociales (WhatsApp, Facebook, Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gruposierra.com.pe/" />
+  <meta property="og:title" content="Grupo Sierra — Proyectos Inmobiliarios y Terrenos" />
+  <meta property="og:description" content="Descubre nuestros proyectos inmobiliarios, recorridos virtuales 360° y lotes con títulos listos para invertir." />
+  <meta property="og:image" content="https://api.insoft.com.pe/sierra/web/inicio/slider1.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Grupo Sierra — Proyectos Inmobiliarios" />
+  <meta name="twitter:description" content="Lotes y viviendas en zonas estratégicas de Huaraz y Ancash." />
+  <meta name="twitter:image" content="https://api.insoft.com.pe/sierra/web/inicio/slider1.webp" />
+
+  <link rel="icon" type="image/x-icon" href="./img/iconos/logito.png" />
+  <link rel="apple-touch-icon" href="./img/iconos/logito.png" />
+  
+  <!-- Schema.org JSON-LD (SEO Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Grupo Sierra Capital S.A.C.",
+    "alternateName": "Grupo Sierra Inmobiliaria",
+    "url": "https://gruposierra.com.pe/",
+    "logo": "https://gruposierra.com.pe/img/logos/grupoSierra1.png",
+    "image": "https://api.insoft.com.pe/sierra/web/inicio/slider1.webp",
+    "telephone": "+51972535066",
+    "email": "ventas@gruposierra.com.pe",
+    "sameAs": [
+      "https://www.facebook.com/share/18QKd1gdgz/?mibextid=wwXIfr",
+      "https://www.tiktok.com/@gruposierra?_r=1&_t=ZS-99Bopa58j0H",
+      "https://wa.me/message/F6WZUYRKRVOQF1"
+    ],
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Jr. Lima N° 248",
+        "addressLocality": "Juliaca",
+        "addressRegion": "Puno",
+        "addressCountry": "PE"
+      },
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Jr. Cajamarca N° 345",
+        "addressLocality": "Puno",
+        "addressRegion": "Puno",
+        "addressCountry": "PE"
+      }
+    ],
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -15.4959,
+      "longitude": -70.1333
+    },
+    "areaServed": ["Puno", "Juliaca", "Huaraz", "Ancash", "Peru"],
+    "priceRange": "$$"
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <!-- 1) Sistema responsive -->
-  <link rel="stylesheet" href="/assets/css/1responsive.css?v=3.6" />
+  <link rel="stylesheet" href="./assets/css/1responsive.css?v=5.0" />
   <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="/assets/css/2fondoPrincipal.css?v=3.6" />
+  <link rel="stylesheet" href="./assets/css/2fondoPrincipal.css?v=5.0" />
   <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="/assets/css/home.css?v=3.6">
-  <script src="/assets/js/home.js?v=3.6" defer></script>
+  <link rel="stylesheet" href="./assets/css/home.css?v=5.0">
+  <script src="./assets/js/home.js?v=5.0" defer></script>
   <!-- 4) CSS de  grupoSierra Proyectos -->
-  <link rel="stylesheet" href="/pages/proyectos/proyectos.css?v=3.6">
-  <script src="/pages/proyectos/proyectos.js?v=3.6" defer></script>
+  <link rel="stylesheet" href="./pages/proyectos/proyectos.css?v=5.0">
+  <script src="./pages/proyectos/proyectos.js?v=5.0" defer></script>
 
   <!-- 5) Menú y Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="/includes/1menu.css?v=3.6" />
+  <link rel="stylesheet" href="./includes/1menu.css?v=5.0" />
 
 </head>
 
@@ -83,66 +139,62 @@
       </div>
     </section>
 
-    <!-- SERVICIOS -->
-    <section id="servicios" class="gs-section gs-section--light gs-section--wide gs-section--sep">
-      <div class="gs-container gs-container--airy">
-        <header class="gs-head">
-          <h3 class="gs-h2">Servicios inmobiliarios</h3>
-          <p class="gs-sub">
-            Brindamos acompañamiento integral en cada etapa del proceso inmobiliario, 
-            combinando experiencia, transparencia y compromiso para que tomes decisiones seguras al momento de invertir, alquilar o vender.
+    <!-- CLIENTES SATISFECHOS & EXPERIENCIA -->
+    <section id="servicios" class="gs-section gs-section--testimonios">
+      <div class="gs-container gs-container--testimonios">
+        <header class="gs-testimonios__header">
+          <span class="gs-testimonios__pill"><i class="fas fa-check-circle"></i> CONFIANZA & TRAYECTORIA</span>
+          <h3 class="gs-h2 gs-testimonios__title">Clientes Satisfechos y Familias Felices</h3>
+          <p class="gs-testimonios__lead">
+            Somos el <strong>Grupo Sierra</strong>, uno de los grupos empresariales más importantes del sur del Perú, en la rama de la construcción, desarrollo inmobiliario y comercialización de inmuebles. Creamos proyectos planificados en ubicaciones estratégicas para brindar seguridad jurídica, valor y alta rentabilidad a nuestros clientes.
           </p>
+          
+          <!-- Badges de Estadísticas y Confianza -->
+          <div class="gs-testimonios__badges">
+            <div class="gs-tbadge">
+              <i class="fas fa-award gs-tbadge__icon"></i>
+              <div class="gs-tbadge__content">
+                <strong>+5 Años</strong>
+                <span>De experiencia en el sector</span>
+              </div>
+            </div>
+            <div class="gs-tbadge">
+              <i class="fas fa-city gs-tbadge__icon"></i>
+              <div class="gs-tbadge__content">
+                <strong>+5 Proyectos</strong>
+                <span>En desarrollo en la región</span>
+              </div>
+            </div>
+            <div class="gs-tbadge">
+              <i class="fas fa-shield-alt gs-tbadge__icon"></i>
+              <div class="gs-tbadge__content">
+                <strong>100% Garantía</strong>
+                <span>Seguridad jurídica y títulos</span>
+              </div>
+            </div>
+          </div>
         </header>
+      </div>
 
-        <ul class="gs-services">
-          <li class="gs-service">
-            <i class="fas fa-key gs-ico" aria-hidden="true"></i>
-            <h4>Compra y venta</h4>
-            <p>
-              Te guiamos en todo el proceso: valoración profesional, negociación eficaz y cierre exitoso de tu propiedad o inversión.
-            </p>
-          </li>
+      <!-- CARRUSEL CONTINUO INFINITO (MARQUEE INTERACTIVO) -->
+      <div class="gs-marquee-wrapper" aria-label="Galería de clientes satisfechos y entregas de lotes">
+        <div class="gs-marquee" id="marquee-testimonios">
+          <div class="gs-marquee__track" id="track-testimonios">
+            <!-- Las fotos se inyectan dinámicamente por JS desde el VPS -->
+          </div>
+        </div>
+      </div>
 
-          <li class="gs-service">
-            <i class="fas fa-building gs-ico" aria-hidden="true"></i>
-            <h4>Alquileres</h4>
-            <p>
-              Nos encargamos de la promoción, evaluación de inquilinos y redacción de contratos para un arrendamiento seguro y rentable.
-            </p>
-          </li>
-
-          <li class="gs-service">
-            <i class="fas fa-balance-scale gs-ico" aria-hidden="true"></i>
-            <h4>Tasación</h4>
-            <p>
-              Determinamos el valor real de tu inmueble con base en análisis de mercado, comparativos actuales y criterios técnicos confiables.
-            </p>
-          </li>
-
-          <li class="gs-service">
-            <i class="fas fa-file-signature gs-ico" aria-hidden="true"></i>
-            <h4>Gestión legal</h4>
-            <p>
-              Asesoría legal completa en títulos, minutas, escrituras, registros y due diligence para garantizar operaciones sin riesgos.
-            </p>
-          </li>
-
-          <li class="gs-service">
-            <i class="fas fa-handshake gs-ico" aria-hidden="true"></i>
-            <h4>Administración</h4>
-            <p>
-              Mantenemos tu propiedad en óptimas condiciones: cobranza, mantenimiento y gestión eficiente de ingresos y gastos.
-            </p>
-          </li>
-
-          <li class="gs-service">
-            <i class="fas fa-project-diagram gs-ico" aria-hidden="true"></i>
-            <h4>Proyectos</h4>
-            <p>
-              Participamos en el desarrollo, lanzamiento y comercialización de proyectos inmobiliarios, desde la planificación hasta la venta final.
-            </p>
-          </li>
-        </ul>
+      <!-- VISOR LIGHTBOX EN PANTALLA COMPLETA -->
+      <div id="gs-lightbox" class="gs-lightbox-modal" role="dialog" aria-modal="true" aria-label="Visor de imagen de cliente" hidden>
+        <div class="gs-lightbox__backdrop" id="lb-backdrop"></div>
+        <button class="gs-lightbox__btn-close" id="lb-btn-close" aria-label="Cerrar visor">&times;</button>
+        <button class="gs-lightbox__btn-nav gs-lightbox__btn-prev" id="lb-btn-prev" aria-label="Foto anterior">‹</button>
+        <button class="gs-lightbox__btn-nav gs-lightbox__btn-next" id="lb-btn-next" aria-label="Foto siguiente">›</button>
+        <div class="gs-lightbox__stage">
+          <img id="lb-img" src="" alt="Cliente satisfecho Grupo Sierra" class="gs-lightbox__img">
+          <div id="lb-caption" class="gs-lightbox__caption"></div>
+        </div>
       </div>
     </section>
 
@@ -151,17 +203,22 @@
       <div class="gs-container gs-container--quienes">
         <div class="gs-quienes-grid">
           
-          <!-- Card 1: ¿Quiénes somos? -->
+          <!-- Card 1: ¿Quiénes somos? + Lema Oficial -->
           <article class="gs-card qs-card qs-card--left">
             <h3 class="gs-h2">¿Quiénes somos?</h3>
             <p class="gs-p">
-              Somos <strong>Grupo Sierra Inmobiliaria</strong>, especialistas en compra, venta y alquiler de bienes raíces.  
-              Acompañamos a nuestros clientes con una asesoría integral en <em>tasación, financiamiento, gestión legal</em> y <em>proyectos exclusivos</em>.
+              Somos el <strong>Grupo Sierra</strong>, uno de los grupos empresariales más importantes del sur del Perú, en la rama de la construcción, desarrollo inmobiliario y comercialización de inmuebles. Creamos proyectos planificados en ubicaciones estratégicas para brindar seguridad jurídica, valor y alta rentabilidad a nuestros clientes.
             </p>
+            <div style="margin: 18px 0; padding: 14px 18px; border-left: 3px solid #ff4d4d; background: rgba(255, 77, 77, 0.08); border-radius: 0 12px 12px 0;">
+              <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; color: #ff8080; text-transform: uppercase; display: block; margin-bottom: 4px;">NUESTRO LEMA</span>
+              <p style="margin: 0; font-size: 1.05rem; font-style: italic; font-weight: 600; color: #ffffff;">
+                «Cada familia merece un lugar donde pertenecer.»
+              </p>
+            </div>
             <ul class="gs-list gs-list--check">
-              <li>Más de 10 años de experiencia en el mercado inmobiliario.</li>
-              <li>Portafolio curado con propiedades en las mejores zonas del país.</li>
-              <li>Compromiso con la transparencia, la seguridad y los resultados.</li>
+              <li>Más de 5 años de experiencia en el sector inmobiliario.</li>
+              <li>Más de 5 proyectos inmobiliarios en desarrollo en toda la Región.</li>
+              <li>Compromiso con la seguridad jurídica, la transparencia y la alta rentabilidad.</li>
             </ul>
           </article>
 
@@ -170,8 +227,7 @@
             <span class="qs-badge">MISIÓN</span>
             <h4 class="gs-h3">Nuestra misión</h4>
             <p class="gs-p">
-              Brindar soluciones inmobiliarias <strong>honestas, eficientes y sostenibles</strong>, 
-              guiando a nuestros clientes en la adquisición o inversión ideal, con acompañamiento integral.
+              Servir a Dios, a nuestros clientes, colaboradores y a la sociedad, creando oportunidades de inversión y crecimiento para que más familias puedan alcanzar el sueño de construir un patrimonio propio y disfrutar de un mejor futuro. Guiados por la integridad, el respeto y la vocación de servicio, desarrollamos proyectos inmobiliarios de calidad con el mismo compromiso y cuidado con el que los construiríamos para nuestra propia familia.
             </p>
           </article>
 
@@ -183,9 +239,18 @@
               para ayudarte a decidir con confianza y alcanzar tus metas inmobiliarias.
             </p>
             <div class="gs-kpis">
-              <div class="gs-kpi"><span class="num">+500</span><span class="label">Operaciones</span></div>
-              <div class="gs-kpi"><span class="num">+120</span><span class="label">Clientes</span></div>
-              <div class="gs-kpi"><span class="num">24/7</span><span class="label">Atención</span></div>
+              <div class="gs-kpi">
+                <span class="num">+1000</span>
+                <span class="label">Propiedades gestionadas</span>
+              </div>
+              <div class="gs-kpi">
+                <span class="num">+500</span>
+                <span class="label">Familias beneficiadas</span>
+              </div>
+              <div class="gs-kpi">
+                <span class="num">24/7</span>
+                <span class="label">Atención y asesoría</span>
+              </div>
             </div>
           </article>
 
@@ -194,8 +259,7 @@
             <span class="qs-badge">VISIÓN</span>
             <h4 class="gs-h3">Nuestra visión</h4>
             <p class="gs-p">
-              Ser una <strong>empresa líder en el sector inmobiliario peruano</strong>, reconocida por su innovación,
-              su compromiso social y su capacidad de transformar espacios en hogares con historia.
+              Ser una de las empresas inmobiliarias más reconocidas y confiables del sur del Perú, referente por servir a Dios, a nuestros clientes, colaboradores y a la sociedad, desarrollando proyectos innovadores y de calidad que generen oportunidades de inversión, crecimiento, patrimonio y bienestar; impactando positivamente en la vida de las personas y contribuyendo al desarrollo de nuestras ciudades.
             </p>
           </article>
 
@@ -209,11 +273,11 @@
 
   <!-- --------------------------------Todo el Pie de Pagina-------------------------------- -->
   <!-- carga el header -->
-  <script src="/includes/1menu.js?v=3.6"></script>
+  <script src="./includes/1menu.js?v=5.0"></script>
   <!-- Footer -->
   <div id="footer-placeholder"></div>
   <!-- Loader del footer -->
-  <script src="/includes/2pie.js?v=3.6"></script>
+  <script src="./includes/2pie.js?v=5.0"></script>
   <!-- -------------------------------------------------------------------------------------- -->
 
 </body>
