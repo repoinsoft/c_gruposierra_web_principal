@@ -1,39 +1,41 @@
-# 1) Desactivar listado
+# =========================================================================
+# GRUPO SIERRA — Configuración Apache / cPanel (.htaccess)
+# URLs Limpias, Seguridad y Optimización de Rendimiento
+# =========================================================================
+
+# 1. Página de inicio por defecto
+DirectoryIndex index.html index.php
+
+# 2. Desactivar listado de directorios
 Options -Indexes
 
-# 2) Proteger .htaccess mismo y archivos sensibles
-<Files ".htaccess">
-    Require all denied
-</Files>
+# 3. Motor de reescritura de URLs limpias (Sin .html)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
 
-<FilesMatch "(?:^|/)(?:config\.php|\.env|\.log|\.ini|composer\.json|composer\.lock|id_rsa|id_rsa\.pub|\.git|\.svn)$">
-    Require all denied
-</FilesMatch>
+    # Redirigir /index.html a la raíz / (301 Permanente)
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/ [NC]
+    RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
 
-# 3) Bloquear accesos directos a ciertos backups/temp
-RedirectMatch 404 (?i)\.(?:bak|old|backup|~|swp)$
+    # Redirigir cualquier archivo .html a su versión limpia sin extensión
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.html\ HTTP/ [NC]
+    RewriteRule ^ /%1 [R=301,L]
 
-# 4) Prohibir ejecución de scripts en directorios de subida (si aplica)
-# (esto evitará que .php subidos se ejecuten si quedan en uploads/)
-<Directory "uploads">
-    <IfModule mod_php7.c>
-        php_flag engine off
-    </IfModule>
-</Directory>
+    # Resolver internamente URLs sin extensión al archivo .html real
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
 
-# Alternativa (más genérica): negar archivos .php en uploads
-<If "%{REQUEST_URI} =~ m#^/uploads/#">
-    <FilesMatch "\.(php|php5|phtml)$">
-        Require all denied
-    </FilesMatch>
-</If>
+# 4. Compresión Gzip para carga ultrarrápida
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
 
-# 5) Cabeceras de seguridad básicas
-Header always set X-Frame-Options "DENY"
-Header always set X-Content-Type-Options "nosniff"
-Header always set Referrer-Policy "no-referrer-when-downgrade"
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-
-# 6) Redirigir 403 a index si prefieres UX
-ErrorDocument 403 /index.html
-ErrorDocument 404 /index.html
+# 5. Cabeceras de Seguridad
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>

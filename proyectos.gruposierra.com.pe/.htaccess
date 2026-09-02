@@ -1,0 +1,25 @@
+# =========================================================================
+# PROYECTOS GRUPO SIERRA — Configuración Apache / cPanel (.htaccess)
+# =========================================================================
+
+DirectoryIndex index.html index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Redirigir /index.html a la raíz /
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/ [NC]
+    RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>

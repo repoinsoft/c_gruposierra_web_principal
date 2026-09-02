@@ -86,6 +86,59 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
+  // ⏱️ CONTROL DE INACTIVIDAD (Cierre automático tras 30 min)
+  // =========================================================
+  const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutos
+  let inactivityTimer = null;
+
+  function resetInactivityTimer() {
+    if (!state.token) return;
+    localStorage.setItem('sierra_admin_last_activity', Date.now().toString());
+
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      logoutDueToInactivity();
+    }, INACTIVITY_TIMEOUT_MS);
+  }
+
+  function logoutDueToInactivity() {
+    if (!state.token) return;
+    localStorage.removeItem('sierra_admin_token');
+    localStorage.removeItem('sierra_admin_user');
+    localStorage.removeItem('sierra_admin_last_activity');
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    state.token = '';
+    state.user = null;
+    viewDashboard.hidden = true;
+    viewLogin.hidden = false;
+    userInput.value = '';
+    passInput.value = '';
+    showToast('⚠️ Sesión cerrada por 30 min de inactividad.', true);
+    if (msgLogin) {
+      msgLogin.textContent = '🔒 Tu sesión se cerró por inactividad (30 min) para proteger la seguridad.';
+      msgLogin.className = 'intra-msg error';
+    }
+  }
+
+  function checkStoredInactivity() {
+    const lastActivity = parseInt(localStorage.getItem('sierra_admin_last_activity') || '0', 10);
+    if (lastActivity && Date.now() - lastActivity > INACTIVITY_TIMEOUT_MS) {
+      logoutDueToInactivity();
+      return false;
+    }
+    return true;
+  }
+
+  // Detectar interacción real del usuario
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (state.token) {
+        resetInactivityTimer();
+      }
+    }, { passive: true });
+  });
+
+  // =========================================================
   // 1. AUTENTICACIÓN
   // =========================================================
   if (formLogin) {
@@ -122,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         state.user  = json.user;
         localStorage.setItem('sierra_admin_token', json.token);
         localStorage.setItem('sierra_admin_user', JSON.stringify(json.user));
+        localStorage.setItem('sierra_admin_last_activity', Date.now().toString());
 
+        resetInactivityTimer();
         showToast(`¡Bienvenido ${json.user.nombre || 'Administrador'}!`);
         initDashboard();
       } catch (err) {
@@ -139,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLogout.addEventListener('click', () => {
       localStorage.removeItem('sierra_admin_token');
       localStorage.removeItem('sierra_admin_user');
+      localStorage.removeItem('sierra_admin_last_activity');
+      if (inactivityTimer) clearTimeout(inactivityTimer);
       state.token = '';
       state.user = null;
       viewDashboard.hidden = true;
@@ -153,11 +210,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. INICIALIZACIÓN DEL DASHBOARD CMS
   // =========================================================
   async function initDashboard() {
-    if (!state.token) {
+    if (!state.token || !checkStoredInactivity()) {
       viewLogin.hidden = false;
       viewDashboard.hidden = true;
       return;
     }
+
+    resetInactivityTimer();
 
     viewLogin.hidden = true;
     viewDashboard.hidden = false;
