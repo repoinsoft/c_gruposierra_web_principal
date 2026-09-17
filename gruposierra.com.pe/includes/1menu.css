@@ -520,21 +520,21 @@ html.gs-nav-open .gs-burger__text::after{transform:translateY(0);opacity:1;color
 }
 .gs-nav__link:hover,
 .gs-nav__link:focus-visible{
-  background: rgba(212, 60, 60, 0.06) !important;
-  color: #D43C3C !important;
+  background: rgba(255, 0, 0, 0.08) !important;
+  color: #FF0000 !important;
   box-shadow: none !important;
   transform: translateY(-1px) !important;
 }
 
 /* Activo/seleccionado: botón de cristal rojo corporativo */
 .gs-nav__link.is-active{
-  background: #D43C3C !important;
+  background: #FF0000 !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(212, 60, 60, 0.30) !important;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.35) !important;
   font-weight: 700 !important;
 }
 .gs-nav__link.is-active:hover{
-  background: #ff3b30 !important;
+  background: #D60000 !important;
 }
 
 /* Móvil/Tablet: mismo comportamiento usando rojo corporativo */
@@ -543,18 +543,18 @@ html.gs-nav-open .gs-burger__text::after{transform:translateY(0);opacity:1;color
 
   .gs-nav__link:hover,
   .gs-nav__link:focus-visible{
-    background: rgba(212, 60, 60, 0.06) !important;
-    color: #D43C3C !important;
+    background: rgba(255, 0, 0, 0.08) !important;
+    color: #FF0000 !important;
     box-shadow: none !important;
   }
 
   .gs-nav__link.is-active{
-    background: #D43C3C !important;
+    background: #FF0000 !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 12px rgba(212, 60, 60, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.35) !important;
   }
 
-  .gs-nav__link:hover{ color:#D43C3C !important; }
+  .gs-nav__link:hover{ color:#FF0000 !important; }
 }
 
 /* Fallback inmediato: si JS aún no fijó el alto, usa 80px */

@@ -252,7 +252,7 @@ html,body{
 
 /* Paleta principal */
 :root{
-  --rojo: #C12A2A;         /* rojo protagonista */
+  --rojo: #FF0000;         /* rojo oficial Sierra */
   --negro: #111111;        /* texto general */
   --gris-borde: rgba(0,0,0,.12);
 }
@@ -298,15 +298,15 @@ html,body{
 }
 .badge.gold{           /* usaremos este como “destacado” (precio/gratis) */
   color: var(--rojo) !important;
-  background: rgba(193,42,42,.10) !important;
-  border-color: rgba(193,42,42,.35) !important;
+  background: rgba(255,0,0,.08) !important;
+  border-color: rgba(255,0,0,.30) !important;
 }
 
 /* Chip de fecha (principal = rojo sobre fondo blanco) */
 .ev-datechip{
   background: #ffffff !important;
   color: var(--rojo) !important;
-  border-color: rgba(193,42,42,.45) !important;
+  border-color: rgba(255,0,0,.35) !important;
   font-weight: 700;
   font-size: 1rem !important;
   box-shadow: 0 6px 16px rgba(0,0,0,.15);
@@ -314,19 +314,19 @@ html,body{
 
 /* Cinta Agotado (se mantiene roja) */
 .ev-ribbon{
-  background: linear-gradient(90deg, #8F1F1F, #C12A2A) !important;
+  background: linear-gradient(90deg, #CC0000, #FF0000) !important;
 }
 
 /* Hover/focus: sutil en claro */
 .ev-card:hover{
   transform: translateY(-3px);
-  border-color: rgba(193,42,42,.35) !important;
+  border-color: rgba(255,0,0,.35) !important;
   box-shadow: 0 16px 40px rgba(0,0,0,.18) !important;
   filter: none !important;
 }
 .ev-card:focus-visible{
-  box-shadow: 0 0 0 3px rgba(193,42,42,.25), 0 20px 56px rgba(0,0,0,.2) !important;
-  border-color: rgba(193,42,42,.55) !important;
+  box-shadow: 0 0 0 3px rgba(255,0,0,.25), 0 20px 56px rgba(0,0,0,.2) !important;
+  border-color: rgba(255,0,0,.55) !important;
 }
 
 /* Modal: títulos principales en rojo, textos en negro */
@@ -346,11 +346,11 @@ html,body{
   font-weight: 800 !important;
   font-size: 1.05rem !important;
   padding: 14px 30px !important;
-  box-shadow: 0 8px 20px rgba(193,42,42,.30) !important;
+  box-shadow: 0 8px 20px rgba(255,0,0,.35) !important;
 }
 .btn-inscribirme:hover{
-  background:#A72424 !important;
-  box-shadow: 0 12px 28px rgba(193,42,42,.38) !important;
+  background:#D60000 !important;
+  box-shadow: 0 12px 28px rgba(255,0,0,.45) !important;
 }
 
 /* Scroll-margin si tienes header fijo */
@@ -359,8 +359,8 @@ html,body{
 
 /* === MODAL ROJO CON BORDES Y FORMULARIO BIEN ENCAJADO === */
 .modal-card{
-  background: #C12A2A !important;            /* rojo sólido */
-  border: 3px solid #8F1F1F !important;       /* borde más oscuro */
+  background: #FF0000 !important;            /* rojo oficial */
+  border: 3px solid #CC0000 !important;       /* borde más profundo */
   border-radius: 18px !important;
   color: #fff !important;
   box-shadow: 0 20px 70px rgba(0,0,0,.6) !important;

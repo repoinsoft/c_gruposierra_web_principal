@@ -36,18 +36,29 @@ function GS_waitScrollSettle(targetTop, tolerance = 4, idleMs = 160, maxMs = 250
     return (header?.getBoundingClientRect().height | 0) || cssVar || 80;
   };
 
-  const normalize = p => (p.replace(/\/+$/, '/') || '/');
+  const normPath = (p) => {
+    try {
+      const url = new URL(p, window.location.href);
+      p = url.pathname || '/';
+    } catch { /* p ya es relativo */ }
+    p = p.replace(/\/{2,}/g, '/').replace(/\/index\.(?:html?|php)$/i, '/');
+    if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
+    return p || '/';
+  };
 
   const tryHandleAnchor = (a, e) => {
     if (!a) return false;
     const href = a.getAttribute('href') || '';
     if (!href || !href.includes('#')) return false;
 
-    const url = new URL(href, window.location.origin);
-    if (normalize(url.pathname) !== normalize(window.location.pathname)) return false;
-
-    const id = (url.hash || '').slice(1);
+    const hashIdx = href.indexOf('#');
+    const id = href.slice(hashIdx + 1);
     if (!id) return false;
+
+    // Verificar si el hash apunta a la página actual o a otra distinta
+    const pathPart = href.slice(0, hashIdx);
+    const isSamePage = !pathPart || normPath(pathPart) === normPath(window.location.pathname);
+    if (!isSamePage) return false; // Permite navegación natural si el usuario está en otra página
 
     const target = document.getElementById(id);
     if (!target) return false;
@@ -176,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       l.removeAttribute('aria-current');
     });
     const setActive  = a => {
-      if (!a) return;
+      if (!a || a.classList.contains('is-active')) return;
       clearActive();
       a.classList.add('is-active');
       a.setAttribute('aria-current','page');
@@ -237,18 +248,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = location.hash.slice(1);
       const target = document.getElementById(id);
       if (!target) return;
-      requestAnimationFrame(() => {
+      const doScroll = () => {
         applyOffset();
         const extra = (id === 'inicio') ? 15 : 0;
         const top = target.getBoundingClientRect().top + window.scrollY - headerH() - 8 - extra;
-        window.scrollTo({ top });
-      });
+        window.scrollTo({ top, behavior: 'smooth' });
+      };
+      requestAnimationFrame(doScroll);
+      setTimeout(doScroll, 400); // reintento suave tras carga de proyectos o imágenes
     };
 
-    // Sombra en scroll
+    // Sombra en scroll optimizada sin lag
+    let isScrolled = false;
     const onScrollShadow = () => {
-      if (window.scrollY > 6) header.classList.add('gs-header--scrolled');
-      else header.classList.remove('gs-header--scrolled');
+      const s = window.scrollY > 6;
+      if (s !== isScrolled) {
+        isScrolled = s;
+        header.classList.toggle('gs-header--scrolled', s);
+      }
     };
 
     // Hamburguesa

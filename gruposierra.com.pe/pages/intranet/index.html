@@ -16,13 +16,13 @@
 
   <!-- Sistema base -->
   <link rel="stylesheet" href="../../assets/css/2fondoPrincipal.css?v=5.0" />
-  <link rel="stylesheet" href="../../includes/1menu.css?v=5.0" />
-  <link rel="stylesheet" href="./intranet.css?v=5.0">
+  <link rel="stylesheet" href="../../includes/1menu.css?v=5.1" />
+  <link rel="stylesheet" href="./intranet.css?v=5.3">
 
   <!-- Pannellum para preview 360 en el panel -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" defer></script>
-  <script src="./intranet.js?v=5.0" defer></script>
+  <script src="./intranet.js?v=5.2" defer></script>
 </head>
 
 <body class="fondo-principal">
@@ -268,7 +268,7 @@
             </div>
 
             <!-- Grilla de fotos de clientes -->
-            <div id="grid-testimonios" class="cms-grid-media">
+            <div id="grid-testimonios" class="cms-grid-thumbs cms-grid-media">
               <div class="cms-loading"><i class="fas fa-spinner fa-spin"></i> Cargando fotos de clientes...</div>
             </div>
           </div>
@@ -282,9 +282,19 @@
   <!-- Toast Notification -->
   <div id="cms-toast" class="cms-toast" role="alert" aria-live="assertive" hidden></div>
 
+  <!-- VISOR LIGHTBOX EN PANTALLA COMPLETA CON FONDO DESENFOCADO -->
+  <div id="cms-lightbox" class="cms-lightbox-modal" role="dialog" aria-modal="true" aria-label="Visor de imagen en pantalla completa" hidden>
+    <div class="cms-lightbox__backdrop" id="cms-lb-backdrop" title="Clic para cerrar"></div>
+    <button type="button" class="cms-lightbox__btn-close" id="cms-lb-close" aria-label="Cerrar visor">&times;</button>
+    <div class="cms-lightbox__stage">
+      <img id="cms-lb-img" src="" alt="Previsualización de imagen" class="cms-lightbox__img">
+      <div id="cms-lb-caption" class="cms-lightbox__caption"></div>
+    </div>
+  </div>
+
   <!-- Scripts base -->
-  <script src="../../includes/1menu.js?v=5.0"></script>
+  <script src="../../includes/1menu.js?v=5.1"></script>
   <div id="footer-placeholder"></div>
-  <script src="../../includes/2pie.js?v=5.0"></script>
+  <script src="../../includes/2pie.js?v=5.1"></script>
 </body>
 </html>

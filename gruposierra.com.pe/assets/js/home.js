@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rootScroll.scrollTo({ top: targetTop, behavior: 'smooth' });
     }
   }
-  const routeMap = { '/inicio':'inicio', '/quienes':'quienes', '/servicios':'servicios' };
+  const routeMap = { '/inicio':'inicio', '/proyectos':'proyectos', '/quienes':'quienes', '/servicios':'servicios' };
   function normalizePath(href) {
     try {
       const u = href.startsWith('http') ? new URL(href) : new URL(href, window.location.origin);
@@ -315,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       card.innerHTML = `
         <div class="gs-marquee__img-wrap">
+          <div class="gs-marquee__ambient" style="background-image: url('${p.url}')"></div>
           <img src="${p.url}" alt="${p.titulo || 'Cliente satisfecho Grupo Sierra'}" loading="lazy" class="gs-marquee__img">
           <div class="gs-marquee__overlay">
             <span class="gs-marquee__zoom-icon"><i class="fas fa-search-plus"></i></span>

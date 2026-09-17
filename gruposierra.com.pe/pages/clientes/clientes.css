@@ -1,18 +1,18 @@
-﻿/* =========================================================
+/* =========================================================
    Acceso de Clientes — Fondo blanco + tonos rojos
    - Glass claro con reflejo
    - Efectos suaves de brillo y transición
 ========================================================= */
 :root{
-  --brand:       #8F1F1F;                  /* Rojo vino oscuro */
-  --brand-light: #C12A2A;                  /* Rojo principal */
-  --brand-soft:  #F2E8E8;                  /* Fondo suave cálido */
+  --brand:       #CC0000;                  /* Rojo vino oscuro -> Rojo corporativo profundo */
+  --brand-light: #FF0000;                  /* Rojo oficial Sierra */
+  --brand-soft:  rgba(255, 0, 0, 0.05);   /* Fondo suave cálido */
   --text:        #1A1A1A;                  /* Texto oscuro */
   --bg:          #FFFFFF;                  /* Fondo blanco total */
 
   --card-bg:     rgba(255,255,255,0.65);   /* Glass blanco translúcido */
-  --card-stroke: rgba(200,0,0,0.22);       /* Trazo rojizo tenue */
-  --shadow:      0 10px 25px rgba(180,20,20,0.18);
+  --card-stroke: rgba(255,0,0,0.18);       /* Trazo rojizo tenue */
+  --shadow:      0 10px 25px rgba(255,0,0,0.12);
   --radius:      14px;
 }
 
@@ -131,8 +131,8 @@ html, body{
 }
 .btn-primary:hover{
   transform: translateY(-2px);
-  background: #A72424;
-  box-shadow: 0 4px 14px rgba(160,0,0,.4);
+  background: #D60000;
+  box-shadow: 0 4px 14px rgba(255,0,0,.35);
 }
 .btn-primary:disabled{ opacity:.6; cursor:not-allowed; }
 
@@ -141,7 +141,7 @@ html, body{
   min-height: 22px;
   font-size: .95rem;
   text-align:center;
-  color:#A72424;
+  color:#FF0000;
 }
 
 /* ==================== FOOTER ==================== */
@@ -159,8 +159,8 @@ html, body{
   transition: color .25s ease, border-color .25s ease;
 }
 .gs-footer__bottom a:hover{
-  color: #8F1F1F;
-  border-color: #8F1F1F;
+  color: #D60000;
+  border-color: #D60000;
 }
 
 

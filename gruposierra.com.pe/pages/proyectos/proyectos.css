@@ -8,7 +8,7 @@
 
 /* ===== 1) Variables del Sistema */
 :root {
-  --p-red: #C41616;
+  --p-red: #FF0000;
   --p-border: rgba(255, 255, 255, 0.15);
   --p-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
 }
@@ -244,7 +244,7 @@ body.fondo-principal {
     content: "\f3c5";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    color: #ff3b30;
+    color: #FF0000;
   }
 
   /* Footer: Precio + CTA */
@@ -254,7 +254,7 @@ body.fondo-principal {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    width: 100% !important;
+    margin-top: auto !important;
   }
   .proy-price {
     display: flex !important;
@@ -262,10 +262,11 @@ body.fondo-principal {
     gap: 2px !important;
   }
   .proy-price small {
+    display: block !important;
     font-size: 0.72rem !important;
-    color: rgba(255, 255, 255, 0.6) !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
+    letter-spacing: 0.8px !important;
+    color: rgba(255, 255, 255, 0.75) !important;
   }
   .proy-price strong {
     font-size: 1.25rem !important;
@@ -275,14 +276,14 @@ body.fondo-principal {
 
   /* Botón Ver Proyecto */
   .proy-cta {
-    background: #ff3b30 !important;
+    background: #FF0000 !important;
     color: #ffffff !important;
     padding: 8px 18px !important;
     border-radius: 99px !important;
     font-size: 0.82rem !important;
     font-weight: 700 !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2) !important;
+    box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35) !important;
     transition: all 0.25s ease !important;
     display: inline-block !important;
   }
@@ -347,62 +348,83 @@ body.fondo-principal {
     left: 0 !important;
     right: 0 !important;
     z-index: 2 !important;
-    padding: 20px !important;
+    padding: 18px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 6px !important;
+    gap: 4px !important;
     background: transparent !important;
+    box-sizing: border-box !important;
   }
 
   .proy-titlebar {
     color: #ffffff !important;
     font-weight: 800 !important;
     font-size: 1.25rem !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
     white-space: normal !important;
     text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
 
   .proyecto-ubicacion {
-    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
     font-size: 0.88rem !important;
+    line-height: 1.3 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 5px !important;
   }
   .proyecto-ubicacion::before {
     content: "\f3c5";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    color: #ff3b30;
+    color: #FF0000;
   }
 
   .proy-footer {
     display: flex !important;
     justify-content: space-between !important;
-    align-items: center !important;
+    align-items: flex-end !important;
+    margin-top: 8px !important;
     padding-top: 10px !important;
     border-top: 1px solid rgba(255,255,255,0.12) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .proy-price {
     display: flex !important;
     flex-direction: column !important;
+    gap: 2px !important;
   }
   .proy-price small {
-    font-size: 0.68rem !important;
-    color: rgba(255,255,255,0.6) !important;
+    font-size: 0.72rem !important;
+    color: rgba(255,255,255,0.7) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
   }
   .proy-price strong {
-    font-size: 1.2rem !important;
-    color: #ff3b30 !important;
+    font-size: 1.25rem !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
   }
   .proy-cta {
-    background: #ff3b30 !important;
+    background: #FF0000 !important;
     color: #ffffff !important;
-    padding: 6px 14px !important;
+    padding: 9px 18px !important;
     border-radius: 99px !important;
-    font-size: 0.8rem !important;
+    font-size: 0.88rem !important;
     font-weight: 700 !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 14px rgba(255, 0, 0, 0.40) !important;
+    transition: all 0.25s ease !important;
+    margin: 0 !important;
   }
 }
 
@@ -544,5 +566,5 @@ body.fondo-principal {
 .proyectos-grid:hover .proyecto-card:hover {
   border: none !important;
   outline: none !important;
-  box-shadow: 0 0 0 2px #D43C3C, 0 12px 28px rgba(212, 60, 60, 0.25) !important;
+  box-shadow: 0 0 0 2px #FF0000, 0 12px 28px rgba(255, 0, 0, 0.30) !important;
 }

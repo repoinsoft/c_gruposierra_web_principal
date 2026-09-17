@@ -71,10 +71,43 @@ document.addEventListener('DOMContentLoaded', () => {
   function showToast(text, isError = false) {
     if (!toastEl) return;
     toastEl.textContent = text;
-    toastEl.style.background = isError ? '#D32F2F' : '#1B5E20';
+    toastEl.style.background = isError ? '#FF0000' : '#1B5E20';
     toastEl.hidden = false;
     setTimeout(() => { toastEl.hidden = true; }, 3500);
   }
+
+  // =========================================================
+  // 🔍 LIGHTBOX MODAL EN PANTALLA COMPLETA (FONDO DESENFOCADO)
+  // =========================================================
+  const cmsLightbox   = document.getElementById('cms-lightbox');
+  const cmsLbImg      = document.getElementById('cms-lb-img');
+  const cmsLbCaption  = document.getElementById('cms-lb-caption');
+  const cmsLbClose    = document.getElementById('cms-lb-close');
+  const cmsLbBackdrop = document.getElementById('cms-lb-backdrop');
+
+  function openCmsLightbox(url, title = '') {
+    if (!cmsLightbox || !cmsLbImg || !url) return;
+    cmsLbImg.src = url;
+    cmsLbImg.alt = title || 'Vista ampliada';
+    if (cmsLbCaption) cmsLbCaption.textContent = title || '';
+    cmsLightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCmsLightbox() {
+    if (!cmsLightbox) return;
+    cmsLightbox.hidden = true;
+    if (cmsLbImg) cmsLbImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  if (cmsLbClose) cmsLbClose.addEventListener('click', closeCmsLightbox);
+  if (cmsLbBackdrop) cmsLbBackdrop.addEventListener('click', closeCmsLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cmsLightbox && !cmsLightbox.hidden) {
+      closeCmsLightbox();
+    }
+  });
 
   // Toggle mostrar contraseña
   if (btnTogglePass) {
@@ -290,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const item = document.createElement('div');
       item.className = 'cms-slider-item';
       item.innerHTML = `
+        <div class="cms-slider-ambient" style="background-image: url('${s.url}')"></div>
         <img src="${s.url}" alt="${s.nombre}" class="cms-slider-img" loading="lazy">
         <div class="cms-slider-overlay">
           <span class="cms-slider-name">${s.nombre}</span>
@@ -317,6 +351,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
           showToast(e.message, true);
         }
+      });
+
+      // Clic para ver en tamaño grande (desenfocando fondo)
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.cms-btn-del')) return;
+        openCmsLightbox(s.url, s.nombre);
       });
 
       gridSliders.appendChild(item);
@@ -366,11 +406,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     testimonios.forEach(t => {
       const item = document.createElement('div');
-      item.className = 'cms-slider-item';
+      item.className = 'cms-thumb-item';
       item.innerHTML = `
-        <img src="${t.url}" alt="${t.nombre}" class="cms-slider-img" loading="lazy">
-        <div class="cms-slider-overlay">
-          <span class="cms-slider-name">${t.nombre}</span>
+        <div class="cms-thumb-ambient" style="background-image: url('${t.url}')"></div>
+        <img src="${t.url}" alt="${t.nombre}" class="cms-thumb-img" loading="lazy">
+        <div class="cms-thumb-overlay">
+          <span class="cms-thumb-title">${t.nombre}</span>
           <button type="button" class="cms-btn-del" title="Eliminar Foto"><i class="fas fa-trash-alt"></i></button>
         </div>
       `;
@@ -395,6 +436,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
           showToast(e.message, true);
         }
+      });
+
+      // Clic para ver en tamaño grande (desenfocando fondo)
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.cms-btn-del')) return;
+        openCmsLightbox(t.url, t.nombre);
       });
 
       gridTestimonios.appendChild(item);
@@ -462,6 +509,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Portada
     if (imgPreviewPortada) {
       imgPreviewPortada.src = proj.portada || '/img/imagen/hero1.webp';
+      imgPreviewPortada.style.cursor = 'pointer';
+      imgPreviewPortada.title = 'Clic para ampliar imagen';
+      imgPreviewPortada.onclick = () => {
+        if (imgPreviewPortada.src) openCmsLightbox(imgPreviewPortada.src, `Portada: ${proj.nombre || ''}`);
+      };
     }
 
     // 2. Plano
@@ -470,6 +522,11 @@ document.addEventListener('DOMContentLoaded', () => {
         imgPreviewPlano.src = proj.plano;
         imgPreviewPlano.hidden = false;
         planoEmptyMsg.hidden = true;
+        imgPreviewPlano.style.cursor = 'pointer';
+        imgPreviewPlano.title = 'Clic para ampliar plano';
+        imgPreviewPlano.onclick = () => {
+          if (imgPreviewPlano.src) openCmsLightbox(imgPreviewPlano.src, `Plano de Lotización: ${proj.nombre || ''}`);
+        };
       } else {
         imgPreviewPlano.hidden = true;
         planoEmptyMsg.hidden = false;
@@ -497,16 +554,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'cms-thumb-item';
       card.innerHTML = `
+        <div class="cms-thumb-ambient" style="background-image: url('${img.url}')"></div>
         <img src="${img.url}" alt="Vista 360 ${idx+1}" class="cms-thumb-img" loading="lazy">
         <div class="cms-thumb-overlay">
           <span class="cms-thumb-title">360 #${idx+1}</span>
-          <button type="button" class="cms-btn-del" title="Eliminar 360"><i class="fas fa-trash-alt"></i></button>
+          <div style="display: flex; gap: 6px; pointer-events: auto;">
+            <button type="button" class="cms-btn-zoom cms-btn-del" style="background: rgba(255,255,255,0.25);" title="Ver foto grande"><i class="fas fa-search-plus"></i></button>
+            <button type="button" class="cms-btn-del" title="Eliminar 360"><i class="fas fa-trash-alt"></i></button>
+          </div>
         </div>
       `;
 
-      // Clic para previsualizar en visor 360
+      // Clic para previsualizar en visor 360 o zoom grande
       card.addEventListener('click', (e) => {
-        if (e.target.closest('.cms-btn-del')) return;
+        if (e.target.closest('.cms-btn-del:not(.cms-btn-zoom)')) return;
+        if (e.target.closest('.cms-btn-zoom')) {
+          openCmsLightbox(img.url, `Foto Panorámica 360 #${idx+1}`);
+          return;
+        }
         previewInPannellum(img.url);
       });
 
@@ -578,6 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'cms-thumb-item';
       card.innerHTML = `
+        <div class="cms-thumb-ambient" style="background-image: url('${m.url}')"></div>
         <img src="${m.url}" alt="${m.titulo}" class="cms-thumb-img" loading="lazy">
         <div class="cms-thumb-overlay">
           <span class="cms-thumb-title">${m.titulo}</span>
@@ -606,6 +672,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
           showToast(err.message, true);
         }
+      });
+
+      // Clic para ver en tamaño grande (desenfocando fondo)
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.cms-btn-del')) return;
+        openCmsLightbox(m.url, m.titulo);
       });
 
       gridModelos.appendChild(card);
