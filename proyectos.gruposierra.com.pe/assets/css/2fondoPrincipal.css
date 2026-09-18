@@ -11,23 +11,23 @@
 }
 
 /* =============================
-   ⚙️ Base general
+   ⚙️ Base general - Rojo Oficial Sierra
 ============================= */
 html {
-  background-color: #FFFFFF; /* Fondo original blanco limpio */
+  background-color: #FF0000;
 }
 body {
   margin: 0;
   padding: 0;
-  min-height: 100%;      /* Permite crecer con el contenido */
+  min-height: 100%;
   width: 100%;
-  background: var(--white);
+  background: #FF0000;
   color: var(--text);
   font-family: 'Inter', system-ui, Arial, sans-serif;
 }
 
 /* =============================
-   🏦 Fondo principal blanco (aplicado a body)
+   🏛️ Fondo principal Oficial Sierra (aplicado a body)
 ============================= */
 body.fondo-principal {
   display: flex;
@@ -35,9 +35,14 @@ body.fondo-principal {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background: var(--white);
+  background-color: #FF0000;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.045) 0px, rgba(0, 0, 0, 0.045) 2px, transparent 2px, transparent 12px),
+    radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, #FF0000 0%, #E60000 50%, #CC0000 100%);
+  background-attachment: fixed;
   color: var(--text);
-  overflow-x: hidden;       /* Evita scroll horizontal */
+  overflow-x: hidden;
 }
 
 /* El cuerpo principal (main) se expande para empujar el footer hacia abajo */

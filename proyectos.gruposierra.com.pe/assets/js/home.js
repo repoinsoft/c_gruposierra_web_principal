@@ -15,8 +15,9 @@
   const visor360   = $("#visor360");
 
   // Imagen grande (hero), plano y flechas del carrusel
-  const heroImg  = $("#proy-hero");
-  const planImg  = $("#proy-plan");
+  const heroImg    = $("#proy-hero");
+  const heroBgImg  = $("#proy-hero-bg");
+  const planImg    = $("#proy-plan");
   const prevBtn  = $("#proy-prev");
   const nextBtn  = $("#proy-next");
 
@@ -29,59 +30,118 @@
 
   const MOCK_PROYECTOS = [
     {
+      id: 5,
+      nombre: "EDIFICIO LA TORRE CENTRAL",
+      slug: "edificiolatorrecentral",
+      direccion: "AV. LA TORRE, JULIACA",
+      descripcion: "Edificio multifamiliar de departamentos, locales comerciales y cocheras con acabados de primera calidad.",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/edificiolatorrecentral/portada/portada_20260904_121819.webp",
+      moneda: "DOLARES",
+      tipo: "Edificio",
+      desde: 18500,
+      metros: 0,
+      entrada: 36,
+      salida: 0,
+      saldo: 36,
+      prioridad: 1,
+      plano: "",
+      img360: []
+    },
+    {
       id: 4,
-      nombre: "Residencial Villa Andina",
+      nombre: "RESIDENCIAL VILLA ANDINA",
       slug: "residencialvillaandina",
-      direccion: "Distrito de Villa Andina, Ancash",
+      direccion: "VILLA ANDINA",
       descripcion: "Hermoso proyecto residencial con amplias áreas verdes y todos los servicios básicos en una zona tranquila.",
-      foto: "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/portada/portada.webp",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/portada/portada_20260904_121728.webp",
+      moneda: "SOLES",
+      tipo: "Desde",
+      desde: 23200,
+      metros: 160,
       entrada: 74,
       salida: 0,
       saldo: 74,
-      plano: "",
+      prioridad: 0,
+      plano: "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/plano/RESIDENCIAL_VILLA_ANDINA.png",
       img360: [
         "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/1almacen360.jpg",
-        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/2almacen360.jpg"
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/2almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/3almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/4almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialvillaandina/sesenta/5almacen360.jpg"
       ]
     },
     {
       id: 3,
-      nombre: "Urbanización Maravillas II",
+      nombre: "URBANIZACIÓN MARAVILLAS II",
       slug: "urbanizacionmaravillasii",
-      direccion: "Av. Las Maravillas, Huaraz",
-      descripcion: "Segunda etapa del exitoso proyecto Maravillas. Lotes habilitados con pórtico de ingreso y seguridad.",
+      direccion: "MARAVILLAS",
+      descripcion: "Segunda etapa del exitoso proyecto Maravillas. Lotes habilitados con pórtico de ingreso y seguridad permanente.",
       foto: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/portada/portada.webp",
+      moneda: "SOLES",
+      tipo: "Desde",
+      desde: 27500,
+      metros: 131.6,
       entrada: 49,
       salida: 0,
       saldo: 49,
-      plano: "",
-      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/4almacen360.jpg"]
+      prioridad: 0,
+      plano: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/plano/urbanizacion_maravillas_ii.png",
+      img360: [
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/1almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/2almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/3almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/4almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillasii/sesenta/5almacen360.jpg"
+      ]
     },
     {
       id: 2,
-      nombre: "Urbanización Maravillas",
+      nombre: "URBANIZACIÓN MARAVILLAS",
       slug: "urbanizacionmaravillas",
-      direccion: "Huaraz, Ancash",
+      direccion: "URBANIZACION MARAVILLAS",
       descripcion: "Urbanización moderna con servicios completos, pistas y veredas. Excelente oportunidad de inversión.",
-      foto: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/portada/portada.webp",
+      foto: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/portada/portada_20260904_121706.webp",
+      moneda: "SOLES",
+      tipo: "Desde",
+      desde: 22000,
+      metros: 138,
       entrada: 40,
       salida: 0,
       saldo: 40,
-      plano: "",
-      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/5almacen360.jpg"]
+      prioridad: 0,
+      plano: "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/plano/urbanizacion_maravillas.png",
+      img360: [
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/1almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/2almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/3almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/4almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/urbanizacionmaravillas/sesenta/5almacen360.jpg"
+      ]
     },
     {
       id: 1,
-      nombre: "Residencial Independencia",
+      nombre: "RESIDENCIAL INDEPENDENCIA",
       slug: "residencialindependencia",
-      direccion: "Distrito de Independencia, Huaraz",
+      direccion: "AV. INDEPENDENCIA",
       descripcion: "Ubicación privilegiada con vista a la cordillera. Lotes listos para construir el hogar de tus sueños.",
       foto: "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/portada/portada.webp",
-      entrada: 87,
+      moneda: "SOLES",
+      tipo: "Desde",
+      desde: 54000,
+      metros: 120,
+      entrada: 67,
       salida: 0,
-      saldo: 87,
-      plano: "",
-      img360: ["https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/1almacen360.jpg"]
+      saldo: 67,
+      prioridad: 0,
+      plano: "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/plano/RESIDENCIAL_INDEPENDENCIA.png",
+      img360: [
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/1almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/2almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/3almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/4almacen360.jpg",
+        "https://api.insoft.com.pe/sierra/web/proyectos/residencialindependencia/sesenta/5almacen360.jpg"
+      ]
     }
   ];
 
@@ -121,6 +181,7 @@
     document.head.appendChild(l);
   };
   async function ensurePannellum(){
+    if (window.pannellum) return;
     loadCssOnce("https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css","pano-css");
     await loadScriptOnce("https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js","pano-js");
   }
@@ -201,7 +262,19 @@
         previewAuthor: "GrupoSierra.com.pe"
       });
     } catch (err) {
-      console.error("Error inicializando visor 360:", err);
+      console.warn("Error inicializando visor 360 con URL remota, intentando fallback local:", err);
+      try {
+        viewer360 = pannellum.viewer("visor360", {
+          type: "equirectangular",
+          panorama: "./img/360/1almacen360.jpg",
+          autoLoad: true,
+          showZoomCtrl: true,
+          showFullscreenCtrl: true,
+          hfov: 100
+        });
+      } catch (e2) {
+        console.error("Error definitivo en visor 360:", e2);
+      }
     }
   }
 
@@ -214,8 +287,10 @@
       li.dataset.id=p.id;
       li.dataset.slug=p.slug || "";
       if (String(p.id) === String(selectedId)) li.classList.add("is-active");
+      const fallbackThumb = "./img/imagen/hero1.webp";
+      const thumbSrc = p.miniatura || p.foto_card || p.portada || p.foto || fallbackThumb;
       li.innerHTML=`
-        <img class="gs-proy__thumb" src="${p.foto||'/img/proyectos/default.jpg'}" alt="${p.nombre}">
+        <img class="gs-proy__thumb" src="${thumbSrc}" alt="${p.nombre}" onerror="this.onerror=null; this.src='${fallbackThumb}';">
         <div>
           <h4 class="gs-proy__name">${p.nombre}</h4>
           <div class="gs-proy__chips">
@@ -240,7 +315,8 @@
       b.type = "button";
       b.className="gs-thumb";
       b.setAttribute("aria-label", `Vista 360 ${i+1}`);
-      b.innerHTML = `<img src="${u}" alt="Vista 360 ${i+1}">`;
+      const fallback360Thumb = `./img/360/${(i % 5) + 1}almacen360.jpg`;
+      b.innerHTML = `<img src="${u}" alt="Vista 360 ${i+1}" onerror="this.onerror=null; this.src='${fallback360Thumb}';">`;
       b.onclick=()=>mostrar360(u, b);
       thumbsEl.append(b);
     });
@@ -262,13 +338,16 @@
       try {
         const found = proyectos.find(p => p.id == id) || MOCK_PROYECTOS.find(p => p.id == id);
         const slug = found ? (found.slug || '') : '';
-        const r = await fetch(`${API}?action=project_detail&id=${id}&slug=${encodeURIComponent(slug)}`);
+        const r = await fetch(`${API}?action=project_detail&id=${id}&slug=${encodeURIComponent(slug)}`, { cache: 'no-store' });
         if (!r.ok) throw new Error("API response not ok");
         const j = await r.json();
         if(!j.ok) throw new Error(j.error);
         proyecto = j.data.proyecto || found;
-        pUrl = j.data.plano_url || "";
+        pUrl = j.data.plano_url || (found && found.plano) || "";
         img360 = (j.data.img360 || []).map(x => typeof x === 'string' ? x : x.url).filter(Boolean);
+        if (!img360.length && found && found.img360 && found.img360.length) {
+          img360 = found.img360;
+        }
         if (j.data.portada) proyecto.portada = j.data.portada;
       } catch (apiError) {
         console.warn("No se pudo cargar el detalle del proyecto de la API, usando mock local.", apiError);
@@ -337,15 +416,28 @@
           proyecto.portada     ||
           proyecto.foto        ||
           (fromList && fromList.foto) ||
-          "/img/proyectos/default_hero.jpg";
+          "./img/imagen/hero1.webp";
 
+        heroImg.onerror = () => {
+          heroImg.onerror = null;
+          heroImg.src = "./img/imagen/hero1.webp";
+          if (heroBgImg) heroBgImg.src = "./img/imagen/hero1.webp";
+        };
         heroImg.src = heroSrc;
         heroImg.alt = proyecto.nombre || "Proyecto Grupo Sierra";
+        if (heroBgImg) {
+          heroBgImg.src = heroSrc;
+        }
       }
 
-      // 🔹 Mostrar plano (si existe) y configurar botón de scroll
+      // 🔹 Mostrar plano (solo si el proyecto tiene plano asignado)
       if (planImg && seccionPlano){
-        if (planoUrl){
+        if (planoUrl) {
+          planImg.onerror = () => {
+            planImg.onerror = null;
+            seccionPlano.style.display = "none";
+            if (btnScrollPlano) btnScrollPlano.style.display = "none";
+          };
           planImg.src = planoUrl;
           planImg.alt = `Plano de ${proyecto.nombre || "proyecto"}`;
           seccionPlano.style.display = "block";
@@ -353,35 +445,43 @@
             btnScrollPlano.style.display = "inline-flex";
             btnScrollPlano.onclick = () => seccionPlano.scrollIntoView({ behavior: "smooth", block: "center" });
           }
-        }else{
+        } else {
           planImg.src = "";
           seccionPlano.style.display = "none";
           if (btnScrollPlano) btnScrollPlano.style.display = "none";
         }
       }
 
-      // 🔹 Configurar botón de scroll para 360
-      if (btnScroll360) {
+      // 🔹 Visor 360 (solo si el proyecto tiene escenas 360 cargadas)
+      const headerPano = $(".gs-section-header--pano");
+      if (visor360) {
         if (escenas360.length) {
-          btnScroll360.style.display = "inline-flex";
-          btnScroll360.onclick = () => visor360.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (headerPano) headerPano.style.display = "block";
+          visor360.style.display = "block";
+          if (thumbsEl) thumbsEl.style.display = "flex";
+          if (btnScroll360) {
+            btnScroll360.style.display = "inline-flex";
+            btnScroll360.onclick = () => visor360.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          renderThumbs();
+          visor360.innerHTML = "";
+          const firstThumb = thumbsEl ? thumbsEl.querySelector(".gs-thumb") : null;
+          if (firstThumb) mostrar360(escenas360[0], firstThumb);
         } else {
-          btnScroll360.style.display = "none";
+          if (headerPano) headerPano.style.display = "none";
+          visor360.style.display = "none";
+          visor360.innerHTML = "";
+          if (thumbsEl) {
+            thumbsEl.style.display = "none";
+            thumbsEl.innerHTML = "";
+          }
+          if (btnScroll360) btnScroll360.style.display = "none";
         }
-      }
-
-      renderThumbs();
-      visor360.innerHTML = "";
-
-      if (escenas360.length) {
-        const firstThumb = thumbsEl.querySelector(".gs-thumb");
-        if (firstThumb) mostrar360(escenas360[0], firstThumb);
       }
 
       return { ok:true, escenas: escenas360.slice(), plano: !!planoUrl, slug: proyecto.slug || "" };
     }catch(e){
-      console.error(e);
-      alert("No se pudo cargar el visor");
+      console.error("Error al cargar datos del proyecto:", e);
       return { ok:false };
     }
   }
@@ -442,7 +542,7 @@
   (async()=>{
     try{
       try {
-        const r=await fetch(`${API}?action=projects`);
+        const r=await fetch(`${API}?action=projects`, { cache: "no-store" });
         if (!r.ok) throw new Error("API response not ok");
         const j=await r.json();
         if(!j.ok) throw new Error(j.error);

@@ -65,14 +65,17 @@
   <!-- 1) Sistema responsive -->
   <link rel="stylesheet" href="./assets/css/1responsive.css?v=5.0" />
   <!-- 2) Fondo Principal-->
-  <link rel="stylesheet" href="./assets/css/2fondoPrincipal.css?v=5.0" />
+  <link rel="stylesheet" href="./assets/css/2fondoPrincipal.css?v=5.4" />
   <!-- 3) CSS de  grupoSierra -->
-  <link rel="stylesheet" href="./assets/css/home.css?v=5.0">
-  <script src="./assets/js/home.js?v=5.0" defer></script>
+  <link rel="stylesheet" href="./assets/css/home.css?v=5.8">
+  <!-- Pannellum 360 Viewer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <script src="./assets/js/home.js?v=5.8" defer></script>
 
   <!-- 4) Menú y Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="./includes/1menu.css?v=5.0" />
+  <link rel="stylesheet" href="./includes/1menu.css?v=5.2" />
 
 </head>
 
@@ -133,10 +136,12 @@
   <main id="inicio" class="gs-main">
     <!-- Imagen HERO del proyecto con Overlay de información y Badge (Puesto al inicio para ocupar toda la cabecera) -->
     <figure class="gs-hero">
+      <img id="proy-hero-bg" src="./img/imagen/hero1.webp" alt="" class="gs-hero__bg" aria-hidden="true">
       <img id="proy-hero"
-          src="https://elcomercio-gestion-prod.web.arc-cdn.net/resizer/v2/B2PE7FJ625AQ3C44MDAAT27EXQ.png?auth=b88d2b97c36766369f79c3110f2d170a5f8ec9399476a9c04f81153beadcd69b&width=1200&height=713&smart=true&quality=75"
+          src="./img/imagen/hero1.webp"
           alt="Imagen del proyecto seleccionado"
-          class="gs-hero__img">
+          class="gs-hero__img"
+          onerror="this.onerror=null; this.src='./img/imagen/hero1.webp';">
       
       <!-- Degradado inferior con título y ubicación -->
       <figcaption class="gs-hero__overlay">
@@ -241,6 +246,17 @@
           <!-- Miniaturas 360 -->
           <div id="thumb-strip" class="gs-thumbs" role="list"></div>
 
+          <!-- Plano del proyecto -->
+          <section id="seccion-plano" class="gs-plan-section" style="display: none;">
+            <header class="gs-section-header">
+              <h3 class="gs-section-title">Plano de Distribución de Lotes</h3>
+              <p class="gs-section-subtitle">Visualiza la ubicación y dimensiones de cada lote disponible</p>
+            </header>
+            <figure class="gs-plan">
+              <img id="proy-plan" src="" alt="Plano del proyecto" class="gs-plan__img">
+            </figure>
+          </section>
+
           <!-- SECCIÓN DE CONTACTO ESTILO SERHANT (TEMA SIERRA) -->
           <section class="gs-contact-section">
             <div class="gs-contact-container">
@@ -301,17 +317,6 @@
                 </form>
               </div>
             </div>
-          </section>
-
-          <!-- Plano del proyecto -->
-          <section id="seccion-plano" class="gs-plan-section" style="display: none;">
-            <header class="gs-section-header">
-              <h3 class="gs-section-title">Plano de Distribución de Lotes</h3>
-              <p class="gs-section-subtitle">Visualiza la ubicación y dimensiones de cada lote disponible</p>
-            </header>
-            <figure class="gs-plan">
-              <img id="proy-plan" src="" alt="Plano del proyecto" class="gs-plan__img">
-            </figure>
           </section>
 
         </div>
