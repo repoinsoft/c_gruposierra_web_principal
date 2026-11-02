@@ -9,6 +9,10 @@ Options -Indexes
     RewriteEngine On
     RewriteBase /
 
+    # Redirigir subdominio anterior (.com.pe) hacia el nuevo subdominio (.pe)
+    RewriteCond %{HTTP_HOST} ^(www\.)?proyectos\.gruposierra\.com\.pe$ [NC]
+    RewriteRule ^(.*)$ https://proyectos.gruposierra.pe/$1 [R=301,L]
+
     # Redirigir /index.html a la raíz /
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/ [NC]
     RewriteRule ^(.*)index\.html$ /$1 [R=301,L]

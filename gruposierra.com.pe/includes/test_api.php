@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-$API_URL = 'https://gruposierra.com.pe/includes/apiMyPro.php';
+$API_URL = 'https://gruposierra.pe/includes/apiMyPro.php';
 
 function hit($url, $params = []) {
   $ch = curl_init();

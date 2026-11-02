@@ -99,7 +99,7 @@ if ($action === 'list') {
       $img = '/img/proyectos/' . ltrim($img, '/');
     }
 
-    $url = 'https://proyectos.gruposierra.com.pe/?p=' . rawurlencode($slug);
+    $url = 'https://proyectos.gruposierra.pe/?p=' . rawurlencode($slug);
 
     $moneda = $r['moneda'] ?? '';
     $desde  = isset($r['desde'])  ? (float)$r['desde']  : null;

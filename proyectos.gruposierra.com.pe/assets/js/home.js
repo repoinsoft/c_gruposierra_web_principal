@@ -259,7 +259,7 @@
         minHfov: 40,
         maxHfov: 120,
         previewTitle: "Recorrido Virtual 360°",
-        previewAuthor: "GrupoSierra.com.pe"
+        previewAuthor: "GrupoSierra.pe"
       });
     } catch (err) {
       console.warn("Error inicializando visor 360 con URL remota, intentando fallback local:", err);

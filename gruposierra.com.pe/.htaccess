@@ -14,6 +14,10 @@ Options -Indexes
     RewriteEngine On
     RewriteBase /
 
+    # Redirigir dominio anterior (.com.pe) hacia el nuevo dominio oficial (.pe)
+    RewriteCond %{HTTP_HOST} ^(www\.)?gruposierra\.com\.pe$ [NC]
+    RewriteRule ^(.*)$ https://gruposierra.pe/$1 [R=301,L]
+
     # Redirigir /index.html a la raíz / (301 Permanente)
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/ [NC]
     RewriteRule ^(.*)index\.html$ /$1 [R=301,L]

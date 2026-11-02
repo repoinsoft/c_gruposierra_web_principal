@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Ajusta el path si tu proyecto está colgado en raíz
           let p = cur.pathname;
           if (p.startsWith('/gruposierra/')) p = p.replace('/gruposierra', '');
-          return window.location.origin + p; // https://gruposierra.com.pe + /web/slider/...
+          return window.location.origin + p; // https://gruposierra.pe + /web/slider/...
         }
         // Intento genérico: subir a https
         cur.protocol = 'https:';

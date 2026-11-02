@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const buildURL = (slug) =>
     isLocal
       ? `/proyectos.gruposierra.com.pe/?p=${encodeURIComponent(slug)}`
-      : `https://proyectos.gruposierra.com.pe/?p=${encodeURIComponent(slug)}`;
+      : `https://proyectos.gruposierra.pe/?p=${encodeURIComponent(slug)}`;
 
   // ⮑ Normaliza cada item usando tus columnas reales
   const normalizeItem = (p) => {
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ubicacion: "VILLA ANDINA",
           img: "/img/imagen/hero1.webp",
           slug: "residencialvillaandina",
-          url: "https://proyectos.gruposierra.com.pe/?p=residencialvillaandina",
+          url: "https://proyectos.gruposierra.pe/?p=residencialvillaandina",
           mapa: "https://maps.app.goo.gl/to2y2vLXTpEdsMmV7",
           tipo: "Desde",
           precio_moneda: "SOLES",
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ubicacion: "MARAVILLAS",
           img: "/img/imagen/hero2.webp",
           slug: "urbanizacionmaravillasii",
-          url: "https://proyectos.gruposierra.com.pe/?p=urbanizacionmaravillasii",
+          url: "https://proyectos.gruposierra.pe/?p=urbanizacionmaravillasii",
           mapa: "https://maps.app.goo.gl/to2y2vLXTpEdsMmV7",
           tipo: "Desde",
           precio_moneda: "SOLES",
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ubicacion: "URBANIZACION MARAVILLAS",
           img: "/img/imagen/hero3.webp",
           slug: "urbanizacionmaravillas",
-          url: "https://proyectos.gruposierra.com.pe/?p=urbanizacionmaravillas",
+          url: "https://proyectos.gruposierra.pe/?p=urbanizacionmaravillas",
           mapa: "https://maps.app.goo.gl/to2y2vLXTpEdsMmV7",
           tipo: "Desde",
           precio_moneda: "SOLES",
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ubicacion: "AV. INDEPENDENCIA",
           img: "/img/imagen/hero1.webp",
           slug: "residencialindependencia",
-          url: "https://proyectos.gruposierra.com.pe/?p=residencialindependencia",
+          url: "https://proyectos.gruposierra.pe/?p=residencialindependencia",
           mapa: "https://maps.app.goo.gl/Wb8v7FDbQn9TYUbw5",
           tipo: "Desde",
           precio_moneda: "SOLES",
